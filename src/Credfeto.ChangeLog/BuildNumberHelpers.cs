@@ -1,20 +1,24 @@
-﻿namespace Credfeto.ChangeLog.Management
+﻿using System;
+
+namespace Credfeto.ChangeLog.Management
 {
     internal static class BuildNumberHelpers
     {
-        public static string DetermineBuildNumberForChangeLog(string version)
+        public static Version? DetermineVersionForChangeLog(string version)
         {
             if (string.IsNullOrWhiteSpace(version))
             {
-                return "unreleased";
+                return null;
             }
 
             if (version.Contains('-'))
             {
-                return "unreleased";
+                return null;
             }
 
-            return version.Substring(startIndex: 0, version.LastIndexOf('.'));
+            return new Version(version);
+
+            //return version.Substring(startIndex: 0, version.LastIndexOf('.'));
         }
     }
 }

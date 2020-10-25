@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -19,13 +20,13 @@ namespace Credfeto.ChangeLog.Management
 
         public static string ExtractReleaseNotes(string changeLog, string version)
         {
-            string buildNumber = BuildNumberHelpers.DetermineBuildNumberForChangeLog(version);
+            Version? releaseVersion = BuildNumberHelpers.DetermineVersionForChangeLog(version);
 
             string[] text = RemoveComments.Replace(input: changeLog, replacement: string.Empty)
                                           .Trim()
                                           .Split(Environment.NewLine);
 
-            FindSectionForBuild(text: text, buildNumber: buildNumber, out int foundStart, out int foundEnd);
+            FindSectionForBuild(text: text, version: releaseVersion, out int foundStart, out int foundEnd);
 
             StringBuilder releaseNotes = new StringBuilder();
 
@@ -73,37 +74,63 @@ namespace Credfeto.ChangeLog.Management
                 previousLine = text[i];
             }
 
-            if (buildNumber == "unreleased")
-            {
-            }
-
             return releaseNotes.ToString()
                                .Trim();
         }
 
-        private static void FindSectionForBuild(string[] text, string buildNumber, out int foundStart, out int foundEnd)
+        private static void FindSectionForBuild(string[] text, Version? version, out int foundStart, out int foundEnd)
         {
             foundStart = -1;
             foundEnd = -1;
 
             for (int i = 1; i < text.Length; i++)
             {
-                if (text[i]
-                    .StartsWith("## [" + buildNumber, comparisonType: StringComparison.OrdinalIgnoreCase))
+                string line = text[i];
+
+                if (IsMatchingVersion(version: version, line: line))
                 {
                     foundStart = i + 1;
 
                     continue;
                 }
 
-                if (foundStart != -1 && text[i]
-                    .StartsWith(value: "## [", comparisonType: StringComparison.Ordinal))
+                if (foundStart != -1 && line.StartsWith(value: "## [", comparisonType: StringComparison.Ordinal))
                 {
                     foundEnd = i;
 
                     break;
                 }
             }
+        }
+
+        private static bool IsMatchingVersion(Version? version, string line)
+        {
+            if (version == null)
+            {
+                return StringComparer.InvariantCultureIgnoreCase.Equals(x: line, y: "## [Unreleased]");
+            }
+
+            static IEnumerable<string> Candidates(Version expected)
+            {
+                int build = expected.Build == 0 || expected.Build == -1 ? 0 : expected.Build;
+
+                yield return $"## [{expected.Major}.{expected.Minor}.{build}]";
+
+                if (build == 0)
+                {
+                    yield return $"## [{expected.Major}.{expected.Minor}]";
+                }
+            }
+
+            foreach (var candidate in Candidates(version))
+            {
+                if (line.StartsWith(value: candidate, comparisonType: StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -5,6 +5,38 @@ namespace Credfeto.ChangeLog.Tests
 {
     public sealed class ChangeLogReaderTests
     {
+        private const string MULTI_RELEASE_CHANGE_LOG = @"# Changelog
+All notable changes to this project will be documented in this file.
+
+<!--
+Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
+-->
+
+## [Unreleased]
+### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [1.1.1] - TBD
+### Added
+- Something was added here.
+
+## [1.1.0] - TBD
+### Added
+- This is release 1.1.0.
+
+## [1.0] - TBD
+### Added
+- This is release 1.0.0.
+
+## [0.0.0] - Project created
+";
+
         [Theory]
         [InlineData("")]
         [InlineData("1.0.0.1-master")]
@@ -206,6 +238,31 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
             const string expected = @"### Deployment Changes
 - Need to do something special here on the next deployment.";
 
+            Assert.Equal(expected: expected, actual: result);
+        }
+
+        [Theory]
+        [InlineData("1.1.1")]
+        [InlineData("1.1.1.1")]
+        [InlineData("1.1.1.3000")]
+        public void ReadASpecificReleaseReturnsThatReleaseOnly(string version)
+        {
+            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
+            const string expected = @"### Added
+- Something was added here.";
+            Assert.Equal(expected: expected, actual: result);
+        }
+
+        [Theory]
+        [InlineData("1.0")]
+        [InlineData("1.0.0")]
+        [InlineData("1.0.0.0")]
+        [InlineData("1.0.0.3000")]
+        public void ReadASpecificReleaseReturnsThatReleaseOnlyIgnoringZeroVersionParts(string version)
+        {
+            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
+            const string expected = @"### Added
+- This is release 1.0.0.";
             Assert.Equal(expected: expected, actual: result);
         }
     }
