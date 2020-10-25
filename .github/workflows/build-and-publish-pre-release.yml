@@ -50,3 +50,7 @@ jobs:
     - name: Publish
       run: |
         dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
+    - name: Create Release Notes
+      run: |
+        dotnet tool install --local Credfeto.ChangeLog.Cmd --version ${{ env.BUILD_VERSION }} --add-source dist
+        dotnet changelog -changelog CHANGELOG.md -extract RELEASE_NOTES.md -version ${{ env.BUILD_VERSION }}
