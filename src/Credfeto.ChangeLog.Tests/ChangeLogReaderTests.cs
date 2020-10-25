@@ -35,6 +35,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 - This is release 1.0.0.
 
 ## [0.0.0] - Project created
+### Added
+- Initial version
 ";
 
         [Theory]
@@ -264,6 +266,32 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
             const string expected = @"### Added
 - This is release 1.0.0.";
             Assert.Equal(expected: expected, actual: result);
+        }
+
+        [Theory]
+        [InlineData("0.0")]
+        [InlineData("0.0.0")]
+        [InlineData("0.0.0.0")]
+        [InlineData("0.0.0.3000")]
+        public void ReadASpecificReleaseAtEndOfFile(string version)
+        {
+            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
+
+            const string expected = @"### Added
+- Initial version";
+            Assert.Equal(expected: expected, actual: result);
+        }
+
+        [Theory]
+        [InlineData("7.0")]
+        [InlineData("8.1.0")]
+        [InlineData("9.2.3.0")]
+        [InlineData("10.3.4.3000")]
+        public void ReadNonExistentVersion(string version)
+        {
+            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
+
+            Assert.Equal(expected: string.Empty, actual: result);
         }
     }
 }
