@@ -51,7 +51,7 @@ namespace Credfeto.ChangeLog.Cmd
 
         private static async Task<int> ExtractAsync(string changeLogFileName, string version, string extractFileName)
         {
-            string? text = await ChangeLogUpdater.ReadAsync(changeLogFileName: changeLogFileName, version: version);
+            string text = await ChangeLogUpdater.ReadAsync(changeLogFileName: changeLogFileName, version: version);
 
             await File.WriteAllTextAsync(path: extractFileName, contents: text, encoding: Encoding.UTF8);
 
