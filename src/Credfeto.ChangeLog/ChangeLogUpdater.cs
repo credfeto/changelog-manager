@@ -21,7 +21,16 @@ namespace Credfeto.ChangeLog.Management
                 textBlock = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
             }
 
-            string[] text = textBlock.Split(Environment.NewLine);
+            string content = AddEntry(changeLog: textBlock, type: type, message: message);
+
+            //Write-Information "* Saving Changelog"
+            await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8);
+        }
+
+        public static string AddEntry(string changeLog, string type, string message)
+        {
+            string[] text = EnsureChangelog(changeLog)
+                .Split(Environment.NewLine);
 
             StringBuilder output = new StringBuilder();
             bool foundUnreleased = false;
@@ -60,11 +69,20 @@ namespace Credfeto.ChangeLog.Management
                 throw new InvalidChangeLogException("Could not find [Unreleased] section of file");
             }
 
-            //Write-Information "* Saving Changelog"
-            await File.WriteAllTextAsync(path: changeLogFileName,
-                                         output.ToString()
-                                               .Trim(),
-                                         encoding: Encoding.UTF8);
+            string content = output.ToString()
+                                   .Trim();
+
+            return content;
+        }
+
+        private static string EnsureChangelog(string changeLog)
+        {
+            if (string.IsNullOrWhiteSpace(changeLog))
+            {
+                return TemplateFile.Initial;
+            }
+
+            return changeLog;
         }
 
         public static Task CreateEmptyAsync(string changeLogFileName)
