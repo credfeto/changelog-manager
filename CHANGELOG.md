@@ -7,10 +7,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Unit tests
-- Support for adding new entries
-- Support for extracting the changelog for a specific release
-- Support for extracting the changelog for a unreleased content
 ### Fixed
 ### Changed
 ### Removed
@@ -19,4 +15,11 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.0.0] - 2020-10-25
+### Added
+- Unit tests
+- Support for adding new entries
+- Support for extracting the changelog for a specific release
+- Support for extracting the changelog for a unreleased content
+
 ## [0.0.0] - Project created
