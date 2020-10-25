@@ -1,0 +1,52 @@
+name: .NET Core [Pre-Release]
+
+on:
+  push:
+    branches-ignore:
+     - 'release/*'
+     - 'hotfix/*'
+    pull_request:
+     - opened
+     - edited
+     - synchronize
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.3.3
+    - name: Fetch tags and master
+      run: |
+          git fetch --tags
+          echo REF: $GITHUB_REF
+          echo SHA: $GITHUB_SHA
+          echo GIT_BRANCH=$GITHUB_REF >> $GITHUB_ENV
+    - name: Determine .net core version
+      uses: credfeto/action-dotnet-version-detect@v1.1.1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: Enable dotnet tools
+      run: dotnet new tool-manifest
+    - name: Install Build Version Tool
+      run: dotnet tool install --local FunFair.BuildVersion --add-source ${{ secrets.FUNFAIR_NUGET_FEED }}
+    - name: Install Multi-Push Tool
+      run: dotnet tool install --local Credfeto.Package.Push
+    - name: Set Define Build Version
+      run: dotnet buildversion $GITHUB_RUN_NUMBER
+    - name: Build with dotnet
+      run: |
+        cd src
+        dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
+    - name: Pack tool
+      run: |
+        cd src
+        dotnet pack --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-restore --output ../dist
+    - name: Publish
+      run: |
+        dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
