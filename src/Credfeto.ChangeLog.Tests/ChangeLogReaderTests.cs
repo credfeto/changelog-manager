@@ -14,5 +14,199 @@ namespace Credfeto.ChangeLog.Tests
             string result = ChangeLogReader.ExtractReleaseNotes(changeLog: string.Empty, version: version);
             Assert.Empty(result);
         }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("1.0.0.1-master")]
+        public void ReadUnReleasedSectionWithNoContentReturnsEmpty(string version)
+        {
+            const string changeLog = @"# Changelog
+All notable changes to this project will be documented in this file.
+
+<!--
+Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
+-->
+
+## [Unreleased]
+### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [0.0.0] - Project created
+";
+
+            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+            Assert.Empty(result);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("1.0.0.1-master")]
+        public void ReadUnReleasedSectionWithJustAddedReturnsAddedSectionOnly(string version)
+        {
+            const string changeLog = @"# Changelog
+All notable changes to this project will be documented in this file.
+
+<!--
+Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
+-->
+
+## [Unreleased]
+### Added
+- Something was added.
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [0.0.0] - Project created
+";
+
+            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+            const string expected = @"### Added
+- Something was added.";
+
+            Assert.Equal(expected: expected, actual: result);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("1.0.0.1-master")]
+        public void ReadUnReleasedSectionWithJustFixedReturnsAddedSectionOnly(string version)
+        {
+            const string changeLog = @"# Changelog
+All notable changes to this project will be documented in this file.
+
+<!--
+Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
+-->
+
+## [Unreleased]
+### Added
+### Fixed
+- Something was fixed.
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [0.0.0] - Project created
+";
+
+            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+            const string expected = @"### Fixed
+- Something was fixed.";
+
+            Assert.Equal(expected: expected, actual: result);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("1.0.0.1-master")]
+        public void ReadUnReleasedSectionWithJustChangedReturnsChangedSectionOnly(string version)
+        {
+            const string changeLog = @"# Changelog
+All notable changes to this project will be documented in this file.
+
+<!--
+Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
+-->
+
+## [Unreleased]
+### Added
+### Fixed
+### Changed
+- Something was changed.
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [0.0.0] - Project created
+";
+
+            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+            const string expected = @"### Changed
+- Something was changed.";
+
+            Assert.Equal(expected: expected, actual: result);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("1.0.0.1-master")]
+        public void ReadUnReleasedSectionWithJustRemovedReturnsRemovedSectionOnly(string version)
+        {
+            const string changeLog = @"# Changelog
+All notable changes to this project will be documented in this file.
+
+<!--
+Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
+-->
+
+## [Unreleased]
+### Added
+### Fixed
+### Changed
+### Removed
+- Something was removed.
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [0.0.0] - Project created
+";
+
+            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+            const string expected = @"### Removed
+- Something was removed.";
+
+            Assert.Equal(expected: expected, actual: result);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("1.0.0.1-master")]
+        public void ReadUnReleasedSectionWithJustDeploymentChangesReturnsDeploymentChangesSectionOnly(string version)
+        {
+            const string changeLog = @"# Changelog
+All notable changes to this project will be documented in this file.
+
+<!--
+Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
+-->
+
+## [Unreleased]
+### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+- Need to do something special here on the next deployment.
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [0.0.0] - Project created
+";
+
+            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+            const string expected = @"### Deployment Changes
+- Need to do something special here on the next deployment.";
+
+            Assert.Equal(expected: expected, actual: result);
+        }
     }
 }

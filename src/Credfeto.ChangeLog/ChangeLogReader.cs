@@ -8,7 +8,7 @@ namespace Credfeto.ChangeLog.Management
 {
     public sealed class ChangeLogReader
     {
-        private static readonly Regex RemoveComments = new Regex(pattern: "(?ms)<!--(.*)-->", options: RegexOptions.Compiled);
+        private static readonly Regex RemoveComments = new Regex(pattern: "<!--[\\s\\S]*?-->", RegexOptions.Compiled | RegexOptions.Multiline);
 
         public static async Task<string> ExtractReleasNodesFromFileAsync(string changeLogFileName, string version)
         {
@@ -20,7 +20,10 @@ namespace Credfeto.ChangeLog.Management
         public static string ExtractReleaseNotes(string changeLog, string version)
         {
             string buildNumber = BuildNumberHelpers.DetermineBuildNumberForChangeLog(version);
-            string[] text = changeLog.Split(Environment.NewLine);
+
+            string[] text = RemoveComments.Replace(input: changeLog, replacement: string.Empty)
+                                          .Trim()
+                                          .Split(Environment.NewLine);
 
             FindSectionForBuild(text: text, buildNumber: buildNumber, out int foundStart, out int foundEnd);
 
@@ -72,8 +75,6 @@ namespace Credfeto.ChangeLog.Management
 
             if (buildNumber == "unreleased")
             {
-                return RemoveComments.Replace(releaseNotes.ToString(), replacement: string.Empty)
-                                     .Trim();
             }
 
             return releaseNotes.ToString()
