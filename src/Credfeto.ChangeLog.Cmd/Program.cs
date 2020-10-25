@@ -36,7 +36,29 @@ namespace Credfeto.ChangeLog.Cmd
                 {
                     string version = configuration.GetValue<string>("version");
 
-                    return await ExtractAsync(changeLogFileName: changeLog, version: version, extractFileName: extractFileName);
+                    string text = await ChangeLogReader.ExtractReleasNodesFromFileAsync(changeLogFileName: changeLog, version: version);
+
+                    await File.WriteAllTextAsync(path: extractFileName, contents: text, encoding: Encoding.UTF8);
+
+                    return SUCCESS;
+                }
+
+                string? addType = configuration.GetValue<string>("add");
+
+                if (!string.IsNullOrEmpty(addType))
+                {
+                    string message = configuration.GetValue<string>("message");
+
+                    if (string.IsNullOrWhiteSpace(message))
+                    {
+                        Console.WriteLine("ERROR: message not specified");
+
+                        return ERROR;
+                    }
+
+                    await ChangeLogUpdater.AddEntryAsync(changeLogFileName: changeLog, type: addType, message: message);
+
+                    return SUCCESS;
                 }
 
                 return ERROR;
@@ -47,15 +69,6 @@ namespace Credfeto.ChangeLog.Cmd
 
                 return ERROR;
             }
-        }
-
-        private static async Task<int> ExtractAsync(string changeLogFileName, string version, string extractFileName)
-        {
-            string text = await ChangeLogReader.ExtractReleasNodesFromFileAsync(changeLogFileName: changeLogFileName, version: version);
-
-            await File.WriteAllTextAsync(path: extractFileName, contents: text, encoding: Encoding.UTF8);
-
-            return SUCCESS;
         }
 
         private static IConfigurationRoot LoadConfiguration(string[] args)
