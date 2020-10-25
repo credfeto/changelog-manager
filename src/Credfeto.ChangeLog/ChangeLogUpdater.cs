@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,22 +31,29 @@ namespace Credfeto.ChangeLog.Management
 
         public static string AddEntry(string changeLog, string type, string message)
         {
-            string[] text = EnsureChangelog(changeLog)
-                .Split(Environment.NewLine);
+            List<string> text = EnsureChangelog(changeLog)
+                                .Split(Environment.NewLine)
+                                .ToList();
 
             StringBuilder output = new StringBuilder();
+            int index = FindInsertPosition(changeLog: text, type: type);
+            text.Insert(index: index, "- " + message);
+
+            string content = string.Join(separator: Environment.NewLine, values: text)
+                                   .Trim();
+
+            return content;
+        }
+
+        private static int FindInsertPosition(List<string> changeLog, string type)
+        {
             bool foundUnreleased = false;
-            bool done = false;
 
-            foreach (var candidateLine in text)
+            string search = "### " + type;
+
+            for (int index = 0; index < changeLog.Count; index++)
             {
-                string line = candidateLine.TrimEnd();
-                output.AppendLine(line);
-
-                if (done)
-                {
-                    continue;
-                }
+                string? line = changeLog[index];
 
                 if (!foundUnreleased)
                 {
@@ -55,24 +64,48 @@ namespace Credfeto.ChangeLog.Management
                 }
                 else
                 {
-                    if (line == "### " + type)
+                    if (line == search)
                     {
-                        //Write-Information "* Changelog Insert position added"
-                        output.AppendLine("- " + message);
-                        done = true;
+                        int next = index + 1;
+
+                        while (next < changeLog.Count)
+                        {
+                            if (IsNextItem(changeLog[next]))
+                            {
+                                return FindPreviousNonBlankEntry(changeLog: changeLog, earliest: index, latest: next);
+                            }
+
+                            ++next;
+                        }
+
+                        return index + 1;
                     }
                 }
             }
 
-            if (!done)
+            throw new InvalidChangeLogException("Could not find [Unreleased] section of file");
+        }
+
+        private static int FindPreviousNonBlankEntry(List<string> changeLog, int earliest, int latest)
+        {
+            int previous = latest - 1;
+
+            while (previous > earliest && string.IsNullOrWhiteSpace(changeLog[previous]))
             {
-                throw new InvalidChangeLogException("Could not find [Unreleased] section of file");
+                --previous;
+
+                if (!string.IsNullOrWhiteSpace(changeLog[previous]))
+                {
+                    return previous + 1;
+                }
             }
 
-            string content = output.ToString()
-                                   .Trim();
+            return latest;
+        }
 
-            return content;
+        private static bool IsNextItem(string line)
+        {
+            return line.StartsWith(value: "#", comparisonType: StringComparison.Ordinal) || line.StartsWith(value: "<!--", comparisonType: StringComparison.Ordinal);
         }
 
         private static string EnsureChangelog(string changeLog)
