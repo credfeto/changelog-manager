@@ -1,0 +1,33 @@
+name: Standardise MSSQL Format [FF-2107]
+
+on:
+  push:
+    branches-ignore:
+    - "release/*"
+    - "hotfix/*"
+    paths:
+    - '**.sql'
+
+jobs:
+  standardise-tsql-files:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.3.3
+      with:
+        fetch-depth: 0
+    - run: |
+        echo Current Branch ${GITHUB_REF#refs/heads/}
+        echo ::set-env name=GIT_BRANCH::$(echo ${GITHUB_REF#refs/heads/})
+    - name: Reformat
+      uses: credfeto/action-sql-format@v1.2
+    - name: Commit files
+      run: |
+        git status
+        git config --local user.email "credfeto@users.noreply.github.com"
+        git config --local user.name "fun-sqlfmt[bot]"
+        git commit --all -m"[FF-2107] Reformat SQL Files to common format." || true
+    - name: Push
+      run: |
+        git push "https://${{github.actor}}:${{secrets.SOURCE_PUSH_TOKEN}}@github.com/${{github.repository}}.git" "HEAD:${{ env.GIT_BRANCH }}"
