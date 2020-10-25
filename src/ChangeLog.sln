@@ -8,7 +8,9 @@ ProjectSection(SolutionItems) = preProject
 	CodeAnalysis.ruleset = CodeAnalysis.ruleset
 EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Credfeto.ChangeLog.Management", "Credfeto.ChangeLog.Management\Credfeto.ChangeLog.Management.csproj", "{425DE764-943A-41C2-88A8-9373EE29BD9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Credfeto.ChangeLog", "Credfeto.ChangeLog\Credfeto.ChangeLog.csproj", "{425DE764-943A-41C2-88A8-9373EE29BD9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Credfeto.ChangeLog.Tests", "Credfeto.ChangeLog.Tests\Credfeto.ChangeLog.Tests.csproj", "{C40B00C9-8429-4EDF-BC29-EF397174538B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +26,9 @@ Global
 		{425DE764-943A-41C2-88A8-9373EE29BD9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{425DE764-943A-41C2-88A8-9373EE29BD9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{425DE764-943A-41C2-88A8-9373EE29BD9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C40B00C9-8429-4EDF-BC29-EF397174538B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C40B00C9-8429-4EDF-BC29-EF397174538B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C40B00C9-8429-4EDF-BC29-EF397174538B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C40B00C9-8429-4EDF-BC29-EF397174538B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
