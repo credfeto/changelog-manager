@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Credfeto.ChangeLog.Cmd", "Credfeto.ChangeLog.Cmd\Credfeto.ChangeLog.Cmd.csproj", "{E2322FAD-2D45-4182-84C4-F53398C149C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{30AF6B5C-FD89-4B87-AC02-59AAF150C123}"
+ProjectSection(SolutionItems) = preProject
+	global.json = global.json
+	CodeAnalysis.ruleset = CodeAnalysis.ruleset
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Credfeto.ChangeLog.Management", "Credfeto.ChangeLog.Management\Credfeto.ChangeLog.Management.csproj", "{425DE764-943A-41C2-88A8-9373EE29BD9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2322FAD-2D45-4182-84C4-F53398C149C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2322FAD-2D45-4182-84C4-F53398C149C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2322FAD-2D45-4182-84C4-F53398C149C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2322FAD-2D45-4182-84C4-F53398C149C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{425DE764-943A-41C2-88A8-9373EE29BD9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{425DE764-943A-41C2-88A8-9373EE29BD9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{425DE764-943A-41C2-88A8-9373EE29BD9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{425DE764-943A-41C2-88A8-9373EE29BD9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
