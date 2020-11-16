@@ -12,18 +12,18 @@ jobs:
     - if: ${{ !startsWith(github.head_ref, 'release/') && !startsWith(github.head_ref, 'hotfix/') }}
       uses: seferov/pr-lint-action@v1.1.2
       with:
-        title-regex: '^\[FF-\d*\](\ )'
+        title-regex: '^\[FF\-\d*?\](\ )'
         title-regex-flags: 'g'
         error-message: 'Add Jira Ticket ID to your title'
 
   include-changelog-entry:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.3
+      - uses: actions/checkout@v2.3.4
         with:
           fetch-depth: 0
       - if: ${{ github.actor != 'dependabot-preview[bot]' }}
-        uses: Zomzog/changelog-checker@v1.0.0
+        uses: Zomzog/changelog-checker@v1.1.0
         with:
           fileName: CHANGELOG.md
           noChangelogLabel: Changelog Not Required
