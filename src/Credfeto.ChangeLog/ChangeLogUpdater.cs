@@ -35,7 +35,6 @@ namespace Credfeto.ChangeLog.Management
                                 .Split(Environment.NewLine)
                                 .ToList();
 
-            StringBuilder output = new StringBuilder();
             int index = FindInsertPosition(changeLog: text, type: type);
             text.Insert(index: index, "- " + message);
 
