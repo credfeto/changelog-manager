@@ -44,7 +44,7 @@ namespace Credfeto.ChangeLog.Management
 
             for (int i = foundStart; i < foundEnd; i++)
             {
-                if (text[i] == "")
+                if (string.IsNullOrEmpty(text[i]))
                 {
                     continue;
                 }

@@ -14,7 +14,7 @@ namespace Credfeto.ChangeLog.Cmd
         {
             FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(type.Assembly.Location);
 
-            return fileVersionInfo.ProductVersion;
+            return fileVersionInfo.ProductVersion!;
         }
     }
 }
