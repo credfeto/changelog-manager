@@ -55,7 +55,7 @@ updates:
   - dependency-name: "Microsoft.ApplicationInsights.AspNetCore"
   - dependency-name: "Portable.BouncyCastle"
   - dependency-name: "Cryptography.ECDSA.Secp256K1"
-  - dependency-name: "FunFair.*",
+  - dependency-name: "FunFair.*"
   - dependency-name: "Microsoft.Extensions.*"
   commit-message:
     prefix: "[FF-1429]"
