@@ -24,4 +24,3 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 - Support for extracting the changelog for a unreleased content
 
 ## [0.0.0] - Project created
-- This should be an error
