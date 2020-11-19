@@ -9,8 +9,8 @@ namespace Credfeto.ChangeLog.Management
 {
     public static class ChangeLogReader
     {
-        private static readonly Regex RemoveComments = new(pattern: "<!--[\\s\\S]*?-->", RegexOptions.Compiled | RegexOptions.Multiline);
-        private static readonly Regex VersionHeaderMatch = new(pattern: @"^##\s\[(\d+)", options: RegexOptions.Compiled);
+        private static readonly Regex RemoveComments = new Regex(pattern: "<!--[\\s\\S]*?-->", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex VersionHeaderMatch = new Regex(pattern: @"^##\s\[(\d+)", options: RegexOptions.Compiled);
 
         public static async Task<string> ExtractReleaseNodesFromFileAsync(string changeLogFileName, string version)
         {
@@ -41,7 +41,7 @@ namespace Credfeto.ChangeLog.Management
 
             string previousLine = string.Empty;
 
-            StringBuilder releaseNotes = new();
+            StringBuilder releaseNotes = new StringBuilder();
 
             for (int i = foundStart; i < foundEnd; i++)
             {
