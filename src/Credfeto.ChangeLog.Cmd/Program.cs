@@ -79,6 +79,8 @@ namespace Credfeto.ChangeLog.Cmd
                     return ERROR;
                 }
 
+                Console.WriteLine("ERROR: No known action specified");
+
                 return ERROR;
             }
             catch (Exception exception)
