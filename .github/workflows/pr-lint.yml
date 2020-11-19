@@ -46,5 +46,5 @@ jobs:
       run: dotnet new tool-manifest
     - name: Install Changelog tool
       run: dotnet tool install --local Credfeto.ChangeLog.Cmd
-    - name Check Changelog
+    - name: Check Changelog
       run: dotnet changelog -changelog D:\Work\changelog-manager\CHANGELOG.md -check-insert ${{ github.base_ref}}
