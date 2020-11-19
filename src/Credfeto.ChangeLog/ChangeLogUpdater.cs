@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Credfeto.ChangeLog.Management
 {
-    public sealed class ChangeLogUpdater
+    public static class ChangeLogUpdater
     {
         public static async Task AddEntryAsync(string changeLogFileName, string type, string message)
         {
