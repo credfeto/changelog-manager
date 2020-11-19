@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace Credfeto.ChangeLog.Management
 {
-    public sealed class ChangeLogReader
+    public static class ChangeLogReader
     {
         private static readonly Regex RemoveComments = new Regex(pattern: "<!--[\\s\\S]*?-->", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex VersionHeaderMatch = new Regex(pattern: @"^##\s\[(\d+)", options: RegexOptions.Compiled);
 
-        public static async Task<string> ExtractReleasNodesFromFileAsync(string changeLogFileName, string version)
+        public static async Task<string> ExtractReleaseNodesFromFileAsync(string changeLogFileName, string version)
         {
             string textBlock = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
 
@@ -28,8 +29,6 @@ namespace Credfeto.ChangeLog.Management
 
             FindSectionForBuild(text: text, version: releaseVersion, out int foundStart, out int foundEnd);
 
-            StringBuilder releaseNotes = new StringBuilder();
-
             if (foundStart == -1)
             {
                 return string.Empty;
@@ -40,7 +39,9 @@ namespace Credfeto.ChangeLog.Management
                 foundEnd = text.Length;
             }
 
-            string previousLine = "";
+            string previousLine = string.Empty;
+
+            StringBuilder releaseNotes = new StringBuilder();
 
             for (int i = foundStart; i < foundEnd; i++)
             {
@@ -76,6 +77,23 @@ namespace Credfeto.ChangeLog.Management
 
             return releaseNotes.ToString()
                                .Trim();
+        }
+
+        public static async Task<int?> FindFirstReleaseVersionPositionAsync(string changeLogFileName)
+        {
+            IReadOnlyList<string> changelog = await File.ReadAllLinesAsync(path: changeLogFileName, encoding: Encoding.UTF8);
+
+            for (int lineIndex = 0; lineIndex < changelog.Count; ++lineIndex)
+            {
+                string line = changelog[lineIndex];
+
+                if (VersionHeaderMatch.IsMatch(line))
+                {
+                    return lineIndex;
+                }
+            }
+
+            return null;
         }
 
         private static void FindSectionForBuild(string[] text, Version? version, out int foundStart, out int foundEnd)

@@ -36,7 +36,7 @@ namespace Credfeto.ChangeLog.Cmd
                 {
                     string version = configuration.GetValue<string>("version");
 
-                    string text = await ChangeLogReader.ExtractReleasNodesFromFileAsync(changeLogFileName: changeLog, version: version);
+                    string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: version);
 
                     await File.WriteAllTextAsync(path: extractFileName, contents: text, encoding: Encoding.UTF8);
 
@@ -61,6 +61,26 @@ namespace Credfeto.ChangeLog.Cmd
                     return SUCCESS;
                 }
 
+                string? branchName = configuration.GetValue<string>("check-insert");
+
+                if (!string.IsNullOrWhiteSpace(branchName))
+                {
+                    bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: branchName);
+
+                    if (valid)
+                    {
+                        Console.WriteLine("Changelog is valid");
+
+                        return SUCCESS;
+                    }
+
+                    await Console.Error.WriteLineAsync("ERROR: Changelog modified in released section");
+
+                    return ERROR;
+                }
+
+                Console.WriteLine("ERROR: No known action specified");
+
                 return ERROR;
             }
             catch (Exception exception)
@@ -80,7 +100,8 @@ namespace Credfeto.ChangeLog.Cmd
                                                                  {@"-version", @"version"},
                                                                  {@"-extract", @"extract"},
                                                                  {@"-add", @"add"},
-                                                                 {@"-message", @"message"}
+                                                                 {@"-message", @"message"},
+                                                                 {@"-check-insert", @"check-insert"}
                                                              })
                                              .Build();
         }
