@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Added support for checking where changelog entries were entered
 ### Fixed
 ### Changed
 ### Removed
