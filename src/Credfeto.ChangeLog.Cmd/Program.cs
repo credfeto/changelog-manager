@@ -87,6 +87,11 @@ namespace Credfeto.ChangeLog.Cmd
             {
                 Console.WriteLine($"ERROR: {exception.Message}");
 
+                if (exception.StackTrace != null)
+                {
+                    Console.WriteLine(exception.StackTrace);
+                }
+
                 return ERROR;
             }
         }
