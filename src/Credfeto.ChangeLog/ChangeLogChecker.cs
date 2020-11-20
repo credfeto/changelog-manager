@@ -53,42 +53,49 @@ namespace Credfeto.ChangeLog.Management
                                                          newTree: repo.Head.Tip.Tree,
                                                          new CompareOptions {ContextLines = 0, InterhunkLines = 0, IncludeUnmodified = false});
 
-                foreach (var change in changes)
+                PatchEntryChanges? change = changes.FirstOrDefault(candidate => candidate.Path == changeLogInRepoPath);
+
+                if (change != null)
                 {
-                    if (change.Path == changeLogInRepoPath)
-                    {
-                        string patchDetails = change.Patch;
-                        Console.WriteLine(patchDetails);
+                    return CheckForChangesAfterFirstRelease(change: change, firstReleaseVersionIndex: firstReleaseVersionIndex);
+                }
 
-                        MatchCollection matches = HunkPositionRegex.Matches(patchDetails);
+                Console.WriteLine("Could not find change in diff");
+            }
 
-                        foreach (Match? match in matches)
-                        {
-                            if (match == null)
-                            {
-                                continue;
-                            }
+            return true;
+        }
 
-                            int changeStart = Convert.ToInt32(match.Groups["CurrentFileStart"]
-                                                                   .Value);
+        private static bool CheckForChangesAfterFirstRelease(PatchEntryChanges change, int firstReleaseVersionIndex)
+        {
+            Console.WriteLine("Change Details");
+            string patchDetails = change.Patch;
+            Console.WriteLine(patchDetails);
 
-                            if (!int.TryParse(s: match.Groups["CurrentFileChangeLength"]
-                                                      .Value,
-                                              out int changeLength))
-                            {
-                                changeLength = 1;
-                            }
+            MatchCollection matches = HunkPositionRegex.Matches(patchDetails);
 
-                            int changeEnd = changeStart + changeLength;
+            foreach (Match? match in matches)
+            {
+                if (match == null)
+                {
+                    continue;
+                }
 
-                            if (changeEnd >= firstReleaseVersionIndex)
-                            {
-                                return false;
-                            }
-                        }
+                int changeStart = Convert.ToInt32(match.Groups["CurrentFileStart"]
+                                                       .Value);
 
-                        return true;
-                    }
+                if (!int.TryParse(s: match.Groups["CurrentFileChangeLength"]
+                                          .Value,
+                                  out int changeLength))
+                {
+                    changeLength = 1;
+                }
+
+                int changeEnd = changeStart + changeLength;
+
+                if (changeEnd >= firstReleaseVersionIndex)
+                {
+                    return false;
                 }
             }
 
@@ -97,14 +104,14 @@ namespace Credfeto.ChangeLog.Management
 
         private static string GetFullChangeLogFilePath(string changeLogFileName)
         {
-            string? path = Path.GetDirectoryName(changeLogFileName);
+            FileInfo changeLog = new FileInfo(changeLogFileName);
 
-            if (path != null)
+            if (!changeLog.Exists)
             {
-                return changeLogFileName;
+                throw new InvalidChangeLogException($"Could not find {changeLogFileName}");
             }
 
-            return Path.Combine(Directory.GetCurrentDirectory(), path2: changeLogFileName);
+            return changeLog.FullName;
         }
 
         private static string GetChangeLogDirectory(string changeLogFileName)
