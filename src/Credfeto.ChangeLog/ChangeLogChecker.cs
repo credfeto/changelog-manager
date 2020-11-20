@@ -15,6 +15,8 @@ namespace Credfeto.ChangeLog.Management
 
         public static async Task<bool> ChangeLogModifiedInReleaseSectionAsync(string changeLogFileName, string originBranchName)
         {
+            changeLogFileName = GetFullChangeLogFilePath(changeLogFileName);
+            Console.WriteLine($"Changelog: {changeLogFileName}");
             int? position = await ChangeLogReader.FindFirstReleaseVersionPositionAsync(changeLogFileName);
 
             if (position == null)
@@ -22,11 +24,12 @@ namespace Credfeto.ChangeLog.Management
                 return false;
             }
 
-            string changelogDir = Path.GetDirectoryName(changeLogFileName)!;
+            string changelogDir = GetChangeLogDirectory(changeLogFileName);
+            Console.WriteLine($"Changelog Folder: {changelogDir}");
 
             using (Repository repo = OpenRepository(changelogDir))
             {
-                string? sha = repo.Head.Tip.Sha;
+                string sha = repo.Head.Tip.Sha;
 
                 Branch? originBranch = repo.Branches.FirstOrDefault(b => b.FriendlyName == originBranchName);
 
@@ -42,6 +45,7 @@ namespace Credfeto.ChangeLog.Management
                 }
 
                 string changeLogInRepoPath = FindChangeLogPositionInRepo(repo: repo, changeLogFileName: changeLogFileName);
+                Console.WriteLine($"Relative to Repo Root: {changeLogInRepoPath}");
 
                 int firstReleaseVersionIndex = position.Value;
 
@@ -89,6 +93,25 @@ namespace Credfeto.ChangeLog.Management
             }
 
             return true;
+        }
+
+        private static string GetFullChangeLogFilePath(string changeLogFileName)
+        {
+            string? path = Path.GetDirectoryName(changeLogFileName);
+
+            if (path != null)
+            {
+                return changeLogFileName;
+            }
+
+            return Path.Combine(Directory.GetCurrentDirectory(), path2: changeLogFileName);
+        }
+
+        private static string GetChangeLogDirectory(string changeLogFileName)
+        {
+            string? path = Path.GetDirectoryName(changeLogFileName);
+
+            return path ?? Directory.GetCurrentDirectory();
         }
 
         private static string FindChangeLogPositionInRepo(Repository repo, string changeLogFileName)
