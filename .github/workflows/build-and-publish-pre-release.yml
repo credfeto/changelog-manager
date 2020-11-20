@@ -17,12 +17,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2.3.3
+        with:
+          fetch-depth: 0
     - name: Fetch tags and master
       run: |
           git fetch --tags
           echo REF: $GITHUB_REF
           echo SHA: $GITHUB_SHA
           echo GIT_BRANCH=$GITHUB_REF >> $GITHUB_ENV
+          git branches --remote
     - name: Determine .net core version
       uses: credfeto/action-dotnet-version-detect@v1.1.1
     - name: Setup .NET Core
