@@ -15,6 +15,7 @@ updates:
   allow:
   - dependency-type: all
   ignore:
+  - dependency-name: "AWSSDK.*"
   - dependency-name: "FunFair.*"
   - dependency-name: "Microsoft.Extensions.*"
   - dependency-name: "AsyncFixer"
