@@ -43,7 +43,7 @@ jobs:
     - name: Enable dotnet tools
       run: dotnet new tool-manifest
     - name: Install Build Version Tool
-      run: dotnet tool install --local FunFair.BuildVersion --add-source ${{ secrets.FUNFAIR_NUGET_FEED }}
+      run: dotnet tool install --local FunFair.BuildVersion
     - name: Install Multi-Push Tool
       run: dotnet tool install --local Credfeto.Package.Push
     - name: Set Define Build Version
