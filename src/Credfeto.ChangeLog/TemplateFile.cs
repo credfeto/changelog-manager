@@ -1,4 +1,6 @@
-﻿namespace Credfeto.ChangeLog.Management
+﻿using Credfeto.ChangeLog.Management.Helpers;
+
+namespace Credfeto.ChangeLog.Management
 {
     internal static class TemplateFile
     {
@@ -9,7 +11,7 @@ All notable changes to this project will be documented in this file.
 Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 -->
 
-## [Unreleased]
+## [" + Constants.Unreleased + @"]
 ### Added
 ### Fixed
 ### Changed

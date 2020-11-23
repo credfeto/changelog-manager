@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Credfeto.ChangeLog.Management.Helpers;
 
 namespace Credfeto.ChangeLog.Management
 {
     public static class ChangeLogReader
     {
-        private static readonly Regex RemoveComments = new Regex(pattern: "<!--[\\s\\S]*?-->", RegexOptions.Compiled | RegexOptions.Multiline);
-        private static readonly Regex VersionHeaderMatch = new Regex(pattern: @"^##\s\[(\d+)", options: RegexOptions.Compiled);
-
         public static async Task<string> ExtractReleaseNodesFromFileAsync(string changeLogFileName, string version)
         {
             string textBlock = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
@@ -23,9 +20,9 @@ namespace Credfeto.ChangeLog.Management
         {
             Version? releaseVersion = BuildNumberHelpers.DetermineVersionForChangeLog(version);
 
-            string[] text = RemoveComments.Replace(input: changeLog, replacement: string.Empty)
-                                          .Trim()
-                                          .Split(Environment.NewLine);
+            string[] text = CommonRegex.RemoveComments.Replace(input: changeLog, replacement: string.Empty)
+                                       .Trim()
+                                       .Split(Environment.NewLine);
 
             FindSectionForBuild(text: text, version: releaseVersion, out int foundStart, out int foundEnd);
 
@@ -41,7 +38,7 @@ namespace Credfeto.ChangeLog.Management
 
             string previousLine = string.Empty;
 
-            StringBuilder releaseNotes = new StringBuilder();
+            StringBuilder releaseNotes = new();
 
             for (int i = foundStart; i < foundEnd; i++)
             {
@@ -87,7 +84,7 @@ namespace Credfeto.ChangeLog.Management
             {
                 string line = changelog[lineIndex];
 
-                if (VersionHeaderMatch.IsMatch(line))
+                if (CommonRegex.VersionHeaderMatch.IsMatch(line))
                 {
                     return lineIndex;
                 }
@@ -125,7 +122,7 @@ namespace Credfeto.ChangeLog.Management
         {
             if (version == null)
             {
-                return StringComparer.InvariantCultureIgnoreCase.Equals(x: line, y: "## [Unreleased]");
+                return StringComparer.InvariantCultureIgnoreCase.Equals(x: line, y: Constants.UnreleasedHeader);
             }
 
             static IEnumerable<string> Candidates(Version expected)

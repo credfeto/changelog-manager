@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Credfeto.ChangeLog.Management.Exceptions;
+using Credfeto.ChangeLog.Management.Helpers;
 
 namespace Credfeto.ChangeLog.Management
 {
@@ -66,7 +68,7 @@ namespace Credfeto.ChangeLog.Management
 
                 if (!foundUnreleased)
                 {
-                    if (line == "## [Unreleased]")
+                    if (line == Constants.UnreleasedHeader)
                     {
                         foundUnreleased = true;
                     }
@@ -112,7 +114,78 @@ namespace Credfeto.ChangeLog.Management
 
         public static string CreateRelease(string changeLog, string version)
         {
+            List<string> text = EnsureChangelog(changeLog)
+                                .Split(Environment.NewLine)
+                                .ToList();
+
+            Dictionary<string, int> releases = text.Select((line, index) => new {line, index})
+                                                   .Where(i => IsRelease(i.line))
+                                                   .ToDictionary(keySelector: i => ExtractRelease(i.line), elementSelector: i => i.index);
+
+            if (!releases.Any())
+            {
+                throw new EmptyChangeLogException("Could not find unreleased section");
+            }
+
+            if (!releases.TryGetValue(key: Constants.Unreleased, out int unreleasedIndex))
+            {
+                throw new EmptyChangeLogException("Could not find unreleased section");
+            }
+
+            Console.WriteLine($"Found {Constants.Unreleased} at {unreleasedIndex}");
+
+            Version numericalVersion = new(version);
+
+            string? latestRelease = releases.Keys.Where(x => x != Constants.Unreleased)
+                                            .OrderByDescending(x => new Version(x))
+                                            .FirstOrDefault();
+
+            int releaseInsertPos;
+
+            if (latestRelease != null)
+            {
+                Console.WriteLine($"Latest release: {latestRelease}");
+
+                Version latestNumeric = new(latestRelease);
+
+                if (latestNumeric == numericalVersion)
+                {
+                    throw new ReleaseAlreadyExistsException($"Release {version} already exists");
+                }
+
+                if (latestNumeric > numericalVersion)
+                {
+                    throw new ReleaseTooOldException($"Release {latestRelease} already exists and is newer than {version}");
+                }
+
+                releaseInsertPos = releases[version];
+            }
+            else
+            {
+                releaseInsertPos = text.Count;
+            }
+
+            Console.WriteLine($"Inserting at {releaseInsertPos}");
+
             return changeLog + version;
+        }
+
+        private static string ExtractRelease(string line)
+        {
+            if (line == Constants.UnreleasedHeader)
+            {
+                return Constants.Unreleased;
+            }
+
+            Match match = CommonRegex.VersionHeaderMatch.Match(line);
+
+            return match.Groups["version"]
+                        .Value;
+        }
+
+        private static bool IsRelease(string line)
+        {
+            return line == Constants.UnreleasedHeader || CommonRegex.VersionHeaderMatch.IsMatch(line);
         }
 
         private static int FindPreviousNonBlankEntry(List<string> changeLog, int earliest, int latest)
