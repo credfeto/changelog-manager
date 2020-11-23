@@ -36,16 +36,24 @@ namespace Credfeto.ChangeLog.Management
                                 .Split(Environment.NewLine)
                                 .ToList();
 
-            int index = FindInsertPosition(changeLog: text, type: type);
-            text.Insert(index: index, "- " + message);
+            string entryText = CreateEntryText(message);
+            int index = FindInsertPosition(changeLog: text, type: type, entryText: entryText);
 
-            string content = string.Join(separator: Environment.NewLine, values: text)
-                                   .Trim();
+            if (index != -1)
+            {
+                text.Insert(index: index, item: entryText);
+            }
 
-            return content;
+            return string.Join(separator: Environment.NewLine, values: text)
+                         .Trim();
         }
 
-        private static int FindInsertPosition(List<string> changeLog, string type)
+        private static string CreateEntryText(string message)
+        {
+            return "- " + message;
+        }
+
+        private static int FindInsertPosition(List<string> changeLog, string type, string entryText)
         {
             bool foundUnreleased = false;
 
@@ -70,6 +78,12 @@ namespace Credfeto.ChangeLog.Management
 
                         while (next < changeLog.Count)
                         {
+                            if (StringComparer.InvariantCultureIgnoreCase.Equals(x: entryText, changeLog[next]))
+                            {
+                                // Found matching text
+                                return -1;
+                            }
+
                             if (IsNextItem(changeLog[next]))
                             {
                                 return FindPreviousNonBlankEntry(changeLog: changeLog, earliest: index, latest: next);
