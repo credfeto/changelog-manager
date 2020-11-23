@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Credfeto.ChangeLog.Management.Exceptions;
 using LibGit2Sharp;
 
 namespace Credfeto.ChangeLog.Management
@@ -10,8 +11,8 @@ namespace Credfeto.ChangeLog.Management
     public static class ChangeLogChecker
     {
         private static readonly Regex HunkPositionRegex =
-            new Regex(pattern: @"^@@\s*\-(?<OriginalFileStart>\d*)(,(?<OriginalFileEnd>\d*))?\s*\+(?<CurrentFileStart>\d*)(,(?<CurrentFileChangeLength>\d*))?\s*@@",
-                      RegexOptions.Compiled | RegexOptions.Multiline);
+            new(pattern: @"^@@\s*\-(?<OriginalFileStart>\d*)(,(?<OriginalFileEnd>\d*))?\s*\+(?<CurrentFileStart>\d*)(,(?<CurrentFileChangeLength>\d*))?\s*@@",
+                RegexOptions.Compiled | RegexOptions.Multiline);
 
         public static async Task<bool> ChangeLogModifiedInReleaseSectionAsync(string changeLogFileName, string originBranchName)
         {
@@ -104,7 +105,7 @@ namespace Credfeto.ChangeLog.Management
 
         private static string GetFullChangeLogFilePath(string changeLogFileName)
         {
-            FileInfo changeLog = new FileInfo(changeLogFileName);
+            FileInfo changeLog = new(changeLogFileName);
 
             if (!changeLog.Exists)
             {
