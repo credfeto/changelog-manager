@@ -79,6 +79,15 @@ namespace Credfeto.ChangeLog.Cmd
                     return ERROR;
                 }
 
+                string? releaseVersion = configuration.GetValue<string>("create-release");
+
+                if (!string.IsNullOrWhiteSpace(releaseVersion))
+                {
+                    await ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: releaseVersion);
+
+                    return SUCCESS;
+                }
+
                 Console.WriteLine("ERROR: No known action specified");
 
                 return ERROR;
@@ -106,7 +115,8 @@ namespace Credfeto.ChangeLog.Cmd
                                                                  {@"-extract", @"extract"},
                                                                  {@"-add", @"add"},
                                                                  {@"-message", @"message"},
-                                                                 {@"-check-insert", @"check-insert"}
+                                                                 {@"-check-insert", @"check-insert"},
+                                                                 {@"-create-release", "create-release"}
                                                              })
                                              .Build();
         }

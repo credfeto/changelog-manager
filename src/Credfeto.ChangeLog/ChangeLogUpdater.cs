@@ -11,22 +11,23 @@ namespace Credfeto.ChangeLog.Management
     {
         public static async Task AddEntryAsync(string changeLogFileName, string type, string message)
         {
-            string textBlock;
-
-            if (!File.Exists(changeLogFileName))
-            {
-                await CreateEmptyAsync(changeLogFileName);
-                textBlock = TemplateFile.Initial;
-            }
-            else
-            {
-                textBlock = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
-            }
+            string textBlock = await ReadChangeLogAsync(changeLogFileName);
 
             string content = AddEntry(changeLog: textBlock, type: type, message: message);
 
-            //Write-Information "* Saving Changelog"
             await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8);
+        }
+
+        private static async Task<string> ReadChangeLogAsync(string changeLogFileName)
+        {
+            if (!File.Exists(changeLogFileName))
+            {
+                await CreateEmptyAsync(changeLogFileName);
+
+                return TemplateFile.Initial;
+            }
+
+            return await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
         }
 
         public static string AddEntry(string changeLog, string type, string message)
@@ -83,6 +84,20 @@ namespace Credfeto.ChangeLog.Management
             }
 
             throw new InvalidChangeLogException("Could not find [Unreleased] section of file");
+        }
+
+        public static async Task CreateReleaseAsync(string changeLogFileName, string version)
+        {
+            string originalChangeLog = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
+
+            string newChangeLog = CreateRelease(changeLog: originalChangeLog, version: version);
+
+            await File.WriteAllTextAsync(path: changeLogFileName, contents: newChangeLog, encoding: Encoding.UTF8);
+        }
+
+        public static string CreateRelease(string changeLog, string version)
+        {
+            return changeLog + version;
         }
 
         private static int FindPreviousNonBlankEntry(List<string> changeLog, int earliest, int latest)

@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Credfeto.ChangeLog.Tests
 {
-    public sealed class ChangeLogUpdaterTests
+    public sealed class ChangeLogUpdaterAddEntryTests
     {
         [Fact]
         public void AddToEmptyChangelog()
