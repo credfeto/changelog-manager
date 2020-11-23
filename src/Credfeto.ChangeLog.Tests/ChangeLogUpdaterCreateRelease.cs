@@ -1,11 +1,20 @@
-﻿using Credfeto.ChangeLog.Management;
+﻿using System;
+using Credfeto.ChangeLog.Management;
 using Credfeto.ChangeLog.Management.Exceptions;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Credfeto.ChangeLog.Tests
 {
     public sealed class ChangeLogUpdaterCreateRelease
     {
+        private readonly ITestOutputHelper _output;
+
+        public ChangeLogUpdaterCreateRelease(ITestOutputHelper output)
+        {
+            this._output = output ?? throw new ArgumentNullException(nameof(output));
+        }
+
         [Fact]
         public void EmptyUnreleasedDoesNotCreateARelease()
         {
@@ -26,8 +35,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
             Assert.Throws<EmptyChangeLogException>(() => ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0"));
         }
@@ -57,8 +65,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## Added
 - An Item
 
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
             Assert.Throws<ReleaseAlreadyExistsException>(() => ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0"));
         }
@@ -88,8 +95,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## Added
 - An Item
 
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
             Assert.Throws<ReleaseTooOldException>(() => ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0"));
         }
@@ -115,8 +121,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
             string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0");
 
@@ -141,9 +146,9 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ### Added
 - Some Content
 
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
+            this._output.WriteLine(updated);
             Assert.Equal(expected: expected, actual: updated);
         }
 
@@ -168,8 +173,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
             string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0");
 
@@ -194,9 +198,9 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ### Fixed
 - Some Content
 
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
+            this._output.WriteLine(updated);
             Assert.Equal(expected: expected, actual: updated);
         }
 
@@ -221,8 +225,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
             string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0");
 
@@ -247,9 +250,9 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ### Changed
 - Some Content
 
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
+            this._output.WriteLine(updated);
             Assert.Equal(expected: expected, actual: updated);
         }
 
@@ -274,8 +277,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
             string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0");
 
@@ -300,9 +302,9 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ### Removed
 - Some Content
 
-## [0.0.0] - Project created
-";
+## [0.0.0] - Project created";
 
+            this._output.WriteLine(updated);
             Assert.Equal(expected: expected, actual: updated);
         }
     }

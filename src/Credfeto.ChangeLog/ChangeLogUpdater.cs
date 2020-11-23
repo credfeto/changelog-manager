@@ -158,16 +158,101 @@ namespace Credfeto.ChangeLog.Management
                     throw new ReleaseTooOldException($"Release {latestRelease} already exists and is newer than {version}");
                 }
 
-                releaseInsertPos = releases[version];
+                releaseInsertPos = releases[latestRelease];
             }
             else
             {
-                releaseInsertPos = text.Count;
+                releaseInsertPos = text.Count - 1;
             }
 
             Console.WriteLine($"Inserting at {releaseInsertPos}");
 
-            return changeLog + version;
+            string previousLine = string.Empty;
+
+            List<string> newRelease = new();
+
+            List<int> removeIndexes = new();
+
+            bool inComment = false;
+
+            for (int i = unreleasedIndex + 1; i < releaseInsertPos; i++)
+            {
+                if (text[i]
+                    .Contains(value: "<!--", comparisonType: StringComparison.Ordinal) && !text[i]
+                    .Contains(value: "-->", comparisonType: StringComparison.Ordinal))
+                {
+                    if (string.IsNullOrWhiteSpace(text[i - 1]))
+                    {
+                        // if line before was blank then don't delete it
+                        removeIndexes.Remove(i - 1);
+                    }
+
+                    inComment = true;
+
+                    continue;
+                }
+
+                if (inComment)
+                {
+                    if (text[i]
+                        .Contains(value: "-->", comparisonType: StringComparison.Ordinal))
+                    {
+                        inComment = false;
+                    }
+
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(text[i]))
+                {
+                    removeIndexes.Add(i);
+
+                    continue;
+                }
+
+                if (text[i]
+                    .StartsWith(value: "### ", comparisonType: StringComparison.Ordinal) && previousLine.StartsWith(value: "### ", comparisonType: StringComparison.Ordinal))
+                {
+                    previousLine = text[i];
+
+                    continue;
+                }
+
+                if (text[i]
+                    .StartsWith(value: "### ", comparisonType: StringComparison.Ordinal))
+                {
+                    previousLine = text[i];
+
+                    continue;
+                }
+
+                if (previousLine.StartsWith(value: "### ", comparisonType: StringComparison.Ordinal))
+                {
+                    newRelease.Add(previousLine);
+                }
+
+                removeIndexes.Add(i);
+                newRelease.Add(text[i]);
+                previousLine = text[i];
+            }
+
+            if (!newRelease.Any())
+            {
+                throw new EmptyChangeLogException();
+            }
+
+            newRelease.Insert(index: 0, "## [" + version + "] - TBD");
+            newRelease.Add(string.Empty);
+
+            text.InsertRange(index: releaseInsertPos, collection: newRelease);
+
+            foreach (int item in removeIndexes.OrderByDescending(x => x))
+            {
+                text.RemoveAt(item);
+            }
+
+            return string.Join(separator: Environment.NewLine, values: text)
+                         .Trim();
         }
 
         private static string ExtractRelease(string line)
