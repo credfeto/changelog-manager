@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Command to create a new release from unreleased content
 ### Fixed
 ### Changed
 ### Removed
