@@ -162,7 +162,7 @@ namespace Credfeto.ChangeLog.Management
             }
             else
             {
-                releaseInsertPos = text.Count - 1;
+                releaseInsertPos = text.Count;
             }
 
             Console.WriteLine($"Inserting at {releaseInsertPos}");
