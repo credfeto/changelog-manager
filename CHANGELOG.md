@@ -8,6 +8,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Added
 - Command to create a new release from unreleased content
+- Detection of changelog if it is in the git repo
 ### Fixed
 ### Changed
 ### Removed

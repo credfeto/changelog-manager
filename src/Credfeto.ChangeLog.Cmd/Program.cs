@@ -21,13 +21,16 @@ namespace Credfeto.ChangeLog.Cmd
             {
                 IConfigurationRoot configuration = LoadConfiguration(args);
 
-                string changeLog = configuration.GetValue<string>(key: @"changelog");
+                string? changeLog = configuration.GetValue<string>(key: @"changelog");
 
                 if (string.IsNullOrEmpty(changeLog))
                 {
-                    Console.WriteLine("ERROR: changelog not specified");
+                    if (!ChangeLogDetector.TryFindChangeLog(out changeLog))
+                    {
+                        Console.WriteLine("ERROR: changelog not specified or found");
 
-                    return ERROR;
+                        return ERROR;
+                    }
                 }
 
                 string extractFileName = configuration.GetValue<string>("extract");
