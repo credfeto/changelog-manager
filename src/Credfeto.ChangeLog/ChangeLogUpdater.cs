@@ -118,14 +118,7 @@ namespace Credfeto.ChangeLog.Management
                                 .Split(Environment.NewLine)
                                 .ToList();
 
-            Dictionary<string, int> releases = text.Select((line, index) => new {line, index})
-                                                   .Where(i => IsRelease(i.line))
-                                                   .ToDictionary(keySelector: i => ExtractRelease(i.line), elementSelector: i => i.index);
-
-            if (!releases.Any())
-            {
-                throw new EmptyChangeLogException("Could not find unreleased section");
-            }
+            Dictionary<string, int> releases = FindReleasePositions(text);
 
             if (!releases.TryGetValue(key: Constants.Unreleased, out int unreleasedIndex))
             {
@@ -253,6 +246,20 @@ namespace Credfeto.ChangeLog.Management
 
             return string.Join(separator: Environment.NewLine, values: text)
                          .Trim();
+        }
+
+        private static Dictionary<string, int> FindReleasePositions(IReadOnlyList<string> text)
+        {
+            Dictionary<string, int> releases = text.Select((line, index) => new {line, index})
+                                                   .Where(i => IsRelease(i.line))
+                                                   .ToDictionary(keySelector: i => ExtractRelease(i.line), elementSelector: i => i.index);
+
+            if (!releases.Any())
+            {
+                throw new EmptyChangeLogException("Could not find unreleased section");
+            }
+
+            return releases;
         }
 
         private static string ExtractRelease(string line)
