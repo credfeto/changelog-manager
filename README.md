@@ -1,5 +1,7 @@
 # Changelog manager .net tool
 
+Changelog manager is a .net tool that works on all supported .net platforms (windows/linux/mac).
+
 ## Release Notes
 
 See [CHANGELOG.md](CHANGELOG.md) managed by this tool.
