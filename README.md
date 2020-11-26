@@ -30,7 +30,11 @@ dotnet tool update Credfeto.ChangeLog.Cmd --local
 
 ## Usage
 
-Note the parameter `-changelog CHANGELOG.md` is optional and the changelog will be searched for in the current git repo.
+Common notes
+
+- The parameter `-changelog CHANGELOG.md` is optional and the changelog will be searched for in the current git repo.  Its is given explicitly in the examples assuming CHANGELOG.md is in the current directory.
+- If CHANGELOG.md doesn't exist calling `-add` with and when using `-changelog CHANGELOG.md` will create a file at that location.  It will error if `-changelog CHANGELOG.md` is not used.
+
 
 ### Extracting Release Notes
 
