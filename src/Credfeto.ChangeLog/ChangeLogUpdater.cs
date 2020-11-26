@@ -100,7 +100,7 @@ namespace Credfeto.ChangeLog.Management
                 }
             }
 
-            throw new InvalidChangeLogException("Could not find [Unreleased] section of file");
+            throw new InvalidChangeLogException("Could not find [" + Constants.Unreleased + "] section of file");
         }
 
         public static async Task CreateReleaseAsync(string changeLogFileName, string version)
