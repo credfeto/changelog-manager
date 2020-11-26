@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -71,7 +72,7 @@ namespace Credfeto.ChangeLog.Management
         private static bool CheckForChangesAfterFirstRelease(PatchEntryChanges change, int firstReleaseVersionIndex)
         {
             Console.WriteLine("Change Details");
-            string patchDetails = change.Patch;
+            string patchDetails = ExtractPatchDetails(change.Patch);
             Console.WriteLine(patchDetails);
 
             MatchCollection matches = HunkPositionRegex.Matches(patchDetails);
@@ -102,6 +103,74 @@ namespace Credfeto.ChangeLog.Management
             }
 
             return true;
+        }
+
+        private static string ExtractPatchDetails(string patch)
+        {
+            Console.WriteLine(patch);
+            List<string> lines = patch.Split('\n')
+                                      .ToList();
+
+            RemoveLastLineIfBlank(lines);
+
+            int lastHunk = lines.FindLastIndex(x => HunkPositionRegex.IsMatch(x));
+
+            if (lastHunk != -1)
+            {
+                CompareHunk(lines: lines, lastHunk: lastHunk, out List<string> before, out List<string> after);
+
+                if (before.SequenceEqual(after))
+                {
+                    lines.RemoveRange(index: lastHunk, lines.Count - lastHunk);
+                }
+            }
+
+            return string.Join(separator: Environment.NewLine, values: lines);
+        }
+
+        private static void CompareHunk(List<string> lines, int lastHunk, out List<string> before, out List<string> after)
+        {
+            before = new List<string>();
+            after = new List<string>();
+
+            foreach (string line in lines.Skip(lastHunk + 1))
+            {
+                switch (line[0])
+                {
+                    case '+':
+                        after.Add(line.Substring(1));
+
+                        break;
+
+                    case '-':
+                        before.Add(line.Substring(1));
+
+                        break;
+
+                    case '\\':
+                        if (line == @"\ No newline at end of file")
+                        {
+                            break;
+                        }
+
+                        throw new DiffException($"Could not process diff line: {line}");
+
+                    default: throw new DiffException($"Could not process diff line: {line}");
+                }
+            }
+        }
+
+        private static void RemoveLastLineIfBlank(List<string> lines)
+        {
+            int lastLine = lines.Count - 1;
+
+            if (lastLine >= 0)
+            {
+                if (string.IsNullOrEmpty(lines[lastLine]))
+                {
+                    lines.RemoveAt(lastLine);
+                }
+            }
         }
 
         private static string GetFullChangeLogFilePath(string changeLogFileName)
