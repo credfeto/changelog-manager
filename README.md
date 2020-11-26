@@ -2,11 +2,30 @@
 
 ## Installation
 
+### Install as a global tool
 ```shell
 dotnet tool install Credfeto.ChangeLog.Cmd
 ```
 
+To update to latest released version
+```shell
+dotnet tool update Credfeto.ChangeLog.Cmd
+```
+
+### Install as a local too tool
+
+```shell
+dotnet new tool-manifest
+dotnet tool install Credfeto.ChangeLog.Cmd --local
+```
+
+To update to latest released version
+```shell
+dotnet tool update Credfeto.ChangeLog.Cmd --local
+```
+
 ## Usage
+
 Note the parameter `-changelog CHANGELOG.md` is optional and the changelog will be searched for in the current git repo.
 
 ### Extracting Release Notes
@@ -20,7 +39,6 @@ dotnet changelog -changelog CHANGELOG.md -extract RELEASE_NOTES.md -version 1.0.
 ```shell
 dotnet changelog -changelog CHANGELOG.md -extract RELEASE_NOTES.md -version 1.0.2.77
 ```
-
 
 ### Add a new entry to the [Unreleased] section
 
@@ -58,4 +76,7 @@ Where `origin/master` is the name of the branch a PR is to be merged into.
 dotnet changelog -changelog CHANGELOG.md -check-insert origin/master
 ```
 
-Note - assumes that all entries have been commited.  Ignores all staged and unstaged files.
+Notes
+- Assumes that the branch to be merged into is up-to-date with the latest changes.
+- Assumes that all entries have been commited to the local repo.
+- All changes in non-committed (staged and unstaged) files are ignored.
