@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Credfeto.ChangeLog.Management
+namespace Credfeto.ChangeLog.Management.Exceptions
 {
     public sealed class BranchMissingException : Exception
     {
