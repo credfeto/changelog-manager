@@ -74,10 +74,10 @@ dotnet changelog -changelog CHANGELOG.md -create-release 1.2.3
 
 ### Check insert position of changes are all in [Unreleased] section
 
-Where `origin/master` is the name of the branch a PR is to be merged into.
+Where `origin/target` is the name of the branch a PR is to be merged into.
 
 ```shell
-dotnet changelog -changelog CHANGELOG.md -check-insert origin/master
+dotnet changelog -changelog CHANGELOG.md -check-insert origin/target
 ```
 
 Notes
