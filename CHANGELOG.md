@@ -7,10 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Command to create a new release from unreleased content
-- Detection of changelog if it is in the git repo
 ### Fixed
-- Diff of whitespace at EOF is reported as error
 ### Changed
 ### Removed
 ### Deployment Changes
@@ -18,6 +15,13 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.3.0] - 2020-11-26
+### Added
+- Command to create a new release from unreleased content
+- Detection of changelog if it is in the git repo
+### Fixed
+- Diff of whitespace at EOF is reported as error
+
 ## [1.2.0] - 2020-11-21
 ### Changed
 - Updated to .NET 5.0
