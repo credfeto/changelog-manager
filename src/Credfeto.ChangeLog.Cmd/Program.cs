@@ -33,11 +33,15 @@ namespace Credfeto.ChangeLog.Cmd
                     }
                 }
 
+                Console.WriteLine($"Using Changelog {changeLog}");
+
                 string extractFileName = configuration.GetValue<string>("extract");
 
                 if (!string.IsNullOrEmpty(extractFileName))
                 {
                     string version = configuration.GetValue<string>("version");
+
+                    Console.WriteLine($"Version: {version}");
 
                     string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: version);
 
@@ -59,6 +63,9 @@ namespace Credfeto.ChangeLog.Cmd
                         return ERROR;
                     }
 
+                    Console.WriteLine($"Change Type: {addType}");
+                    Console.WriteLine($"Message: {message}");
+
                     await ChangeLogUpdater.AddEntryAsync(changeLogFileName: changeLog, type: addType, message: message);
 
                     return SUCCESS;
@@ -68,6 +75,7 @@ namespace Credfeto.ChangeLog.Cmd
 
                 if (!string.IsNullOrWhiteSpace(branchName))
                 {
+                    Console.WriteLine($"Branch: {branchName}");
                     bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: branchName);
 
                     if (valid)
@@ -86,6 +94,8 @@ namespace Credfeto.ChangeLog.Cmd
 
                 if (!string.IsNullOrWhiteSpace(releaseVersion))
                 {
+                    Console.WriteLine($"Release Version: {releaseVersion}");
+
                     await ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: releaseVersion);
 
                     return SUCCESS;

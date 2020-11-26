@@ -19,7 +19,6 @@ namespace Credfeto.ChangeLog.Management
         public static async Task<bool> ChangeLogModifiedInReleaseSectionAsync(string changeLogFileName, string originBranchName)
         {
             changeLogFileName = GetFullChangeLogFilePath(changeLogFileName);
-            Console.WriteLine($"Changelog: {changeLogFileName}");
             int? position = await ChangeLogReader.FindFirstReleaseVersionPositionAsync(changeLogFileName);
 
             if (position == null)
