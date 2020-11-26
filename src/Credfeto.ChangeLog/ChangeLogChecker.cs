@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Credfeto.ChangeLog.Management.Exceptions;
+using Credfeto.ChangeLog.Management.Helpers;
 using LibGit2Sharp;
 
 namespace Credfeto.ChangeLog.Management
@@ -28,7 +29,7 @@ namespace Credfeto.ChangeLog.Management
             string changelogDir = GetChangeLogDirectory(changeLogFileName);
             Console.WriteLine($"Changelog Folder: {changelogDir}");
 
-            using (Repository repo = OpenRepository(changelogDir))
+            using (Repository repo = GitRepository.OpenRepository(changelogDir))
             {
                 string sha = repo.Head.Tip.Sha;
 
@@ -126,13 +127,6 @@ namespace Credfeto.ChangeLog.Management
         {
             return changeLogFileName.Substring(repo.Info.WorkingDirectory.Length)
                                     .Replace(oldValue: "\\", newValue: "/");
-        }
-
-        private static Repository OpenRepository(string workDir)
-        {
-            string found = Repository.Discover(workDir);
-
-            return new Repository(found);
         }
     }
 }
