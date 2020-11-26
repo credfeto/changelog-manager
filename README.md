@@ -50,6 +50,8 @@ dotnet changelog -changelog CHANGELOG.md -extract RELEASE_NOTES.md -version 1.0.
 
 ### Add a new entry to the [Unreleased] section
 
+Note the value of the `-add` parameter matches exactly the heading section in the [Unreleased] section.  It will not create/update a new section if it that section does not exist.
+
 ```shell
 dotnet changelog -changelog CHANGELOG.md -add Added -message "Change description"
 ```
