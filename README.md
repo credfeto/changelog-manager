@@ -11,12 +11,12 @@ Note the parameter `-changelog CHANGELOG.md` is optional and the changelog will 
 
 ### Extracting Release Notes
 
-### Extract the release notes for a pre-release build
+#### Extract the release notes for a pre-release build
 ```shell
 dotnet changelog -changelog CHANGELOG.md -extract RELEASE_NOTES.md -version 1.0.1.27-master
 ```
 
-Extract the release notes for a release build
+#### Extract the release notes for a release build
 ```shell
 dotnet changelog -changelog CHANGELOG.md -extract RELEASE_NOTES.md -version 1.0.2.77
 ```
