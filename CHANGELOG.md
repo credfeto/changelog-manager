@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Command to create a new release from unreleased content
 - Detection of changelog if it is in the git repo
 ### Fixed
+- Diff of whitespace at EOF is reported as error
 ### Changed
 ### Removed
 ### Deployment Changes
