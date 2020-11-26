@@ -125,41 +125,16 @@ namespace Credfeto.ChangeLog.Management
                 throw new EmptyChangeLogException("Could not find unreleased section");
             }
 
-            Console.WriteLine($"Found {Constants.Unreleased} at {unreleasedIndex}");
+            int releaseInsertPos = FindInsertPosition(releaseVersionToFind: version, releases: releases, endOfFilePosition: text.Count);
 
-            Version numericalVersion = new(version);
+            MoveUnreleasedToRelease(version: version, unreleasedIndex: unreleasedIndex, releaseInsertPos: releaseInsertPos, text: text);
 
-            string? latestRelease = releases.Keys.Where(x => x != Constants.Unreleased)
-                                            .OrderByDescending(x => new Version(x))
-                                            .FirstOrDefault();
+            return string.Join(separator: Environment.NewLine, values: text)
+                         .Trim();
+        }
 
-            int releaseInsertPos;
-
-            if (latestRelease != null)
-            {
-                Console.WriteLine($"Latest release: {latestRelease}");
-
-                Version latestNumeric = new(latestRelease);
-
-                if (latestNumeric == numericalVersion)
-                {
-                    throw new ReleaseAlreadyExistsException($"Release {version} already exists");
-                }
-
-                if (latestNumeric > numericalVersion)
-                {
-                    throw new ReleaseTooOldException($"Release {latestRelease} already exists and is newer than {version}");
-                }
-
-                releaseInsertPos = releases[latestRelease];
-            }
-            else
-            {
-                releaseInsertPos = text.Count;
-            }
-
-            Console.WriteLine($"Inserting at {releaseInsertPos}");
-
+        private static void MoveUnreleasedToRelease(string version, int unreleasedIndex, int releaseInsertPos, List<string> text)
+        {
             string previousLine = string.Empty;
 
             List<string> newRelease = new();
@@ -243,9 +218,41 @@ namespace Credfeto.ChangeLog.Management
             {
                 text.RemoveAt(item);
             }
+        }
 
-            return string.Join(separator: Environment.NewLine, values: text)
-                         .Trim();
+        private static int FindInsertPosition(string releaseVersionToFind, IReadOnlyDictionary<string, int> releases, int endOfFilePosition)
+        {
+            string? latestRelease = releases.Keys.Where(x => x != Constants.Unreleased)
+                                            .OrderByDescending(x => new Version(x))
+                                            .FirstOrDefault();
+
+            int releaseInsertPos;
+
+            if (latestRelease != null)
+            {
+                Console.WriteLine($"Latest release: {latestRelease}");
+
+                Version numericalVersion = new(releaseVersionToFind);
+                Version latestNumeric = new(latestRelease);
+
+                if (latestNumeric == numericalVersion)
+                {
+                    throw new ReleaseAlreadyExistsException($"Release {releaseVersionToFind} already exists");
+                }
+
+                if (latestNumeric > numericalVersion)
+                {
+                    throw new ReleaseTooOldException($"Release {latestRelease} already exists and is newer than {releaseVersionToFind}");
+                }
+
+                releaseInsertPos = releases[latestRelease];
+            }
+            else
+            {
+                releaseInsertPos = endOfFilePosition;
+            }
+
+            return releaseInsertPos;
         }
 
         private static Dictionary<string, int> FindReleasePositions(IReadOnlyList<string> text)
