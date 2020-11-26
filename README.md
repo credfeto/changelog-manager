@@ -1,5 +1,9 @@
 # Changelog manager .net tool
 
+## Release Notes
+
+See [CHANGELOG.md](CHANGELOG.md) managed by this tool.
+
 ## Installation
 
 ### Install as a global tool
