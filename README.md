@@ -18,7 +18,7 @@ To update to latest released version
 dotnet tool update Credfeto.ChangeLog.Cmd
 ```
 
-### Install as a local too tool
+### Install as a local tool
 
 ```shell
 dotnet new tool-manifest
