@@ -1,4 +1,4 @@
-﻿namespace Credfeto.ChangeLog.Management.Helpers
+﻿namespace Credfeto.ChangeLog.Helpers
 {
     internal static class Constants
     {

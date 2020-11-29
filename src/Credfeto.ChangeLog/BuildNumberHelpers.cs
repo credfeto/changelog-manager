@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Credfeto.ChangeLog.Management
+namespace Credfeto.ChangeLog
 {
     internal static class BuildNumberHelpers
     {

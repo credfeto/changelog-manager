@@ -1,6 +1,5 @@
 ﻿using System;
-using Credfeto.ChangeLog.Management;
-using Credfeto.ChangeLog.Management.Exceptions;
+using Credfeto.ChangeLog.Exceptions;
 using Xunit;
 using Xunit.Abstractions;
 

@@ -1,5 +1,4 @@
-﻿using Credfeto.ChangeLog.Management;
-using Xunit;
+﻿using Xunit;
 
 namespace Credfeto.ChangeLog.Tests
 {

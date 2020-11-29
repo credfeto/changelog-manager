@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Credfeto.ChangeLog.Management;
 using Microsoft.Extensions.Configuration;
 
 namespace Credfeto.ChangeLog.Cmd

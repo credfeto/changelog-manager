@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Credfeto.ChangeLog.Management.Helpers
+namespace Credfeto.ChangeLog.Helpers
 {
     public static class CommonRegex
     {

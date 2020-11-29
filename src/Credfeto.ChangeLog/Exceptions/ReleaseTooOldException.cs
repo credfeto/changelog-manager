@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Credfeto.ChangeLog.Management.Exceptions
+namespace Credfeto.ChangeLog.Exceptions
 {
     public sealed class ReleaseTooOldException : Exception
     {

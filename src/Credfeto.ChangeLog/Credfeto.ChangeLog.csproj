@@ -11,7 +11,7 @@
     <PackAsTool>true</PackAsTool>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
-    <RootNamespace>Credfeto.ChangeLog.Management</RootNamespace>
+
   </PropertyGroup>
 
   <PropertyGroup>

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Credfeto.ChangeLog.Management.Exceptions;
-using Credfeto.ChangeLog.Management.Helpers;
+using Credfeto.ChangeLog.Exceptions;
+using Credfeto.ChangeLog.Helpers;
 
-namespace Credfeto.ChangeLog.Management
+namespace Credfeto.ChangeLog
 {
     public static class ChangeLogUpdater
     {

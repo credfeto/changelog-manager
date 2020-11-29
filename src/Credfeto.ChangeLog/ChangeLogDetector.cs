@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using Credfeto.ChangeLog.Management.Helpers;
+using Credfeto.ChangeLog.Helpers;
 using LibGit2Sharp;
 
-namespace Credfeto.ChangeLog.Management
+namespace Credfeto.ChangeLog
 {
     public static class ChangeLogDetector
     {
@@ -52,7 +52,7 @@ namespace Credfeto.ChangeLog.Management
             }
             catch
             {
-                // Couldn't 
+                // Couldn't
                 changeLogFileName = null;
 
                 return false;

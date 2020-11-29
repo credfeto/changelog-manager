@@ -1,6 +1,6 @@
-﻿using Credfeto.ChangeLog.Management.Helpers;
+﻿using Credfeto.ChangeLog.Helpers;
 
-namespace Credfeto.ChangeLog.Management
+namespace Credfeto.ChangeLog
 {
     internal static class TemplateFile
     {

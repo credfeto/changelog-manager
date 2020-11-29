@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Credfeto.ChangeLog.Management.Helpers;
+using Credfeto.ChangeLog.Helpers;
 
-namespace Credfeto.ChangeLog.Management
+namespace Credfeto.ChangeLog
 {
     public static class ChangeLogReader
     {
