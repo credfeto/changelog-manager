@@ -8,7 +8,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Added
 ### Fixed
-- Fixed changelog reading/writing so it supports different line endings
 ### Changed
 ### Removed
 ### Deployment Changes
@@ -16,6 +15,10 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.3.1] - 2020-11-30
+### Fixed
+- Fixed changelog reading/writing so it supports different line endings
+
 ## [1.3.0] - 2020-11-26
 ### Added
 - Command to create a new release from unreleased content
