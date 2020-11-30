@@ -36,7 +36,7 @@ namespace Credfeto.ChangeLog
         public static string AddEntry(string changeLog, string type, string message)
         {
             List<string> text = EnsureChangelog(changeLog)
-                                .Split(Environment.NewLine)
+                                .SplitToLines()
                                 .ToList();
 
             string entryText = CreateEntryText(message);
@@ -115,7 +115,7 @@ namespace Credfeto.ChangeLog
         public static string CreateRelease(string changeLog, string version)
         {
             List<string> text = EnsureChangelog(changeLog)
-                                .Split(Environment.NewLine)
+                                .SplitToLines()
                                 .ToList();
 
             Dictionary<string, int> releases = FindReleasePositions(text);

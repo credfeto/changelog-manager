@@ -20,9 +20,9 @@ namespace Credfeto.ChangeLog
         {
             Version? releaseVersion = BuildNumberHelpers.DetermineVersionForChangeLog(version);
 
-            string[] text = CommonRegex.RemoveComments.Replace(input: changeLog, replacement: string.Empty)
-                                       .Trim()
-                                       .Split(Environment.NewLine);
+            IReadOnlyList<string> text = CommonRegex.RemoveComments.Replace(input: changeLog, replacement: string.Empty)
+                                                    .Trim()
+                                                    .SplitToLines();
 
             FindSectionForBuild(text: text, version: releaseVersion, out int foundStart, out int foundEnd);
 
@@ -33,7 +33,7 @@ namespace Credfeto.ChangeLog
 
             if (foundEnd == -1)
             {
-                foundEnd = text.Length;
+                foundEnd = text.Count;
             }
 
             string previousLine = string.Empty;
@@ -93,12 +93,12 @@ namespace Credfeto.ChangeLog
             return null;
         }
 
-        private static void FindSectionForBuild(string[] text, Version? version, out int foundStart, out int foundEnd)
+        private static void FindSectionForBuild(IReadOnlyList<string> text, Version? version, out int foundStart, out int foundEnd)
         {
             foundStart = -1;
             foundEnd = -1;
 
-            for (int i = 1; i < text.Length; i++)
+            for (int i = 1; i < text.Count; i++)
             {
                 string line = text[i];
 
