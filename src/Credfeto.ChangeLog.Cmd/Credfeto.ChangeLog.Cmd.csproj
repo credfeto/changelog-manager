@@ -21,7 +21,11 @@
     <Copyright>Mark Ridgwell</Copyright>
     <Product>Changelog management tool</Product>
     <PackageLicense>https://raw.githubusercontent.com/credfeto/changelog-manager/master/LICENSE</PackageLicense>
+    <Description>Changelog Management dotnet tool.</Description>
+    <PackageTags>Changelog</PackageTags>
     <NeutralLanguage>en-GB</NeutralLanguage>
+    <RepositoryUrl>https://github.com/credfeto/changelog-manager</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0"/>
