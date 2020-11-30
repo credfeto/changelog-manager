@@ -21,7 +21,7 @@
     <Copyright>Mark Ridgwell</Copyright>
     <Product>Changelog management tool</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Description>Changelog Management dotnet tool.</Description>
+    <Description>Changelog manager dotnet tool.</Description>
     <PackageTags>Changelog</PackageTags>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <RepositoryUrl>https://github.com/credfeto/changelog-manager</RepositoryUrl>
