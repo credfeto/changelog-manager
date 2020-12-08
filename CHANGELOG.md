@@ -8,16 +8,20 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Added
 ### Fixed
-- Index of release in difference is +1 from the zero based index when comparing diffs
 ### Changed
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.15.0.24505
-- FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.8.3
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.3.2] - TBD
+### Fixed
+- Index of release in difference is +1 from the zero based index when comparing diffs
+### Changed
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.15.0.24505
+- FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.8.3
+
 ## [1.3.1] - 2020-11-30
 ### Fixed
 - Fixed changelog reading/writing so it supports different line endings
