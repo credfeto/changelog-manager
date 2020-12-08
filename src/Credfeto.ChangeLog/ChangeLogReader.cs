@@ -86,7 +86,8 @@ namespace Credfeto.ChangeLog
 
                 if (CommonRegex.VersionHeaderMatch.IsMatch(line))
                 {
-                    return lineIndex;
+                    // Line indexes start from 1
+                    return lineIndex + 1;
                 }
             }
 

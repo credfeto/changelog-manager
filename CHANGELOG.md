@@ -8,6 +8,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Added
 ### Fixed
+- Index of release in difference is +1 from the zero based index when comparing diffs
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.15.0.24505
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.8.3
