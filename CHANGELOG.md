@@ -9,7 +9,6 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- Updated dependent components
 ### Removed
 ### Deployment Changes
 
