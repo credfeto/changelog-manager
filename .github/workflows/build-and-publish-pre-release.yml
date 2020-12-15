@@ -52,6 +52,13 @@ jobs:
       run: |
         cd src
         dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
+    - name: Run Infer#      
+      uses: microsoft/infersharpaction@v0.2
+      id: runinfersharp
+      with:
+        binary-path: 'src/Credfeto.ChangeLog.Cmd'
+    - name: Infer# analysis results
+      run: echo "${{ steps.runinfersharp.outputs.results }}"
     - name: Pack tool
       run: |
         cd src
