@@ -95,6 +95,8 @@ namespace Credfeto.ChangeLog.Cmd
                 {
                     Console.WriteLine($"Release Version: {releaseVersion}");
 
+                    // TODO: Add in Release Date setting
+                    // TODO: Add in command to Set date of an already released release
                     await ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: releaseVersion);
 
                     return SUCCESS;
@@ -122,13 +124,26 @@ namespace Credfeto.ChangeLog.Cmd
             return new ConfigurationBuilder().AddCommandLine(args: args,
                                                              new Dictionary<string, string>
                                                              {
+                                                                 {@"-help", @"help"},
+                                                                 {@"--help", @"help"},
                                                                  {@"-changelog", @"changelog"},
+                                                                 {@"--changelog", @"changelog"},
+                                                                 {@"-c", @"changelog"},
                                                                  {@"-version", @"version"},
+                                                                 {@"--version", @"version"},
+                                                                 {@"-v", @"version"},
                                                                  {@"-extract", @"extract"},
+                                                                 {@"--extract", @"extract"},
                                                                  {@"-add", @"add"},
+                                                                 {@"--add", @"add"},
+                                                                 {@"-a", @"add"},
                                                                  {@"-message", @"message"},
+                                                                 {@"--message", @"message"},
+                                                                 {@"-m", @"message"},
                                                                  {@"-check-insert", @"check-insert"},
-                                                                 {@"-create-release", "create-release"}
+                                                                 {@"--check-insert", @"check-insert"},
+                                                                 {@"-create-release", "create-release"},
+                                                                 {@"--create-release", "create-release"}
                                                              })
                                              .Build();
         }
