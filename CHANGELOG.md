@@ -9,15 +9,18 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.16.0.25740
-- Changed to use CommandLineParser library to parse command line
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
-## [1.3.2] - TBD
+## [1.4.0] - 2020-12-28
+### Changed
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.16.0.25740
+- Changed to use CommandLineParser library to parse command line
+
+## [1.3.2] - 2020-12-08
 ### Fixed
 - Index of release in difference is +1 from the zero based index when comparing diffs
 ### Changed
