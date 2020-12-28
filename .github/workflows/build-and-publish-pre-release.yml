@@ -69,4 +69,4 @@ jobs:
     - name: Create Release Notes
       run: |
         dotnet tool install --local Credfeto.ChangeLog.Cmd --version ${{ env.BUILD_VERSION }} --add-source dist
-        dotnet changelog -changelog CHANGELOG.md -extract RELEASE_NOTES.md -version ${{ env.BUILD_VERSION }}
+        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
