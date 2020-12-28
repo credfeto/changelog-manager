@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+using CommandLine;
+using Credfeto.ChangeLog.Cmd.Exceptions;
 
 namespace Credfeto.ChangeLog.Cmd
 {
@@ -12,97 +13,103 @@ namespace Credfeto.ChangeLog.Cmd
         private const int SUCCESS = 0;
         private const int ERROR = 1;
 
+        private static string FindChangeLog(Options options)
+        {
+            string? changeLog = options.ChangeLog;
+
+            if (changeLog != null)
+            {
+                return changeLog;
+            }
+
+            if (ChangeLogDetector.TryFindChangeLog(out changeLog))
+            {
+                return changeLog;
+            }
+
+            throw new MissingChangelogException("Could not find changelog");
+        }
+
+        private static async Task ParsedOkAsync(Options options)
+        {
+            if (options.Extract != null && options.Version != null)
+            {
+                string changeLog = FindChangeLog(options);
+                Console.WriteLine($"Using Changelog {changeLog}");
+
+                string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: options.Version);
+
+                await File.WriteAllTextAsync(path: options.Extract, contents: text, encoding: Encoding.UTF8);
+
+                return;
+            }
+
+            if (options.Add != null && options.Message != null)
+            {
+                string changeLog = FindChangeLog(options);
+                Console.WriteLine($"Using Changelog {changeLog}");
+                Console.WriteLine($"Change Type: {options.Add}");
+                Console.WriteLine($"Message: {options.Message}");
+
+                await ChangeLogUpdater.AddEntryAsync(changeLogFileName: changeLog, type: options.Add, message: options.Message);
+
+                return;
+            }
+
+            if (options.CheckInsert != null)
+            {
+                string changeLog = FindChangeLog(options);
+                Console.WriteLine($"Using Changelog {changeLog}");
+                Console.WriteLine($"Branch: {options.CheckInsert}");
+                bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: options.CheckInsert);
+
+                if (valid)
+                {
+                    Console.WriteLine("Changelog is valid");
+
+                    return;
+                }
+
+                throw new ChangeLogInvalidFailedException("Changelog modified in released section");
+            }
+
+            if (options.CreateRelease != null)
+            {
+                string changeLog = FindChangeLog(options);
+                Console.WriteLine($"Using Changelog {changeLog}");
+                Console.WriteLine($"Release Version: {options.CreateRelease}");
+
+                // TODO: Add in Release Date setting
+                // TODO: Add in command to Set date of an already released release
+                await ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: options.CreateRelease);
+
+                return;
+            }
+
+            throw new InvalidOptionsException();
+        }
+
+        private static void NotParsed(IEnumerable<Error> errors)
+        {
+            Console.WriteLine("Errors:");
+
+            foreach (Error error in errors)
+            {
+                Console.WriteLine($" * {error.Tag} - {error}");
+            }
+        }
+
         private static async Task<int> Main(string[] args)
         {
             Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion()}");
 
             try
             {
-                IConfigurationRoot configuration = LoadConfiguration(args);
+                ParserResult<Options> parser = await Parser.Default.ParseArguments<Options>(args)
+                                                           .WithNotParsed(NotParsed)
+                                                           .WithParsedAsync(ParsedOkAsync);
 
-                string? changeLog = configuration.GetValue<string>(key: @"changelog");
-
-                if (string.IsNullOrEmpty(changeLog))
-                {
-                    if (!ChangeLogDetector.TryFindChangeLog(out changeLog))
-                    {
-                        Console.WriteLine("ERROR: changelog not specified or found");
-
-                        return ERROR;
-                    }
-                }
-
-                Console.WriteLine($"Using Changelog {changeLog}");
-
-                string extractFileName = configuration.GetValue<string>("extract");
-
-                if (!string.IsNullOrEmpty(extractFileName))
-                {
-                    string version = configuration.GetValue<string>("version");
-
-                    Console.WriteLine($"Version: {version}");
-
-                    string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: version);
-
-                    await File.WriteAllTextAsync(path: extractFileName, contents: text, encoding: Encoding.UTF8);
-
-                    return SUCCESS;
-                }
-
-                string? addType = configuration.GetValue<string>("add");
-
-                if (!string.IsNullOrEmpty(addType))
-                {
-                    string message = configuration.GetValue<string>("message");
-
-                    if (string.IsNullOrWhiteSpace(message))
-                    {
-                        Console.WriteLine("ERROR: message not specified");
-
-                        return ERROR;
-                    }
-
-                    Console.WriteLine($"Change Type: {addType}");
-                    Console.WriteLine($"Message: {message}");
-
-                    await ChangeLogUpdater.AddEntryAsync(changeLogFileName: changeLog, type: addType, message: message);
-
-                    return SUCCESS;
-                }
-
-                string? branchName = configuration.GetValue<string>("check-insert");
-
-                if (!string.IsNullOrWhiteSpace(branchName))
-                {
-                    Console.WriteLine($"Branch: {branchName}");
-                    bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: branchName);
-
-                    if (valid)
-                    {
-                        Console.WriteLine("Changelog is valid");
-
-                        return SUCCESS;
-                    }
-
-                    await Console.Error.WriteLineAsync("ERROR: Changelog modified in released section");
-
-                    return ERROR;
-                }
-
-                string? releaseVersion = configuration.GetValue<string>("create-release");
-
-                if (!string.IsNullOrWhiteSpace(releaseVersion))
-                {
-                    Console.WriteLine($"Release Version: {releaseVersion}");
-
-                    await ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: releaseVersion);
-
-                    return SUCCESS;
-                }
-
-                Console.WriteLine("ERROR: No known action specified");
-
-                return ERROR;
+                return parser.Tag == ParserResultType.Parsed ? SUCCESS : ERROR;
             }
             catch (Exception exception)
             {
@@ -115,22 +122,6 @@ namespace Credfeto.ChangeLog.Cmd
 
                 return ERROR;
             }
-        }
-
-        private static IConfigurationRoot LoadConfiguration(string[] args)
-        {
-            return new ConfigurationBuilder().AddCommandLine(args: args,
-                                                             new Dictionary<string, string>
-                                                             {
-                                                                 {@"-changelog", @"changelog"},
-                                                                 {@"-version", @"version"},
-                                                                 {@"-extract", @"extract"},
-                                                                 {@"-add", @"add"},
-                                                                 {@"-message", @"message"},
-                                                                 {@"-check-insert", @"check-insert"},
-                                                                 {@"-create-release", "create-release"}
-                                                             })
-                                             .Build();
         }
     }
 }
