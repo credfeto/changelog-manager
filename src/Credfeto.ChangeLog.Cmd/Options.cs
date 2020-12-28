@@ -4,7 +4,7 @@ namespace Credfeto.ChangeLog.Cmd
 {
     public sealed class Options
     {
-        [Option(shortName: 'f', longName: "change-log", Required = false, HelpText = "The changelog filename to use")]
+        [Option(shortName: 'f', longName: "changelog", Required = false, HelpText = "The changelog filename to use")]
         public string? ChangeLog { get; init; }
 
         [Option(shortName: 'v', longName: "version", SetName = "Extract", Required = false, HelpText = "The version to extract")]
