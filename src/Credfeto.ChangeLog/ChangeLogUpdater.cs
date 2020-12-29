@@ -75,6 +75,11 @@ namespace Credfeto.ChangeLog
                 }
                 else
                 {
+                    if (IsRelease(line))
+                    {
+                        throw new InvalidChangeLogException($"Could not find {type} heading");
+                    }
+
                     if (line == search)
                     {
                         int next = index + 1;

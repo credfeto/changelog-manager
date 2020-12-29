@@ -8,6 +8,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Added
 ### Fixed
+- Fixed bug where an entry would be added to an existing release if the heading did not exist in the [unreleased] section
 ### Changed
 ### Removed
 ### Deployment Changes
