@@ -26,6 +26,7 @@
     <NeutralLanguage>en-GB</NeutralLanguage>
     <RepositoryUrl>https://github.com/credfeto/changelog-manager</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0"/>
