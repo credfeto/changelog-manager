@@ -29,11 +29,11 @@
     <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="2.8.0"/>
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AsyncFixer" Version="1.3.0" PrivateAssets="All" />
+    <PackageReference Include="AsyncFixer" Version="1.4.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="16.8.55" PrivateAssets="All" />
     <PackageReference Include="NuGet.Commands" Version="5.8.0" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.16.0.25740" PrivateAssets="All" />

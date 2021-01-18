@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 - Fixed bug where an entry would be added to an existing release if the heading did not exist in the [unreleased] section
 ### Changed
+- FF-1429 - Updated AsyncFixer to 1.4.0
 ### Removed
 ### Deployment Changes
 
