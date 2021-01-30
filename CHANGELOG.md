@@ -13,6 +13,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated AsyncFixer to 1.4.0
 - FF-1429 - Updated AsyncFixer to 1.5.1
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.17.0.26580
+- FF-1429 - Updated Roslynator.Analyzers to 3.1.0
 ### Removed
 ### Deployment Changes
 
