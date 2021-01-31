@@ -79,9 +79,7 @@ namespace Credfeto.ChangeLog.Cmd
                 Console.WriteLine($"Using Changelog {changeLog}");
                 Console.WriteLine($"Release Version: {options.CreateRelease}");
 
-                // TODO: Add in Release Date setting
-                // TODO: Add in command to Set date of an already released release
-                await ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: options.CreateRelease);
+                await ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: options.CreateRelease, pending: options.Pending);
 
                 return;
             }

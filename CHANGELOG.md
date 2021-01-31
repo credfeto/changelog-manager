@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Added ability to set date on release or to have it marked as TBD\pending
 ### Fixed
 - Fixed bug where an entry would be added to an existing release if the heading did not exist in the [unreleased] section
 - Fixing changelog manager erroring on latest ubuntu on github actions
