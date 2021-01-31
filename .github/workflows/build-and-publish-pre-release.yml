@@ -63,7 +63,6 @@ jobs:
         dotnet tool uninstall --local Credfeto.ChangeLog.Cmd
         dotnet tool install --local Credfeto.ChangeLog.Cmd --version ${{ env.BUILD_VERSION }} --add-source dist
         dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
-        dotnet changelog --changelog CHANGELOG.md --check-insert origin/master
     - name: Publish
       run: |
         dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
