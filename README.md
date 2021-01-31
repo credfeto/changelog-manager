@@ -42,36 +42,36 @@ Common notes
 
 #### Extract the release notes for a pre-release build
 ```shell
-dotnet changelog -changelog CHANGELOG.md -extract RELEASE_NOTES.md -version 1.0.1.27-master
+dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version 1.0.1.27-master
 ```
 
 #### Extract the release notes for a release build
 ```shell
-dotnet changelog -changelog CHANGELOG.md -extract RELEASE_NOTES.md -version 1.0.2.77
+dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version 1.0.2.77
 ```
 
 ### Add a new entry to the [Unreleased] section
 
-Note the value of the `-add` parameter matches exactly the heading section in the [Unreleased] section.  It will not create/update a new section if it that section does not exist.
+Note the value of the `--add` parameter matches exactly the heading section in the [Unreleased] section.  It will not create/update a new section if it that section does not exist.
 
 ```shell
-dotnet changelog -changelog CHANGELOG.md -add Added -message "Change description"
+dotnet changelog --changelog CHANGELOG.md --add Added --message "Change description"
 ```
 
 ```shell
-dotnet changelog -changelog CHANGELOG.md -add Changed -message "Change description"
+dotnet changelog --changelog CHANGELOG.md --add Changed --message "Change description"
 ```
 
 ```shell
-dotnet changelog -changelog CHANGELOG.md -add Fixed -message "Change description"
+dotnet changelog --changelog CHANGELOG.md --add Fixed --message "Change description"
 ```
 
 ```shell
-dotnet changelog -changelog CHANGELOG.md -add Removed -message "Change description"
+dotnet changelog --changelog CHANGELOG.md --add Removed --message "Change description"
 ```
 
 ```shell
-dotnet changelog -changelog CHANGELOG.md -add "Deployment Changes" -message "Change description"
+dotnet changelog --changelog CHANGELOG.md --add "Deployment Changes" --message "Change description"
 ```
 
 ### Create a release
@@ -79,7 +79,7 @@ dotnet changelog -changelog CHANGELOG.md -add "Deployment Changes" -message "Cha
 This pulls out all the changes in the [Unreleased] section and adds them to to the release given by the version number.
 
 ```shell
-dotnet changelog -changelog CHANGELOG.md -create-release 1.2.3
+dotnet changelog -changelog CHANGELOG.md --create-release 1.2.3
 ```
 
 Notes:
@@ -91,10 +91,10 @@ Notes:
 Where `origin/target` is the name of the branch a PR is to be merged into.
 
 ```shell
-dotnet changelog -changelog CHANGELOG.md -check-insert origin/target
+dotnet changelog --changelog CHANGELOG.md --check-insert origin/target
 ```
 
 Notes
 - Assumes that the branch to be merged into is up-to-date with the latest changes.
-- Assumes that all entries have been commited to the local repo.
+- Assumes that all entries have been committed to the local repo.
 - All changes in non-committed (staged and unstaged) files are ignored.
