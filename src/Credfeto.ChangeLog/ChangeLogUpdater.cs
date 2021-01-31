@@ -108,16 +108,16 @@ namespace Credfeto.ChangeLog
             throw new InvalidChangeLogException("Could not find [" + Constants.Unreleased + "] section of file");
         }
 
-        public static async Task CreateReleaseAsync(string changeLogFileName, string version)
+        public static async Task CreateReleaseAsync(string changeLogFileName, string version, bool pending)
         {
             string originalChangeLog = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
 
-            string newChangeLog = CreateRelease(changeLog: originalChangeLog, version: version);
+            string newChangeLog = CreateRelease(changeLog: originalChangeLog, version: version, pending: pending);
 
             await File.WriteAllTextAsync(path: changeLogFileName, contents: newChangeLog, encoding: Encoding.UTF8);
         }
 
-        public static string CreateRelease(string changeLog, string version)
+        public static string CreateRelease(string changeLog, string version, bool pending)
         {
             List<string> text = EnsureChangelog(changeLog)
                                 .SplitToLines()
@@ -132,13 +132,13 @@ namespace Credfeto.ChangeLog
 
             int releaseInsertPos = FindInsertPosition(releaseVersionToFind: version, releases: releases, endOfFilePosition: text.Count);
 
-            MoveUnreleasedToRelease(version: version, unreleasedIndex: unreleasedIndex, releaseInsertPos: releaseInsertPos, text: text);
+            MoveUnreleasedToRelease(version: version, pending: pending, unreleasedIndex: unreleasedIndex, releaseInsertPos: releaseInsertPos, text: text);
 
             return string.Join(separator: Environment.NewLine, values: text)
                          .Trim();
         }
 
-        private static void MoveUnreleasedToRelease(string version, int unreleasedIndex, int releaseInsertPos, List<string> text)
+        private static void MoveUnreleasedToRelease(string version, int unreleasedIndex, int releaseInsertPos, List<string> text, bool pending)
         {
             string previousLine = string.Empty;
 
@@ -214,7 +214,9 @@ namespace Credfeto.ChangeLog
                 throw new EmptyChangeLogException();
             }
 
-            newRelease.Insert(index: 0, "## [" + version + "] - TBD");
+            string releaseDate = pending ? "TBD" : DateTime.Now.ToString("yyyy-MM-dd");
+
+            newRelease.Insert(index: 0, "## [" + version + "] - " + releaseDate);
             newRelease.Add(string.Empty);
 
             text.InsertRange(index: releaseInsertPos, collection: newRelease);

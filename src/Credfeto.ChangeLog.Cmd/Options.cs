@@ -22,7 +22,10 @@ namespace Credfeto.ChangeLog.Cmd
         [Option(shortName: 't', longName: "check-insert", Required = false, HelpText = "The branch to check the changelog again")]
         public string? CheckInsert { get; init; }
 
-        [Option(shortName: 'c', longName: "create-release", Required = false, HelpText = "The release version to create")]
+        [Option(shortName: 'c', longName: "create-release", SetName = "Release", Required = false, HelpText = "The release version to create")]
         public string? CreateRelease { get; init; }
+
+        [Option(shortName: 'p', longName: "Pending", SetName = "Release", Required = false, HelpText = "If the release is pending")]
+        public bool Pending { get; set; }
     }
 }
