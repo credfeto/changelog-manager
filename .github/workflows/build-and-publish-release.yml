@@ -55,6 +55,8 @@ jobs:
       run: |
         cd src
         dotnet pack --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-restore --output ../dist
+      env:
+        ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     - name: Update Release Notes with new tool
       run: |
         dotnet tool uninstall --local Credfeto.ChangeLog.Cmd
@@ -63,8 +65,6 @@ jobs:
     - name: Publish
       run: |
         dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
-      env:
-        ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
