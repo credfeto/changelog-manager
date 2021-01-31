@@ -46,7 +46,7 @@ jobs:
       run: |
         cd src
         dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
-    - name: Run Infer#      
+    - name: Run Infer#
       uses: microsoft/infersharpaction@v0.2
       id: runinfersharp
       with:
@@ -64,3 +64,4 @@ jobs:
       run: |
         dotnet tool install --local Credfeto.ChangeLog.Cmd --version ${{ env.BUILD_VERSION }} --add-source dist
         dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
+        dotnet changelog --changelog CHANGELOG.md --check-insert origin/master
