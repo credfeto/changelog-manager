@@ -22,7 +22,7 @@
     <Product>Changelog management tool</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Changelog manager dotnet tool.</Description>
-    <PackageTags>Changelog</PackageTags>
+    <PackageTags>Changelog, tool, command line</PackageTags>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <RepositoryUrl>https://github.com/credfeto/changelog-manager</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
