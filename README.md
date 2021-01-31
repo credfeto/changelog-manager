@@ -76,11 +76,18 @@ dotnet changelog --changelog CHANGELOG.md --add "Deployment Changes" --message "
 
 ### Create a release
 
-This pulls out all the changes in the [Unreleased] section and adds them to to the release given by the version number.
+This pulls out all the changes in the [Unreleased] section and adds them to to the release given by the version number and sets the release date to be today.
 
 ```shell
 dotnet changelog -changelog CHANGELOG.md --create-release 1.2.3
 ```
+
+This pulls out all the changes in the [Unreleased] section and adds them to to the release given by the version number and sets the release date to pending.
+
+```shell
+dotnet changelog -changelog CHANGELOG.md --create-release 1.2.3 --pending
+```
+
 
 Notes:
 - If the specified version already exists then an error will occur.
