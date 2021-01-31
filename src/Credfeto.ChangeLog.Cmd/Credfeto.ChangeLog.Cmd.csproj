@@ -19,6 +19,7 @@
   <PropertyGroup>
     <Company>Mark Ridgwell</Company>
     <Copyright>Mark Ridgwell</Copyright>
+    <Authors>Mark Ridgwell</Authors>
     <Product>Changelog management tool</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Changelog manager dotnet tool.</Description>
