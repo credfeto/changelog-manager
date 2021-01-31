@@ -7,6 +7,16 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [1.5.0] - TBD
+### Added
 - Added ability to set date on release or to have it marked as TBD\pending
 ### Fixed
 - Fixed bug where an entry would be added to an existing release if the heading did not exist in the [unreleased] section
@@ -16,12 +26,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated AsyncFixer to 1.5.1
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.17.0.26580
 - FF-1429 - Updated Roslynator.Analyzers to 3.1.0
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [1.4.0] - 2020-12-28
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.16.0.25740
