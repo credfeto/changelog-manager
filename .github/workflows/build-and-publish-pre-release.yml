@@ -48,6 +48,10 @@ jobs:
     - name: Create Release Notes
       run: |
         dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
+    - id: release-notes
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: RELEASE_NOTES.md
     - name: Build with dotnet
       run: |
         cd src
