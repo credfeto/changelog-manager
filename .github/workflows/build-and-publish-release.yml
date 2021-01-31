@@ -36,8 +36,17 @@ jobs:
       run: dotnet tool install --local FunFair.BuildVersion
     - name: Install Multi-Push Tool
       run: dotnet tool install --local Credfeto.Package.Push
+    - name: Install Changelog Tool
+      run: dotnet tool install --local Credfeto.Changelog.Cmd
     - name: Set Define Build Version
       run: dotnet buildversion $GITHUB_RUN_NUMBER
+    - name: Create Release Notes
+      run: |
+        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
+    - id: release-notes
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: RELEASE_NOTES.md
     - name: Build with dotnet
       run: |
         cd src
@@ -49,7 +58,9 @@ jobs:
     - name: Publish
       run: |
         dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
-    - name: Create Release Notes
+      env:
+        ReleaseNotes: ${{ steps.release-notes.outputs.content }}
+    - name: Update Release Notes with new tool
       run: |
         dotnet tool install --local Credfeto.ChangeLog.Cmd --version ${{ env.BUILD_VERSION }} --add-source dist
         dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
