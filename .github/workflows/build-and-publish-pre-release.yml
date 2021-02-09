@@ -2,6 +2,8 @@ name: .NET Core [Pre-Release]
 
 on:
   push:
+    paths:
+      - 'src/**/*'
     branches-ignore:
      - 'release/*'
      - 'hotfix/*'
