@@ -20,6 +20,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.20.0.28934
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.9.4
 - FF-1429 - Updated NuGet to 5.9.1
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.21.0.30542
 ### Removed
 ### Deployment Changes
 
