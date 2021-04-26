@@ -19,9 +19,6 @@ on:
     paths:
     - '**.cs'
 
-  schedule:
-    - cron: '31 17 * * 1'
-
 jobs:
   analyze:
     name: Analyze
