@@ -12,9 +12,9 @@
 name: "CodeQL"
 
 on:
-  branches-ignore:
-    - "release/*"
-    - "hotfix/*"
+  branches:
+    - "!release/*"
+    - "!hotfix/*"
     paths:
       - '**.cs'
       - '**.csproj'
