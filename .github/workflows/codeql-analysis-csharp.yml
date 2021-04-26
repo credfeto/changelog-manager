@@ -18,7 +18,6 @@ on:
     - "hotfix/*"
     paths:
     - '**.cs'
-    - '**.csproj'
 
   schedule:
     - cron: '31 17 * * 1'
