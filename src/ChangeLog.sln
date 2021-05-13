@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{30AF6B
 ProjectSection(SolutionItems) = preProject
 	global.json = global.json
 	CodeAnalysis.ruleset = CodeAnalysis.ruleset
+	..\CHANGELOG.md = ..\CHANGELOG.md
+	..\README.md = ..\README.md
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Credfeto.ChangeLog", "Credfeto.ChangeLog\Credfeto.ChangeLog.csproj", "{425DE764-943A-41C2-88A8-9373EE29BD9B}"
