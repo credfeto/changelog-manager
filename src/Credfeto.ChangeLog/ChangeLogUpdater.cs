@@ -64,7 +64,7 @@ namespace Credfeto.ChangeLog
 
             for (int index = 0; index < changeLog.Count; index++)
             {
-                string? line = changeLog[index];
+                string line = changeLog[index];
 
                 if (!foundUnreleased)
                 {
