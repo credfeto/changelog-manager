@@ -1,6 +1,7 @@
 version: 2
 updates:
 
+
 - package-ecosystem: nuget
   directory: "/"
   schedule:
@@ -16,8 +17,13 @@ updates:
   - dependency-type: all
   ignore:
   - dependency-name: "AWSSDK.*"
+  - dependency-name: "Coverlet.*"
   - dependency-name: "FunFair.*"
+  - dependency-name: "Microsoft.AspNetCore.*"
+  - dependency-name: "Microsoft.CodeAnalysis.*"
   - dependency-name: "Microsoft.Extensions.*"
+  - dependency-name: "NuGet.*"
+  - dependency-name: "Swashbuckle.*"
   - dependency-name: "AsyncFixer"
   - dependency-name: "Castle.Core"
   - dependency-name: "Cryptography.ECDSA.Secp256K1"
@@ -34,16 +40,12 @@ updates:
   - dependency-name: "MaxMind.GeoIP2"
   - dependency-name: "MaxMind.MinFraud"
   - dependency-name: "Microsoft.ApplicationInsights.AspNetCore"
-  - dependency-name: "Microsoft.CodeAnalysis.Analyzers"
-  - dependency-name: "Microsoft.CodeAnalysis.CSharp.Workspaces"
-  - dependency-name: "Microsoft.CodeAnalysis.FxCopAnalyzers"
   - dependency-name: "Microsoft.NET.Test.Sdk"
   - dependency-name: "Microsoft.VisualStudio.Threading.Analyzers"
   - dependency-name: "NBitcoin"
   - dependency-name: "Newtonsoft.Json"
   - dependency-name: "NSubstitute"
   - dependency-name: "NSubstitute.Analyzers.CSharp"
-  - dependency-name: "NuGet.Versioning"
   - dependency-name: "Octopus.Client"
   - dependency-name: "Portable.BouncyCastle"
   - dependency-name: "Profanity.Detector"
@@ -64,6 +66,7 @@ updates:
   - "dotnet"
   - "dependencies"
   - "Changelog Not Required"
+
 
 - package-ecosystem: github-actions
   directory: "/"
