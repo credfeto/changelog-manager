@@ -10,19 +10,9 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 - Supporting other versions of linux with libgit2sharp
 ### Changed
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.18.0.27296
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.25
 - FF-1429 - Updated coverlet to 3.0.3
-- FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.9.1
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.19.0.28253
-- FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.9.54
-- FF-1429 - Updated NuGet to 5.9.0
-- FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.9.60
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.20.0.28934
-- FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.9.4
 - FF-1429 - Updated NuGet to 5.9.1
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.21.0.30542
-- FF-1429 - Updated SonarAnalyzer.CSharp to 8.22.0.31243
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.23.0.32424
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.10.0
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.10.56
