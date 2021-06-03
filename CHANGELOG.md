@@ -8,6 +8,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Added
 ### Fixed
+- Supporting other versions of linux with libgit2sharp
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.18.0.27296
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.25

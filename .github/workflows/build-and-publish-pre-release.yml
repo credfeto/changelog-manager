@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'src/**/*'
+      - '.github/workflows/build*.yml'
     branches-ignore:
      - 'release/*'
      - 'hotfix/*'
@@ -39,7 +40,7 @@ jobs:
     - name: Enable dotnet tools
       run: dotnet new tool-manifest
     - name: Install Build Version Tool
-      run: dotnet tool install --local FunFair.BuildVersion
+      run: dotnet tool install --local FunFair.BuildVersion --version 3.0.1.193-master
     - name: Install Multi-Push Tool
       run: dotnet tool install --local Credfeto.Package.Push
     - name: Set Define Build Version
@@ -48,7 +49,8 @@ jobs:
       run: dotnet tool install --local Credfeto.Changelog.Cmd
     - name: Create Release Notes
       run: |
-        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
+        echo Hello > RELEASE_NOTES.md
+#        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
     - id: release-notes
       uses: juliangruber/read-file-action@v1
       with:

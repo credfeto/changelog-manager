@@ -12,6 +12,7 @@
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
     <ToolCommandName>changelog</ToolCommandName>
+    <NoWarn/>
   </PropertyGroup>
   <PropertyGroup>
     <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
