@@ -45,13 +45,12 @@ jobs:
     - name: Install Multi-Push Tool
       run: dotnet tool install --local Credfeto.Package.Push
     - name: Set Define Build Version
-      run: dotnet buildversion $GITHUB_RUN_NUMBER
+      run: dotnet buildversion --BuildNumber $GITHUB_RUN_NUMBER
     - name: Install Changelog Tool
       run: dotnet tool install --local Credfeto.Changelog.Cmd
     - name: Create Release Notes
       run: |
-        echo Hello > RELEASE_NOTES.md
-#        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
+        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
     - id: release-notes
       uses: juliangruber/read-file-action@v1
       with:

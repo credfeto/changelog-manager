@@ -39,7 +39,7 @@ jobs:
     - name: Install Changelog Tool
       run: dotnet tool install --local Credfeto.Changelog.Cmd
     - name: Set Define Build Version
-      run: dotnet buildversion $GITHUB_RUN_NUMBER
+      run: dotnet buildversion --BuildNumber $GITHUB_RUN_NUMBER
     - name: Create Release Notes
       run: |
         dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
