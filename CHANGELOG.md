@@ -8,6 +8,15 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ## [Unreleased]
 ### Added
 ### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [1.6.0] - 2021-06-03
+### Fixed
 - Supporting other versions of linux with libgit2sharp
 ### Changed
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.25
@@ -16,13 +25,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.23.0.32424
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.10.0
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.10.56
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
-## [1.5.0] - TBD
+## [1.5.0] - 2021-01-31
 ### Added
 - Added ability to set date on release or to have it marked as TBD\pending
 ### Fixed
