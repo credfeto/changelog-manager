@@ -42,8 +42,7 @@ jobs:
       run: dotnet buildversion $GITHUB_RUN_NUMBER
     - name: Create Release Notes
       run: |
-        echo Changelog > RELEASE_NOTES.md
-#        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
+        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
     - id: release-notes
       uses: juliangruber/read-file-action@v1
       with:
