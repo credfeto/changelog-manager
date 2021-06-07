@@ -1,47 +1,47 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <RuntimeIdentifiers>win-x64;win10-x64;win81-x64;osx.10.12-x64;linux-x64;debian.9-x64</RuntimeIdentifiers>
-    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-    <WarningsAsErrors />
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <LangVersion>latest</LangVersion>
-    <Features>strict;flow-analysis</Features>
-    <PackAsTool>true</PackAsTool>
-    <IsPackable>true</IsPackable>
-    <Nullable>enable</Nullable>
-    <ToolCommandName>changelog</ToolCommandName>
-    <NoWarn/>
-  </PropertyGroup>
-  <PropertyGroup>
-    <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Company>Mark Ridgwell</Company>
-    <Copyright>Mark Ridgwell</Copyright>
-    <Authors>Mark Ridgwell</Authors>
-    <Product>Changelog management tool</Product>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Description>Changelog manager dotnet tool.</Description>
-    <PackageTags>Changelog, tool, command line</PackageTags>
-    <NeutralLanguage>en-GB</NeutralLanguage>
-    <RepositoryUrl>https://github.com/credfeto/changelog-manager</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="2.8.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="AsyncFixer" Version="1.5.1" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="16.10.56" PrivateAssets="All" />
-    <PackageReference Include="NuGet.Commands" Version="5.9.1" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.23.0.32424" PrivateAssets="All" />
-    <PackageReference Include="Roslynator.Analyzers" Version="3.1.0" PrivateAssets="All" />
-    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Credfeto.ChangeLog\Credfeto.ChangeLog.csproj" />
-  </ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <RuntimeIdentifiers>win-x64;win10-x64;win81-x64;osx.10.12-x64;linux-x64;debian.9-x64</RuntimeIdentifiers>
+        <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+        <WarningsAsErrors />
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <LangVersion>latest</LangVersion>
+        <Features>strict;flow-analysis</Features>
+        <PackAsTool>true</PackAsTool>
+        <IsPackable>true</IsPackable>
+        <Nullable>enable</Nullable>
+        <ToolCommandName>changelog</ToolCommandName>
+        <NoWarn />
+    </PropertyGroup>
+    <PropertyGroup>
+        <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+    <PropertyGroup>
+        <Company>Mark Ridgwell</Company>
+        <Copyright>Mark Ridgwell</Copyright>
+        <Authors>Mark Ridgwell</Authors>
+        <Product>Changelog management tool</Product>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Description>Changelog manager dotnet tool.</Description>
+        <PackageTags>Changelog, tool, command line</PackageTags>
+        <NeutralLanguage>en-GB</NeutralLanguage>
+        <RepositoryUrl>https://github.com/credfeto/changelog-manager</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AsyncFixer" Version="1.5.1" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="16.10.56" PrivateAssets="All" />
+        <PackageReference Include="NuGet.Commands" Version="5.9.1" />
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="8.24.0.32949" PrivateAssets="All" />
+        <PackageReference Include="Roslynator.Analyzers" Version="3.1.0" PrivateAssets="All" />
+        <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Credfeto.ChangeLog\Credfeto.ChangeLog.csproj" />
+    </ItemGroup>
 </Project>
