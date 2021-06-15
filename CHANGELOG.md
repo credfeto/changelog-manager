@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.24.0.32949
 - FF-1429 - Updated Roslynator.Analyzers to 3.2.0
+- FF-1429 - Updated NuGet to 5.10.0
 ### Removed
 ### Deployment Changes
 
