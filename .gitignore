@@ -267,10 +267,6 @@ paket-files/
 # FAKE - F# Make
 .fake/
 
-# JetBrains Rider
-.idea/
-*.sln.iml
-
 # CodeRush
 .cr/
 
@@ -305,5 +301,9 @@ appsettings-test-local.json
 # DotCover files
 *.dcvr
 
+# Downloaded Content
+src/Content
+src/Data
+
 /.gtm/
-prepublish/lib
+.config
