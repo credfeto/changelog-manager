@@ -12,21 +12,14 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches-ignore:
-    - "release/*"
-    - "hotfix/*"
-    paths:
-    - '**.py'
-    - 'requirements.txt'
-
   pull_request:
     # The branches below must be a subset of the branches above
     branches: 
     - master
+    paths:
+    - '**/*.py'
+    - '**/requirements.txt'
 
-  schedule:
-    - cron: '31 17 * * 1'
 jobs:
   analyze:
     name: Analyze
