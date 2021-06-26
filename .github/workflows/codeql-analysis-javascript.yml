@@ -9,26 +9,19 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: "CodeQL"
+name: "CodeQL -js"
 
 on:
-  push:
-    branches-ignore:
-    - "release/*"
-    - "hotfix/*"
-    paths:
-    - '**.js'
-    - '**/package.json'
-
   pull_request:
     # The branches below must be a subset of the branches above
     branches: 
     - master
+    paths:
+    - '**/*.js'
+    - '**/package.json'
 
-  schedule:
-    - cron: '31 17 * * 1'
 jobs:
-  analyze:
+  analyze-js:
     name: Analyze
     runs-on: ubuntu-latest
 
