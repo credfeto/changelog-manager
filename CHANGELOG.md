@@ -15,6 +15,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.25.0.33663
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.26.0.34506
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.26
+- FF-1429 - Updated coverlet to 3.1.0
 ### Removed
 ### Deployment Changes
 
