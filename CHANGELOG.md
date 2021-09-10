@@ -18,6 +18,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated coverlet to 3.1.0
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.27.0.35380
 - FF-1429 - Updated NuGet to 5.11.0
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.28.0.36354
 ### Removed
 ### Deployment Changes
 
