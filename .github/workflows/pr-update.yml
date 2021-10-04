@@ -47,4 +47,3 @@ jobs:
     - uses: thomaseizinger/assign-pr-creator-action@v1.0.0
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-
