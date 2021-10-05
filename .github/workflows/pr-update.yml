@@ -11,7 +11,7 @@ on:
 jobs:
   info:
     if: ${{ endsWith(github.repository , '-template') }}
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
     steps:
     - run: |
         sudo chown -R $USER:$USER $GITHUB_WORKSPACE
@@ -28,7 +28,7 @@ jobs:
         echo "Actor: ${{ github.actor }}"
 
   add-pr-label:
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
     steps:
     - run: |
         sudo chown -R $USER:$USER $GITHUB_WORKSPACE
@@ -40,10 +40,11 @@ jobs:
 
   assign-to-creator:
     if: ${{ !github.event.pull_request.assignee.login && github.event_name == 'pull_request' && ( github.event.action == 'opened' || github.event.action == 'reopened')}}
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
     steps:
     - run: |
         sudo chown -R $USER:$USER $GITHUB_WORKSPACE
     - uses: thomaseizinger/assign-pr-creator-action@v1.0.0
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+
