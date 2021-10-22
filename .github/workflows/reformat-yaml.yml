@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2.3.4
+    - uses: actions/checkout@v2.3.5
       with:
         fetch-depth: 0
         token: ${{ secrets.SOURCE_PUSH_TOKEN }}
@@ -33,3 +33,4 @@ jobs:
         commit_user_email: "credfeto@users.noreply.github.com"
         commit_author: "fun-ymlfmt[bot] <credfeto@users.noreply.github.com>"
         skip_dirty_check: false
+
