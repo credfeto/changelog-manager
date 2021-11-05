@@ -28,7 +28,7 @@ namespace Credfeto.ChangeLog.Cmd
         [Option(shortName: 'p', longName: "Pending", SetName = "Release", Required = false, HelpText = "If the release is pending")]
         public bool Pending { get; set; }
 
-        [Option(shortName: 'u', longName: "un-released", SetName = "Extract", Required = false, HelpText = "Prints the unreleased section to the console.")]
+        [Option(shortName: 'u', longName: "un-released", SetName = "UnReleased", Required = false, HelpText = "Prints the unreleased section to the console.")]
         public bool DisplayUnreleased { get; init; }
     }
 }
