@@ -9,6 +9,13 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [1.6.1] - 2021-11-05
+### Changed
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.24.0.32949
 - FF-1429 - Updated Roslynator.Analyzers to 3.2.0
 - FF-1429 - Updated NuGet to 5.10.0
@@ -28,11 +35,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.0.0
 - FF-1429 - -
 ## Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [1.6.0] - 2021-06-03
 ### Fixed
 - Supporting other versions of linux with libgit2sharp
