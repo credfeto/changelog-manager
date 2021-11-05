@@ -84,6 +84,17 @@ namespace Credfeto.ChangeLog.Cmd
                 return;
             }
 
+            if (options.DisplayUnreleased)
+            {
+                string changeLog = FindChangeLog(options);
+                Console.WriteLine($"Using Changelog {changeLog}");
+
+                string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: "0.0.0.0-unreleased");
+                Console.WriteLine(text);
+
+                return;
+            }
+
             throw new InvalidOptionsException();
         }
 

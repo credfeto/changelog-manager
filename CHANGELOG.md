@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Added ability to extract the unreleased section to the console
 ### Fixed
 ### Changed
 ### Deployment Changes
