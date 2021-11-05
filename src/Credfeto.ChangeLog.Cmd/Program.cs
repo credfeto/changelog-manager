@@ -89,6 +89,8 @@ namespace Credfeto.ChangeLog.Cmd
                 string changeLog = FindChangeLog(options);
                 Console.WriteLine($"Using Changelog {changeLog}");
 
+                Console.WriteLine();
+                Console.WriteLine("Unreleased Content:");
                 string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: "0.0.0.0-unreleased");
                 Console.WriteLine(text);
 
