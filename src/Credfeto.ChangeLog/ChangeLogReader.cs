@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Credfeto.ChangeLog.Helpers;
@@ -128,7 +129,7 @@ namespace Credfeto.ChangeLog
 
             static IEnumerable<string> Candidates(Version expected)
             {
-                int build = expected.Build == 0 || expected.Build == -1 ? 0 : expected.Build;
+                int build = expected.Build is 0 or -1 ? 0 : expected.Build;
 
                 yield return $"## [{expected.Major}.{expected.Minor}.{build}]";
 
@@ -138,15 +139,8 @@ namespace Credfeto.ChangeLog
                 }
             }
 
-            foreach (var candidate in Candidates(version))
-            {
-                if (line.StartsWith(value: candidate, comparisonType: StringComparison.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return Candidates(version)
+                .Any(candidate => line.StartsWith(value: candidate, comparisonType: StringComparison.OrdinalIgnoreCase));
         }
     }
 }
