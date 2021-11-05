@@ -10,6 +10,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Added ability to extract the unreleased section to the console
 ### Fixed
 ### Changed
+### Removed
+- Unused packages
 ### Deployment Changes
 
 <!--
