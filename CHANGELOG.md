@@ -9,6 +9,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+- FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.0.64
 ### Removed
 ### Deployment Changes
 
