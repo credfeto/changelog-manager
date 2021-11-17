@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -214,7 +215,7 @@ namespace Credfeto.ChangeLog
                 throw new EmptyChangeLogException();
             }
 
-            string releaseDate = pending ? "TBD" : DateTime.Now.ToString("yyyy-MM-dd");
+            string releaseDate = pending ? "TBD" : CurrentDate();
 
             newRelease.Insert(index: 0, "## [" + version + "] - " + releaseDate);
             newRelease.Add(string.Empty);
@@ -225,6 +226,12 @@ namespace Credfeto.ChangeLog
             {
                 text.RemoveAt(item);
             }
+        }
+
+        [SuppressMessage("FunFair.CodeAnalysis", "FFS0001", Justification = "Should always use the local time.")]
+        private static string CurrentDate()
+        {
+            return DateTime.Now.ToString("yyyy-MM-dd");
         }
 
         private static int FindInsertPosition(string releaseVersionToFind, IReadOnlyDictionary<string, int> releases, int endOfFilePosition)
