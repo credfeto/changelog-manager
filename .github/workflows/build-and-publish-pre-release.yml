@@ -31,6 +31,12 @@ jobs:
         git branch --remote
     - name: Determine .net core version
       uses: credfeto/action-dotnet-version-detect@v1.1.1
+    - name: Setup .NET Core (Old)
+      uses: actions/setup-dotnet@v1.8.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        dotnet-version: 5.0.403
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1.8.0
       env:

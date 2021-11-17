@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Library</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
         <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
         <WarningsAsErrors />
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
@@ -11,6 +11,7 @@
         <IsPackable>true</IsPackable>
         <Nullable>enable</Nullable>
         <NoWarn />
+        <ImplicitUsings>disable</ImplicitUsings>
     </PropertyGroup>
     <PropertyGroup>
         <AnalysisLevel>latest</AnalysisLevel>
@@ -40,7 +41,7 @@
         <PackageReference Include="AsyncFixer" Version="1.5.1" PrivateAssets="All" />
         <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64" PrivateAssets="All" />
         <PackageReference Include="Roslynator.Analyzers" Version="3.2.2" PrivateAssets="All" />
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="8.30.0.37606" PrivateAssets="All" />
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="8.32.0.39516" PrivateAssets="All" />
         <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" />
         <PackageReference Include="ToStringWithoutOverrideAnalyzer" Version="0.6.0" PrivateAssets="All" />
     </ItemGroup>
