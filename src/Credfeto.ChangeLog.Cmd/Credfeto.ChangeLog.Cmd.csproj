@@ -12,6 +12,7 @@
         <IsPackable>true</IsPackable>
         <Nullable>enable</Nullable>
         <ToolCommandName>changelog</ToolCommandName>
+        <ImplicitUsings>disable</ImplicitUsings>
         <NoWarn />
     </PropertyGroup>
     <PropertyGroup>
