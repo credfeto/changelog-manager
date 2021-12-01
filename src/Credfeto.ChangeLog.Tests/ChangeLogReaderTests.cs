@@ -1,11 +1,11 @@
 ﻿using FunFair.Test.Common;
 using Xunit;
 
-namespace Credfeto.ChangeLog.Tests
+namespace Credfeto.ChangeLog.Tests;
+
+public sealed class ChangeLogReaderTests : TestBase
 {
-    public sealed class ChangeLogReaderTests : TestBase
-    {
-        private const string MULTI_RELEASE_CHANGE_LOG = @"# Changelog
+    private const string MULTI_RELEASE_CHANGE_LOG = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -39,22 +39,22 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 - Initial version
 ";
 
-        [Theory]
-        [InlineData("")]
-        [InlineData("1.0.0.1-master")]
-        [InlineData("1.0.0.1")]
-        public void ReadEmptyChangeLogReturnsEmpty(string version)
-        {
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: string.Empty, version: version);
-            Assert.Empty(result);
-        }
+    [Theory]
+    [InlineData("")]
+    [InlineData("1.0.0.1-master")]
+    [InlineData("1.0.0.1")]
+    public void ReadEmptyChangeLogReturnsEmpty(string version)
+    {
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: string.Empty, version: version);
+        Assert.Empty(result);
+    }
 
-        [Theory]
-        [InlineData("")]
-        [InlineData("1.0.0.1-master")]
-        public void ReadUnReleasedSectionWithNoContentReturnsEmpty(string version)
-        {
-            const string changeLog = @"# Changelog
+    [Theory]
+    [InlineData("")]
+    [InlineData("1.0.0.1-master")]
+    public void ReadUnReleasedSectionWithNoContentReturnsEmpty(string version)
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -74,16 +74,16 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [0.0.0] - Project created
 ";
 
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-            Assert.Empty(result);
-        }
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+        Assert.Empty(result);
+    }
 
-        [Theory]
-        [InlineData("")]
-        [InlineData("1.0.0.1-master")]
-        public void ReadUnReleasedSectionWithJustAddedReturnsAddedSectionOnly(string version)
-        {
-            const string changeLog = @"# Changelog
+    [Theory]
+    [InlineData("")]
+    [InlineData("1.0.0.1-master")]
+    public void ReadUnReleasedSectionWithJustAddedReturnsAddedSectionOnly(string version)
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -104,19 +104,19 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [0.0.0] - Project created
 ";
 
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-            const string expected = @"### Added
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+        const string expected = @"### Added
 - Something was added.";
 
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Theory]
-        [InlineData("")]
-        [InlineData("1.0.0.1-master")]
-        public void ReadUnReleasedSectionWithJustFixedReturnsAddedSectionOnly(string version)
-        {
-            const string changeLog = @"# Changelog
+    [Theory]
+    [InlineData("")]
+    [InlineData("1.0.0.1-master")]
+    public void ReadUnReleasedSectionWithJustFixedReturnsAddedSectionOnly(string version)
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -137,19 +137,19 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [0.0.0] - Project created
 ";
 
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-            const string expected = @"### Fixed
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+        const string expected = @"### Fixed
 - Something was fixed.";
 
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Theory]
-        [InlineData("")]
-        [InlineData("1.0.0.1-master")]
-        public void ReadUnReleasedSectionWithJustChangedReturnsChangedSectionOnly(string version)
-        {
-            const string changeLog = @"# Changelog
+    [Theory]
+    [InlineData("")]
+    [InlineData("1.0.0.1-master")]
+    public void ReadUnReleasedSectionWithJustChangedReturnsChangedSectionOnly(string version)
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -170,19 +170,19 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [0.0.0] - Project created
 ";
 
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-            const string expected = @"### Changed
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+        const string expected = @"### Changed
 - Something was changed.";
 
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Theory]
-        [InlineData("")]
-        [InlineData("1.0.0.1-master")]
-        public void ReadUnReleasedSectionWithJustRemovedReturnsRemovedSectionOnly(string version)
-        {
-            const string changeLog = @"# Changelog
+    [Theory]
+    [InlineData("")]
+    [InlineData("1.0.0.1-master")]
+    public void ReadUnReleasedSectionWithJustRemovedReturnsRemovedSectionOnly(string version)
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -203,19 +203,19 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [0.0.0] - Project created
 ";
 
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-            const string expected = @"### Removed
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+        const string expected = @"### Removed
 - Something was removed.";
 
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Theory]
-        [InlineData("")]
-        [InlineData("1.0.0.1-master")]
-        public void ReadUnReleasedSectionWithJustDeploymentChangesReturnsDeploymentChangesSectionOnly(string version)
-        {
-            const string changeLog = @"# Changelog
+    [Theory]
+    [InlineData("")]
+    [InlineData("1.0.0.1-master")]
+    public void ReadUnReleasedSectionWithJustDeploymentChangesReturnsDeploymentChangesSectionOnly(string version)
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -236,62 +236,61 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [0.0.0] - Project created
 ";
 
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-            const string expected = @"### Deployment Changes
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
+        const string expected = @"### Deployment Changes
 - Need to do something special here on the next deployment.";
 
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Theory]
-        [InlineData("1.1.1")]
-        [InlineData("1.1.1.1")]
-        [InlineData("1.1.1.3000")]
-        public void ReadASpecificReleaseReturnsThatReleaseOnly(string version)
-        {
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
-            const string expected = @"### Added
+    [Theory]
+    [InlineData("1.1.1")]
+    [InlineData("1.1.1.1")]
+    [InlineData("1.1.1.3000")]
+    public void ReadASpecificReleaseReturnsThatReleaseOnly(string version)
+    {
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
+        const string expected = @"### Added
 - Something was added here.";
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Theory]
-        [InlineData("1.0")]
-        [InlineData("1.0.0")]
-        [InlineData("1.0.0.0")]
-        [InlineData("1.0.0.3000")]
-        public void ReadASpecificReleaseReturnsThatReleaseOnlyIgnoringZeroVersionParts(string version)
-        {
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
-            const string expected = @"### Added
+    [Theory]
+    [InlineData("1.0")]
+    [InlineData("1.0.0")]
+    [InlineData("1.0.0.0")]
+    [InlineData("1.0.0.3000")]
+    public void ReadASpecificReleaseReturnsThatReleaseOnlyIgnoringZeroVersionParts(string version)
+    {
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
+        const string expected = @"### Added
 - This is release 1.0.0.";
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Theory]
-        [InlineData("0.0")]
-        [InlineData("0.0.0")]
-        [InlineData("0.0.0.0")]
-        [InlineData("0.0.0.3000")]
-        public void ReadASpecificReleaseAtEndOfFile(string version)
-        {
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
+    [Theory]
+    [InlineData("0.0")]
+    [InlineData("0.0.0")]
+    [InlineData("0.0.0.0")]
+    [InlineData("0.0.0.3000")]
+    public void ReadASpecificReleaseAtEndOfFile(string version)
+    {
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
 
-            const string expected = @"### Added
+        const string expected = @"### Added
 - Initial version";
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Theory]
-        [InlineData("7.0")]
-        [InlineData("8.1.0")]
-        [InlineData("9.2.3.0")]
-        [InlineData("10.3.4.3000")]
-        public void ReadNonExistentVersion(string version)
-        {
-            string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
+    [Theory]
+    [InlineData("7.0")]
+    [InlineData("8.1.0")]
+    [InlineData("9.2.3.0")]
+    [InlineData("10.3.4.3000")]
+    public void ReadNonExistentVersion(string version)
+    {
+        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
 
-            Assert.Equal(expected: string.Empty, actual: result);
-        }
+        Assert.Equal(expected: string.Empty, actual: result);
     }
 }

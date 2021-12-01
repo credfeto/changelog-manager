@@ -1,14 +1,13 @@
 ﻿using LibGit2Sharp;
 
-namespace Credfeto.ChangeLog.Helpers
-{
-    internal static class GitRepository
-    {
-        public static Repository OpenRepository(string workDir)
-        {
-            string found = Repository.Discover(workDir);
+namespace Credfeto.ChangeLog.Helpers;
 
-            return new Repository(found);
-        }
+internal static class GitRepository
+{
+    public static Repository OpenRepository(string workDir)
+    {
+        string found = Repository.Discover(workDir);
+
+        return new Repository(found);
     }
 }

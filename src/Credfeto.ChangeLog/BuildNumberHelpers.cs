@@ -1,22 +1,21 @@
 ﻿using System;
 
-namespace Credfeto.ChangeLog
+namespace Credfeto.ChangeLog;
+
+internal static class BuildNumberHelpers
 {
-    internal static class BuildNumberHelpers
+    public static Version? DetermineVersionForChangeLog(string version)
     {
-        public static Version? DetermineVersionForChangeLog(string version)
+        if (string.IsNullOrWhiteSpace(version))
         {
-            if (string.IsNullOrWhiteSpace(version))
-            {
-                return null;
-            }
-
-            if (version.Contains('-', StringComparison.Ordinal))
-            {
-                return null;
-            }
-
-            return new Version(version);
+            return null;
         }
+
+        if (version.Contains(value: '-', comparisonType: StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        return new Version(version);
     }
 }

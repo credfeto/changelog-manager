@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Credfeto.ChangeLog.Cmd
+namespace Credfeto.ChangeLog.Cmd;
+
+internal static class ExecutableVersionInformation
 {
-    internal static class ExecutableVersionInformation
+    public static string ProgramVersion()
     {
-        public static string ProgramVersion()
-        {
-            return CommonVersion(typeof(ExecutableVersionInformation));
-        }
+        return CommonVersion(typeof(ExecutableVersionInformation));
+    }
 
-        private static string CommonVersion(Type type)
-        {
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(type.Assembly.Location);
+    private static string CommonVersion(Type type)
+    {
+        FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(type.Assembly.Location);
 
-            return fileVersionInfo.ProductVersion!;
-        }
+        return fileVersionInfo.ProductVersion!;
     }
 }

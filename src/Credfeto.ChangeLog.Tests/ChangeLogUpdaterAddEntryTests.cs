@@ -2,16 +2,16 @@
 using FunFair.Test.Common;
 using Xunit;
 
-namespace Credfeto.ChangeLog.Tests
+namespace Credfeto.ChangeLog.Tests;
+
+public sealed class ChangeLogUpdaterAddEntryTests : TestBase
 {
-    public sealed class ChangeLogUpdaterAddEntryTests : TestBase
+    [Fact]
+    public void AddToEmptyChangelog()
     {
-        [Fact]
-        public void AddToEmptyChangelog()
-        {
-            string result = ChangeLogUpdater.AddEntry(changeLog: string.Empty, type: "Added", message: "Added a new entry");
+        string result = ChangeLogUpdater.AddEntry(changeLog: string.Empty, type: "Added", message: "Added a new entry");
 
-            const string expected = @"# Changelog
+        const string expected = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -31,13 +31,13 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Fact]
-        public void AddToExistingChangelog()
-        {
-            const string existing = @"# Changelog
+    [Fact]
+    public void AddToExistingChangelog()
+    {
+        const string existing = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -57,9 +57,9 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            string result = ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Another entry");
+        string result = ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Another entry");
 
-            const string expected = @"# Changelog
+        const string expected = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -80,13 +80,13 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Fact]
-        public void AddingDuplicateToExistingChangelogDoesNotAdd()
-        {
-            const string existing = @"# Changelog
+    [Fact]
+    public void AddingDuplicateToExistingChangelogDoesNotAdd()
+    {
+        const string existing = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -106,9 +106,9 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            string result = ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Added a new entry");
+        string result = ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Added a new entry");
 
-            const string expected = @"# Changelog
+        const string expected = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -128,13 +128,13 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Fact]
-        public void AddToExistingChangelogWithTrailingBlanks()
-        {
-            const string existing = @"# Changelog
+    [Fact]
+    public void AddToExistingChangelogWithTrailingBlanks()
+    {
+        const string existing = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -155,9 +155,9 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            string result = ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Another entry");
+        string result = ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Another entry");
 
-            const string expected = @"# Changelog
+        const string expected = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -179,13 +179,13 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            Assert.Equal(expected.ToLocalEndLine(), actual: result);
-        }
+        Assert.Equal(expected.ToLocalEndLine(), actual: result);
+    }
 
-        [Fact]
-        public void AddToExistingChangelogForSectionThatDoesNotExistFails()
-        {
-            const string existing = @"# Changelog
+    [Fact]
+    public void AddToExistingChangelogForSectionThatDoesNotExistFails()
+    {
+        const string existing = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -207,7 +207,6 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
 ## [0.0.0] - Project created";
 
-            Assert.Throws<InvalidChangeLogException>(() => ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Another entry"));
-        }
+        Assert.Throws<InvalidChangeLogException>(() => ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Another entry"));
     }
 }

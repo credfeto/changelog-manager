@@ -4,21 +4,21 @@ using FunFair.Test.Common;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Credfeto.ChangeLog.Tests
+namespace Credfeto.ChangeLog.Tests;
+
+public sealed class ChangeLogUpdaterCreateRelease : TestBase
 {
-    public sealed class ChangeLogUpdaterCreateRelease : TestBase
+    private readonly ITestOutputHelper _output;
+
+    public ChangeLogUpdaterCreateRelease(ITestOutputHelper output)
     {
-        private readonly ITestOutputHelper _output;
+        this._output = output ?? throw new ArgumentNullException(nameof(output));
+    }
 
-        public ChangeLogUpdaterCreateRelease(ITestOutputHelper output)
-        {
-            this._output = output ?? throw new ArgumentNullException(nameof(output));
-        }
-
-        [Fact]
-        public void EmptyUnreleasedDoesNotCreateARelease()
-        {
-            const string changeLog = @"# Changelog
+    [Fact]
+    public void EmptyUnreleasedDoesNotCreateARelease()
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -37,13 +37,13 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            Assert.Throws<EmptyChangeLogException>(() => ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true));
-        }
+        Assert.Throws<EmptyChangeLogException>(() => ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true));
+    }
 
-        [Fact]
-        public void CannotCreateAReleaseThatAlreadyExists()
-        {
-            const string changeLog = @"# Changelog
+    [Fact]
+    public void CannotCreateAReleaseThatAlreadyExists()
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -67,13 +67,13 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
 ## [0.0.0] - Project created";
 
-            Assert.Throws<ReleaseAlreadyExistsException>(() => ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true));
-        }
+        Assert.Throws<ReleaseAlreadyExistsException>(() => ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true));
+    }
 
-        [Fact]
-        public void CannotCreateAReleaseOlderThanLatest()
-        {
-            const string changeLog = @"# Changelog
+    [Fact]
+    public void CannotCreateAReleaseOlderThanLatest()
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -97,13 +97,13 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
 ## [0.0.0] - Project created";
 
-            Assert.Throws<ReleaseTooOldException>(() => ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true));
-        }
+        Assert.Throws<ReleaseTooOldException>(() => ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true));
+    }
 
-        [Fact]
-        public void ChangeLogWithOnlyAddedInUnreleasedProducesReleaseWithJustAdded()
-        {
-            const string changeLog = @"# Changelog
+    [Fact]
+    public void ChangeLogWithOnlyAddedInUnreleasedProducesReleaseWithJustAdded()
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -123,61 +123,9 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
+        string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
 
-            const string expected = @"# Changelog
-All notable changes to this project will be documented in this file.
-
-<!--
-Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
--->
-
-## [Unreleased]
-### Added
-### Fixed
-### Changed
-### Removed
-### Deployment Changes
-
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
-## [1.0.0] - TBD
-### Added
-- Some Content
-
-## [0.0.0] - Project created";
-
-            this._output.WriteLine(updated);
-            Assert.Equal(expected.ToLocalEndLine(), actual: updated);
-        }
-
-        [Fact]
-        public void ChangeLogWithOnlyFixedInUnreleasedProducesReleaseWithJustAdded()
-        {
-            const string changeLog = @"# Changelog
-All notable changes to this project will be documented in this file.
-
-<!--
-Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
--->
-
-## [Unreleased]
-### Added
-### Fixed
-- Some Content
-### Changed
-### Removed
-### Deployment Changes
-
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
-## [0.0.0] - Project created";
-
-            string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
-
-            const string expected = @"# Changelog
+        const string expected = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -195,19 +143,71 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
 ## [1.0.0] - TBD
+### Added
+- Some Content
+
+## [0.0.0] - Project created";
+
+        this._output.WriteLine(updated);
+        Assert.Equal(expected.ToLocalEndLine(), actual: updated);
+    }
+
+    [Fact]
+    public void ChangeLogWithOnlyFixedInUnreleasedProducesReleaseWithJustAdded()
+    {
+        const string changeLog = @"# Changelog
+All notable changes to this project will be documented in this file.
+
+<!--
+Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
+-->
+
+## [Unreleased]
+### Added
+### Fixed
+- Some Content
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [0.0.0] - Project created";
+
+        string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
+
+        const string expected = @"# Changelog
+All notable changes to this project will be documented in this file.
+
+<!--
+Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
+-->
+
+## [Unreleased]
+### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [1.0.0] - TBD
 ### Fixed
 - Some Content
 
 ## [0.0.0] - Project created";
 
-            this._output.WriteLine(updated);
-            Assert.Equal(expected.ToLocalEndLine(), actual: updated);
-        }
+        this._output.WriteLine(updated);
+        Assert.Equal(expected.ToLocalEndLine(), actual: updated);
+    }
 
-        [Fact]
-        public void ChangeLogWithOnlyChangedInUnreleasedProducesReleaseWithJustAdded()
-        {
-            const string changeLog = @"# Changelog
+    [Fact]
+    public void ChangeLogWithOnlyChangedInUnreleasedProducesReleaseWithJustAdded()
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -227,9 +227,9 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
+        string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
 
-            const string expected = @"# Changelog
+        const string expected = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -252,14 +252,14 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
 ## [0.0.0] - Project created";
 
-            this._output.WriteLine(updated);
-            Assert.Equal(expected.ToLocalEndLine(), actual: updated);
-        }
+        this._output.WriteLine(updated);
+        Assert.Equal(expected.ToLocalEndLine(), actual: updated);
+    }
 
-        [Fact]
-        public void ChangeLogWithOnlyRemovedInUnreleasedProducesReleaseWithJustAdded()
-        {
-            const string changeLog = @"# Changelog
+    [Fact]
+    public void ChangeLogWithOnlyRemovedInUnreleasedProducesReleaseWithJustAdded()
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -279,9 +279,9 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
+        string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
 
-            const string expected = @"# Changelog
+        const string expected = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -304,14 +304,14 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
 ## [0.0.0] - Project created";
 
-            this._output.WriteLine(updated);
-            Assert.Equal(expected.ToLocalEndLine(), actual: updated);
-        }
+        this._output.WriteLine(updated);
+        Assert.Equal(expected.ToLocalEndLine(), actual: updated);
+    }
 
-        [Fact]
-        public void NoPreviousReleaseAddsReleaseAtEndOfFile()
-        {
-            const string changeLog = @"# Changelog
+    [Fact]
+    public void NoPreviousReleaseAddsReleaseAtEndOfFile()
+    {
+        const string changeLog = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -330,9 +330,9 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->";
 
-            string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
+        string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
 
-            const string expected = @"# Changelog
+        const string expected = @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -353,8 +353,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ### Added
 - Some Content";
 
-            this._output.WriteLine(updated);
-            Assert.Equal(expected.ToLocalEndLine(), actual: updated);
-        }
+        this._output.WriteLine(updated);
+        Assert.Equal(expected.ToLocalEndLine(), actual: updated);
     }
 }
