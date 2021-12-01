@@ -50,7 +50,7 @@ namespace Credfeto.ChangeLog
                     }
                 }
             }
-            catch
+            catch(Exception)
             {
                 // Couldn't
                 changeLogFileName = null;

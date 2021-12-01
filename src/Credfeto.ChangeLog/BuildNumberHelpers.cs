@@ -11,14 +11,12 @@ namespace Credfeto.ChangeLog
                 return null;
             }
 
-            if (version.Contains('-'))
+            if (version.Contains('-', StringComparison.Ordinal))
             {
                 return null;
             }
 
             return new Version(version);
-
-            //return version.Substring(startIndex: 0, version.LastIndexOf('.'));
         }
     }
 }
