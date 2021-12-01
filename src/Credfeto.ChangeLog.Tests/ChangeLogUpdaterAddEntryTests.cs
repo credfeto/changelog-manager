@@ -30,7 +30,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Fact]
@@ -79,11 +79,11 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Fact]
-        public void AdddingDuplicateToExistingChangelogDoesNotAdd()
+        public void AddingDuplicateToExistingChangelogDoesNotAdd()
         {
             const string existing = @"# Changelog
 All notable changes to this project will be documented in this file.
@@ -127,7 +127,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Fact]
@@ -178,7 +178,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Fact]

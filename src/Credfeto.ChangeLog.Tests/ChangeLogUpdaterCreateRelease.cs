@@ -148,7 +148,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [0.0.0] - Project created";
 
             this._output.WriteLine(updated);
-            Assert.Equal(expected: expected, actual: updated);
+            Assert.Equal(expected.ToLocalEndLine(), actual: updated);
         }
 
         [Fact]
@@ -200,7 +200,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [0.0.0] - Project created";
 
             this._output.WriteLine(updated);
-            Assert.Equal(expected: expected, actual: updated);
+            Assert.Equal(expected.ToLocalEndLine(), actual: updated);
         }
 
         [Fact]
@@ -252,7 +252,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [0.0.0] - Project created";
 
             this._output.WriteLine(updated);
-            Assert.Equal(expected: expected, actual: updated);
+            Assert.Equal(expected.ToLocalEndLine(), actual: updated);
         }
 
         [Fact]
@@ -304,7 +304,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ## [0.0.0] - Project created";
 
             this._output.WriteLine(updated);
-            Assert.Equal(expected: expected, actual: updated);
+            Assert.Equal(expected.ToLocalEndLine(), actual: updated);
         }
 
         [Fact]
@@ -353,7 +353,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 - Some Content";
 
             this._output.WriteLine(updated);
-            Assert.Equal(expected: expected, actual: updated);
+            Assert.Equal(expected.ToLocalEndLine(), actual: updated);
         }
     }
 }

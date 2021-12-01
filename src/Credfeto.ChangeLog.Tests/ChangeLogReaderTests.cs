@@ -107,7 +107,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
             const string expected = @"### Added
 - Something was added.";
 
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Theory]
@@ -140,7 +140,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
             const string expected = @"### Fixed
 - Something was fixed.";
 
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Theory]
@@ -173,7 +173,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
             const string expected = @"### Changed
 - Something was changed.";
 
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Theory]
@@ -206,7 +206,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
             const string expected = @"### Removed
 - Something was removed.";
 
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Theory]
@@ -239,7 +239,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
             const string expected = @"### Deployment Changes
 - Need to do something special here on the next deployment.";
 
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Theory]
@@ -251,7 +251,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
             string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
             const string expected = @"### Added
 - Something was added here.";
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Theory]
@@ -264,7 +264,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
             string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
             const string expected = @"### Added
 - This is release 1.0.0.";
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Theory]
@@ -278,7 +278,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
             const string expected = @"### Added
 - Initial version";
-            Assert.Equal(expected: expected, actual: result);
+            Assert.Equal(expected.ToLocalEndLine(), actual: result);
         }
 
         [Theory]
