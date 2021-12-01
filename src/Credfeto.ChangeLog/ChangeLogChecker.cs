@@ -15,7 +15,8 @@ namespace Credfeto.ChangeLog;
 public static class ChangeLogChecker
 {
     private static readonly Regex HunkPositionRegex = new(pattern: @"^@@\s*\-(?<OriginalFileStart>\d*)(,(?<OriginalFileEnd>\d*))?\s*\+(?<CurrentFileStart>\d*)(,(?<CurrentFileChangeLength>\d*))?\s*@@",
-                                                          RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.ExplicitCapture);
+                                                          RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.ExplicitCapture,
+                                                          matchTimeout: RegexTimeouts.Short);
 
     public static async Task<bool> ChangeLogModifiedInReleaseSectionAsync(string changeLogFileName, string originBranchName)
     {
