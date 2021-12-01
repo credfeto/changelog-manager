@@ -62,7 +62,7 @@ public static class ChangeLogUpdater
     {
         bool foundUnreleased = false;
 
-        string search = "### " + type;
+        string search = BuildSubHeaderSection(type);
 
         for (int index = 0; index < changeLog.Count; index++)
         {
@@ -110,6 +110,11 @@ public static class ChangeLogUpdater
         throw new InvalidChangeLogException("Could not find [" + Constants.Unreleased + "] section of file");
     }
 
+    private static string BuildSubHeaderSection(string type)
+    {
+        return "### " + type;
+    }
+
     public static async Task CreateReleaseAsync(string changeLogFileName, string version, bool pending)
     {
         string originalChangeLog = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
@@ -142,71 +147,36 @@ public static class ChangeLogUpdater
 
     private static void MoveUnreleasedToRelease(string version, int unreleasedIndex, int releaseInsertPos, List<string> text, bool pending)
     {
+        List<string> newRelease = GenerateNewReleaseContents(unreleasedIndex: unreleasedIndex, releaseInsertPos: releaseInsertPos, text: text, out List<int> removeIndexes);
+
+        string releaseVersionHeader = CreateReleaseVersionHeader(version: version, pending: pending);
+
+        PrependReleaseVersionHeader(newRelease: newRelease, releaseVersionHeader: releaseVersionHeader);
+
+        text.InsertRange(index: releaseInsertPos, collection: newRelease);
+
+        RemoveItems(text: text, removeIndexes: removeIndexes);
+    }
+
+    private static List<string> GenerateNewReleaseContents(int unreleasedIndex, int releaseInsertPos, List<string> text, out List<int> removeIndexes)
+    {
         string previousLine = string.Empty;
 
         List<string> newRelease = new();
 
-        List<int> removeIndexes = new();
+        removeIndexes = new List<int>();
 
         bool inComment = false;
 
         for (int i = unreleasedIndex + 1; i < releaseInsertPos; i++)
         {
-            if (text[i]
-                    .Contains(value: "<!--", comparisonType: StringComparison.Ordinal) && !text[i]
-                    .Contains(value: "-->", comparisonType: StringComparison.Ordinal))
+            if (SkipComments(text: text, i: i, removeIndexes: removeIndexes, inComment: ref inComment) || SkipEmptyLine(text: text, i: i, removeIndexes: removeIndexes) ||
+                SkipEmptyHeadingSections(text: text, i: i, previousLine: ref previousLine) || SkipHeadingLine(text: text, i: i, previousLine: ref previousLine))
             {
-                if (string.IsNullOrWhiteSpace(text[i - 1]))
-                {
-                    // if line before was blank then don't delete it
-                    removeIndexes.Remove(i - 1);
-                }
-
-                inComment = true;
-
                 continue;
             }
 
-            if (inComment)
-            {
-                if (text[i]
-                    .Contains(value: "-->", comparisonType: StringComparison.Ordinal))
-                {
-                    inComment = false;
-                }
-
-                continue;
-            }
-
-            if (string.IsNullOrEmpty(text[i]))
-            {
-                removeIndexes.Add(i);
-
-                continue;
-            }
-
-            if (IsSubHeading(text[i]) && IsSubHeading(previousLine))
-            {
-                previousLine = text[i];
-
-                continue;
-            }
-
-            if (IsSubHeading(text[i]))
-            {
-                previousLine = text[i];
-
-                continue;
-            }
-
-            if (IsSubHeading(previousLine))
-            {
-                newRelease.Add(previousLine);
-            }
-
-            removeIndexes.Add(i);
-            newRelease.Add(text[i]);
-            previousLine = text[i];
+            previousLine = AddLineToRelease(text: text, previousLine: previousLine, newRelease: newRelease, removeIndexes: removeIndexes, i: i);
         }
 
         if (newRelease.Count == 0)
@@ -214,17 +184,122 @@ public static class ChangeLogUpdater
             throw new EmptyChangeLogException();
         }
 
-        string releaseDate = pending ? "TBD" : CurrentDate();
+        return newRelease;
+    }
 
-        newRelease.Insert(index: 0, "## [" + version + "] - " + releaseDate);
+    private static void PrependReleaseVersionHeader(List<string> newRelease, string releaseVersionHeader)
+    {
+        newRelease.Insert(index: 0, item: releaseVersionHeader);
         newRelease.Add(string.Empty);
+    }
 
-        text.InsertRange(index: releaseInsertPos, collection: newRelease);
-
+    private static void RemoveItems(List<string> text, List<int> removeIndexes)
+    {
         foreach (int item in removeIndexes.OrderByDescending(x => x))
         {
             text.RemoveAt(item);
         }
+    }
+
+    private static string CreateReleaseVersionHeader(string version, bool pending)
+    {
+        string releaseDate = CreateReleaseDate(pending);
+        string releaseVersionHeader = "## [" + version + "] - " + releaseDate;
+
+        return releaseVersionHeader;
+    }
+
+    private static string CreateReleaseDate(bool pending)
+    {
+        return pending ? "TBD" : CurrentDate();
+    }
+
+    private static string AddLineToRelease(List<string> text, string previousLine, List<string> newRelease, List<int> removeIndexes, int i)
+    {
+        if (IsSubHeading(previousLine))
+        {
+            newRelease.Add(previousLine);
+        }
+
+        removeIndexes.Add(i);
+        newRelease.Add(text[i]);
+        previousLine = text[i];
+
+        return previousLine;
+    }
+
+    private static bool SkipHeadingLine(List<string> text, int i, ref string previousLine)
+    {
+        if (IsSubHeading(text[i]))
+        {
+            previousLine = text[i];
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool SkipEmptyHeadingSections(List<string> text, int i, ref string previousLine)
+    {
+        if (IsSubHeading(text[i]) && IsSubHeading(previousLine))
+        {
+            previousLine = text[i];
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool SkipEmptyLine(List<string> text, int i, List<int> removeIndexes)
+    {
+        if (string.IsNullOrEmpty(text[i]))
+        {
+            removeIndexes.Add(i);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool SkipComments(List<string> text, int i, List<int> removeIndexes, ref bool inComment)
+    {
+        if (ContainsHtmlCommentStart(text[i]) && !ContainsHtmlCommentEnd(text[i]))
+        {
+            if (string.IsNullOrWhiteSpace(text[i - 1]))
+            {
+                // if line before was blank then don't delete it
+                removeIndexes.Remove(i - 1);
+            }
+
+            inComment = true;
+
+            return true;
+        }
+
+        if (inComment)
+        {
+            if (ContainsHtmlCommentEnd(text[i]))
+            {
+                inComment = false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool ContainsHtmlCommentStart(string line)
+    {
+        return line.Contains(value: "<!--", comparisonType: StringComparison.Ordinal);
+    }
+
+    private static bool ContainsHtmlCommentEnd(string line)
+    {
+        return line.Contains(value: "-->", comparisonType: StringComparison.Ordinal);
     }
 
     private static bool IsSubHeading(string line)
