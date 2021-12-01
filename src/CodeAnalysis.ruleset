@@ -417,6 +417,8 @@
     <Rules AnalyzerId="codecracker.CSharp" RuleNamespace="codecracker.CSharp">
         <!-- CC0001 - Use var instead of specifying type name -->
         <Rule Id="CC0001" Action="None"/>
+        <!-- CC0105 - Use var instead of specifying type name -->
+        <Rule Id="CC0105" Action="None"/>
     </Rules>
     <Rules AnalyzerId="SmartAnalyzers.CSharpExtensions.Annotations"
            RuleNamespace="SmartAnalyzers.CSharpExtensions.Annotations">

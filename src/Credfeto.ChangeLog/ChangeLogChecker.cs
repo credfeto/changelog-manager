@@ -14,7 +14,7 @@ namespace Credfeto.ChangeLog
     {
         private static readonly Regex HunkPositionRegex =
             new(pattern: @"^@@\s*\-(?<OriginalFileStart>\d*)(,(?<OriginalFileEnd>\d*))?\s*\+(?<CurrentFileStart>\d*)(,(?<CurrentFileChangeLength>\d*))?\s*@@",
-                RegexOptions.Compiled | RegexOptions.Multiline);
+                RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.ExplicitCapture);
 
         public static async Task<bool> ChangeLogModifiedInReleaseSectionAsync(string changeLogFileName, string originBranchName)
         {
@@ -53,7 +53,7 @@ namespace Credfeto.ChangeLog
 
                 Patch changes = repo.Diff.Compare<Patch>(oldTree: originBranch.Tip.Tree,
                                                          newTree: repo.Head.Tip.Tree,
-                                                         new CompareOptions {ContextLines = 0, InterhunkLines = 0, IncludeUnmodified = false});
+                                                         new CompareOptions { ContextLines = 0, InterhunkLines = 0, IncludeUnmodified = false });
 
                 PatchEntryChanges? change = changes.FirstOrDefault(candidate => candidate.Path == changeLogInRepoPath);
 

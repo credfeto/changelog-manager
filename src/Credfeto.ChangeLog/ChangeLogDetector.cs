@@ -36,7 +36,7 @@ namespace Credfeto.ChangeLog
                         {
                             string changeLogAtRepoRoot = Path.Combine(path1: repoRoot, path2: Constants.ChangeLogFileName);
 
-                            if (changelogs.Contains(changeLogAtRepoRoot))
+                            if (changelogs.Contains(value: changeLogAtRepoRoot, comparer: StringComparer.Ordinal))
                             {
                                 changeLogFileName = changeLogAtRepoRoot;
 
@@ -50,7 +50,7 @@ namespace Credfeto.ChangeLog
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 // Couldn't
                 changeLogFileName = null;

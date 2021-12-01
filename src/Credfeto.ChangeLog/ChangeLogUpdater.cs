@@ -152,8 +152,8 @@ namespace Credfeto.ChangeLog
             for (int i = unreleasedIndex + 1; i < releaseInsertPos; i++)
             {
                 if (text[i]
-                    .Contains(value: "<!--", comparisonType: StringComparison.Ordinal) && !text[i]
-                    .Contains(value: "-->", comparisonType: StringComparison.Ordinal))
+                        .Contains(value: "<!--", comparisonType: StringComparison.Ordinal) && !text[i]
+                        .Contains(value: "-->", comparisonType: StringComparison.Ordinal))
                 {
                     if (string.IsNullOrWhiteSpace(text[i - 1]))
                     {
@@ -185,7 +185,7 @@ namespace Credfeto.ChangeLog
                 }
 
                 if (text[i]
-                    .StartsWith(value: "### ", comparisonType: StringComparison.Ordinal) && previousLine.StartsWith(value: "### ", comparisonType: StringComparison.Ordinal))
+                        .StartsWith(value: "### ", comparisonType: StringComparison.Ordinal) && previousLine.StartsWith(value: "### ", comparisonType: StringComparison.Ordinal))
                 {
                     previousLine = text[i];
 
@@ -210,7 +210,7 @@ namespace Credfeto.ChangeLog
                 previousLine = text[i];
             }
 
-            if (!newRelease.Any())
+            if (newRelease.Count == 0)
             {
                 throw new EmptyChangeLogException();
             }
@@ -271,7 +271,7 @@ namespace Credfeto.ChangeLog
 
         private static Dictionary<string, int> FindReleasePositions(IReadOnlyList<string> text)
         {
-            Dictionary<string, int> releases = text.Select((line, index) => new {line, index})
+            Dictionary<string, int> releases = text.Select((line, index) => new { line, index })
                                                    .Where(i => IsRelease(i.line))
                                                    .ToDictionary(keySelector: i => ExtractRelease(i.line), elementSelector: i => i.index);
 
