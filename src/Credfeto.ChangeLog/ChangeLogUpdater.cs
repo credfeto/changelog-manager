@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -231,7 +232,7 @@ namespace Credfeto.ChangeLog
         [SuppressMessage("FunFair.CodeAnalysis", "FFS0001", Justification = "Should always use the local time.")]
         private static string CurrentDate()
         {
-            return DateTime.Now.ToString("yyyy-MM-dd");
+            return DateTime.Now.ToString(format: "yyyy-MM-dd", provider: CultureInfo.InvariantCulture);
         }
 
         private static int FindInsertPosition(string releaseVersionToFind, IReadOnlyDictionary<string, int> releases, int endOfFilePosition)
@@ -273,9 +274,9 @@ namespace Credfeto.ChangeLog
         {
             Dictionary<string, int> releases = text.Select((line, index) => new { line, index })
                                                    .Where(i => IsRelease(i.line))
-                                                   .ToDictionary(keySelector: i => ExtractRelease(i.line), elementSelector: i => i.index);
+                                                   .ToDictionary(keySelector: i => ExtractRelease(i.line), elementSelector: i => i.index, comparer: StringComparer.Ordinal);
 
-            if (!releases.Any())
+            if (releases.Count == 0)
             {
                 throw new EmptyChangeLogException("Could not find unreleased section");
             }
