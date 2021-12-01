@@ -1,8 +1,9 @@
-﻿using Xunit;
+﻿using FunFair.Test.Common;
+using Xunit;
 
 namespace Credfeto.ChangeLog.Tests
 {
-    public sealed class ChangeLogReaderTests
+    public sealed class ChangeLogReaderTests : TestBase
     {
         private const string MULTI_RELEASE_CHANGE_LOG = @"# Changelog
 All notable changes to this project will be documented in this file.

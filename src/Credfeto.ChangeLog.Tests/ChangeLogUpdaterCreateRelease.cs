@@ -1,11 +1,12 @@
 ﻿using System;
 using Credfeto.ChangeLog.Exceptions;
+using FunFair.Test.Common;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Credfeto.ChangeLog.Tests
 {
-    public sealed class ChangeLogUpdaterCreateRelease
+    public sealed class ChangeLogUpdaterCreateRelease : TestBase
     {
         private readonly ITestOutputHelper _output;
 

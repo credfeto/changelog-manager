@@ -1,9 +1,10 @@
 ﻿using Credfeto.ChangeLog.Exceptions;
+using FunFair.Test.Common;
 using Xunit;
 
 namespace Credfeto.ChangeLog.Tests
 {
-    public sealed class ChangeLogUpdaterAddEntryTests
+    public sealed class ChangeLogUpdaterAddEntryTests : TestBase
     {
         [Fact]
         public void AddToEmptyChangelog()
