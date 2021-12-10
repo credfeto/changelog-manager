@@ -16,6 +16,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.1
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.33.0.40503
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.30
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.680
 ### Removed
 ### Deployment Changes
 
