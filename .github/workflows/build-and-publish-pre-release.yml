@@ -73,8 +73,6 @@ jobs:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     - name: Update Release Notes
       run: |
-        dotnet tool uninstall --local Credfeto.ChangeLog.Cmd
-        dotnet tool install --local Credfeto.ChangeLog.Cmd --version ${{ env.BUILD_VERSION }} --add-source dist
         dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
     - name: Publish
       run: |

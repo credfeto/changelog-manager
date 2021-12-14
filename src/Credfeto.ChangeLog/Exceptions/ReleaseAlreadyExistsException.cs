@@ -1,22 +1,21 @@
 ﻿using System;
 
-namespace Credfeto.ChangeLog.Exceptions
+namespace Credfeto.ChangeLog.Exceptions;
+
+public sealed class ReleaseAlreadyExistsException : Exception
 {
-    public sealed class ReleaseAlreadyExistsException : Exception
+    public ReleaseAlreadyExistsException()
+        : this("Release already exists.")
     {
-        public ReleaseAlreadyExistsException()
-            : this("Release already exists.")
-        {
-        }
+    }
 
-        public ReleaseAlreadyExistsException(string message)
-            : base(message)
-        {
-        }
+    public ReleaseAlreadyExistsException(string message)
+        : base(message)
+    {
+    }
 
-        public ReleaseAlreadyExistsException(string message, Exception innerException)
-            : base(message: message, innerException: innerException)
-        {
-        }
+    public ReleaseAlreadyExistsException(string message, Exception innerException)
+        : base(message: message, innerException: innerException)
+    {
     }
 }

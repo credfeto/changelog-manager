@@ -6,133 +6,166 @@ using System.Threading.Tasks;
 using CommandLine;
 using Credfeto.ChangeLog.Cmd.Exceptions;
 
-namespace Credfeto.ChangeLog.Cmd
+namespace Credfeto.ChangeLog.Cmd;
+
+internal static class Program
 {
-    internal static class Program
+    private const int SUCCESS = 0;
+    private const int ERROR = 1;
+
+    private static string FindChangeLog(Options options)
     {
-        private const int SUCCESS = 0;
-        private const int ERROR = 1;
+        string? changeLog = options.ChangeLog;
 
-        private static string FindChangeLog(Options options)
+        if (changeLog != null)
         {
-            string? changeLog = options.ChangeLog;
-
-            if (changeLog != null)
-            {
-                return changeLog;
-            }
-
-            if (ChangeLogDetector.TryFindChangeLog(out changeLog))
-            {
-                return changeLog;
-            }
-
-            throw new MissingChangelogException("Could not find changelog");
+            return changeLog;
         }
 
-        private static async Task ParsedOkAsync(Options options)
+        if (ChangeLogDetector.TryFindChangeLog(out changeLog))
         {
-            if (options.Extract != null && options.Version != null)
-            {
-                string changeLog = FindChangeLog(options);
-                Console.WriteLine($"Using Changelog {changeLog}");
-
-                string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: options.Version);
-
-                await File.WriteAllTextAsync(path: options.Extract, contents: text, encoding: Encoding.UTF8);
-
-                return;
-            }
-
-            if (options.Add != null && options.Message != null)
-            {
-                string changeLog = FindChangeLog(options);
-                Console.WriteLine($"Using Changelog {changeLog}");
-                Console.WriteLine($"Change Type: {options.Add}");
-                Console.WriteLine($"Message: {options.Message}");
-
-                await ChangeLogUpdater.AddEntryAsync(changeLogFileName: changeLog, type: options.Add, message: options.Message);
-
-                return;
-            }
-
-            if (options.CheckInsert != null)
-            {
-                string changeLog = FindChangeLog(options);
-                Console.WriteLine($"Using Changelog {changeLog}");
-                Console.WriteLine($"Branch: {options.CheckInsert}");
-                bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: options.CheckInsert);
-
-                if (valid)
-                {
-                    Console.WriteLine("Changelog is valid");
-
-                    return;
-                }
-
-                throw new ChangeLogInvalidFailedException("Changelog modified in released section");
-            }
-
-            if (options.CreateRelease != null)
-            {
-                string changeLog = FindChangeLog(options);
-                Console.WriteLine($"Using Changelog {changeLog}");
-                Console.WriteLine($"Release Version: {options.CreateRelease}");
-
-                await ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: options.CreateRelease, pending: options.Pending);
-
-                return;
-            }
-
-            if (options.DisplayUnreleased)
-            {
-                string changeLog = FindChangeLog(options);
-                Console.WriteLine($"Using Changelog {changeLog}");
-
-                Console.WriteLine();
-                Console.WriteLine("Unreleased Content:");
-                string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: "0.0.0.0-unreleased");
-                Console.WriteLine(text);
-
-                return;
-            }
-
-            throw new InvalidOptionsException();
+            return changeLog;
         }
 
-        private static void NotParsed(IEnumerable<Error> errors)
-        {
-            Console.WriteLine("Errors:");
+        throw new MissingChangelogException("Could not find changelog");
+    }
 
-            foreach (Error error in errors)
-            {
-                Console.WriteLine($" * {error.Tag} - {error}");
-            }
+    private static async Task ParsedOkAsync(Options options)
+    {
+        if (options.Extract != null && options.Version != null)
+        {
+            await ExtractChangeLogTextForVersionAsync(options);
+
+            return;
         }
 
-        private static async Task<int> Main(string[] args)
+        if (options.Add != null && options.Message != null)
         {
-            Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion()}");
+            await AddEntryToUnreleasedChangelogAsync(options);
 
-            try
+            return;
+        }
+
+        if (options.CheckInsert != null)
+        {
+            await CheckInsertPositionAsync(options);
+
+            return;
+        }
+
+        if (options.CreateRelease != null)
+        {
+            await CreateNewReleaseAsync(options);
+
+            return;
+        }
+
+        if (options.DisplayUnreleased)
+        {
+            await OutputUnreleasedContentAsync(options);
+
+            return;
+        }
+
+        throw new InvalidOptionsException();
+    }
+
+    private static async Task OutputUnreleasedContentAsync(Options options)
+    {
+        string changeLog = FindChangeLog(options);
+        Console.WriteLine($"Using Changelog {changeLog}");
+
+        Console.WriteLine();
+        Console.WriteLine("Unreleased Content:");
+        string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: "0.0.0.0-unreleased");
+        Console.WriteLine(text);
+    }
+
+    private static Task CreateNewReleaseAsync(Options options)
+    {
+        string releaseVersion = options.CreateRelease!;
+        string changeLog = FindChangeLog(options);
+        Console.WriteLine($"Using Changelog {changeLog}");
+        Console.WriteLine($"Release Version: {releaseVersion}");
+
+        return ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: releaseVersion, pending: options.Pending);
+    }
+
+    private static async Task CheckInsertPositionAsync(Options options)
+    {
+        string originBranchName = options.CheckInsert!;
+        string changeLog = FindChangeLog(options);
+        Console.WriteLine($"Using Changelog {changeLog}");
+        Console.WriteLine($"Branch: {originBranchName}");
+        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: originBranchName);
+
+        if (valid)
+        {
+            Console.WriteLine("Changelog is valid");
+
+            return;
+        }
+
+        throw new ChangeLogInvalidFailedException("Changelog modified in released section");
+    }
+
+    private static Task AddEntryToUnreleasedChangelogAsync(Options options)
+    {
+        string changeType = options.Add!;
+        string message = options.Message!;
+        string changeLog = FindChangeLog(options);
+        Console.WriteLine($"Using Changelog {changeLog}");
+        Console.WriteLine($"Change Type: {changeType}");
+        Console.WriteLine($"Message: {message}");
+
+        return ChangeLogUpdater.AddEntryAsync(changeLogFileName: changeLog, type: changeType, message: message);
+    }
+
+    private static async Task ExtractChangeLogTextForVersionAsync(Options options)
+    {
+        string outputFileName = options.Extract!;
+        string version = options.Version!;
+        string changeLog = FindChangeLog(options);
+        Console.WriteLine($"Using Changelog {changeLog}");
+        Console.WriteLine($"Version {version}");
+
+        string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: version);
+
+        await File.WriteAllTextAsync(path: outputFileName, contents: text, encoding: Encoding.UTF8);
+    }
+
+    private static void NotParsed(IEnumerable<Error> errors)
+    {
+        Console.WriteLine("Errors:");
+
+        foreach (Error error in errors)
+        {
+            Console.WriteLine($" * {error.Tag} - {error}");
+        }
+    }
+
+    private static async Task<int> Main(string[] args)
+    {
+        Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion()}");
+
+        try
+        {
+            ParserResult<Options> parser = await Parser.Default.ParseArguments<Options>(args)
+                                                       .WithNotParsed(NotParsed)
+                                                       .WithParsedAsync(ParsedOkAsync);
+
+            return parser.Tag == ParserResultType.Parsed ? SUCCESS : ERROR;
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine($"ERROR: {exception.Message}");
+
+            if (exception.StackTrace != null)
             {
-                ParserResult<Options> parser = await Parser.Default.ParseArguments<Options>(args)
-                                                           .WithNotParsed(NotParsed)
-                                                           .WithParsedAsync(ParsedOkAsync);
-
-                return parser.Tag == ParserResultType.Parsed ? SUCCESS : ERROR;
+                Console.WriteLine(exception.StackTrace);
             }
-            catch (Exception exception)
-            {
-                Console.WriteLine($"ERROR: {exception.Message}");
 
-                if (exception.StackTrace != null)
-                {
-                    Console.WriteLine(exception.StackTrace);
-                }
-
-                return ERROR;
-            }
+            return ERROR;
         }
     }
 }

@@ -7,8 +7,17 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Additional code analysis fixes
 ### Fixed
 ### Changed
+- FF-1429 - Updated FunFair.Test.Common to 5.7.0.1478
+- FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.29
+- FF-1429 - Updated FunFair.CodeAnalysis to 5.7.3.1052
+- FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.1
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.33.0.40503
+- FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.30
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.680
+- FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.0
 ### Removed
 ### Deployment Changes
 
