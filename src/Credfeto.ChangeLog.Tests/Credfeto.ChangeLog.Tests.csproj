@@ -34,7 +34,7 @@
         <PackageReference Include="AsyncFixer" Version="1.5.1" PrivateAssets="All" />
         <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="All" />
         <PackageReference Include="FunFair.CodeAnalysis" Version="5.7.3.1052" PrivateAssets="All" />
-        <PackageReference Include="Meziantou.Analyzer" Version="1.0.680" PrivateAssets="All" />
+        <PackageReference Include="Meziantou.Analyzer" Version="1.0.681" PrivateAssets="All" />
         <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64" PrivateAssets="All" />
         <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.15" PrivateAssets="All" />
         <PackageReference Include="Nullable.Extended.Analyzer" Version="1.10.4539" PrivateAssets="All" />

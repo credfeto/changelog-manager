@@ -19,6 +19,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.680
 - FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.0
 - FF-1429 - Updated FunFair.Test.Common to 5.7.2.1514
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.681
 ### Removed
 ### Deployment Changes
 
