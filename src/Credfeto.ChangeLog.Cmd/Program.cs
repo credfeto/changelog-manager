@@ -140,7 +140,7 @@ internal static class Program
 
         foreach (Error error in errors)
         {
-            Console.WriteLine($" * {error.Tag} - {error}");
+            Console.WriteLine($" * {error.Tag}");
         }
     }
 
