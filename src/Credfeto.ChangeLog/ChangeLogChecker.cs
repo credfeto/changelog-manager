@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Credfeto.ChangeLog.Exceptions;
 using Credfeto.ChangeLog.Helpers;
 using LibGit2Sharp;
-using CompareOptions = LibGit2Sharp.CompareOptions;
 
 namespace Credfeto.ChangeLog;
 
@@ -53,9 +52,7 @@ public static class ChangeLogChecker
 
             int firstReleaseVersionIndex = position.Value;
 
-            Patch changes = repo.Diff.Compare<Patch>(oldTree: originBranch.Tip.Tree,
-                                                     newTree: repo.Head.Tip.Tree,
-                                                     new CompareOptions { ContextLines = 0, InterhunkLines = 0, IncludeUnmodified = false });
+            Patch changes = repo.Diff.Compare<Patch>(oldTree: originBranch.Tip.Tree, newTree: repo.Head.Tip.Tree, compareOptions: CompareSettings.BuildCompareOptions);
 
             PatchEntryChanges? change = changes.FirstOrDefault(candidate => candidate.Path == changeLogInRepoPath);
 
