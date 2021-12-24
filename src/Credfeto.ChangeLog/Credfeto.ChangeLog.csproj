@@ -50,5 +50,6 @@
         <PackageReference Include="SmartAnalyzers.CSharpExtensions.Annotations" Version="4.2.1" PrivateAssets="All" />
         <PackageReference Include="SonarAnalyzer.CSharp" Version="8.33.0.40503" PrivateAssets="All" />
         <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" />
+        <PackageReference Include="ToStringWithoutOverrideAnalyzer" Version="0.6.0" PrivateAssets="All" />
     </ItemGroup>
 </Project>
