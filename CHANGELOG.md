@@ -23,6 +23,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-3881 - Updated DotNet SDK to 6.0.101
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.31
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.32
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.682
 ### Removed
 ### Deployment Changes
 
