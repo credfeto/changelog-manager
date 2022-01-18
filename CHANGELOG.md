@@ -35,6 +35,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Philips.CodeAnalysis.DuplicateCodeAnalyzer to 1.1.6
 - FF-1429 - Updated FunFair.Test.Common to 5.8.0.1567
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.34.0.42011
+- FF-1429 - Updated FunFair.Test.Common to 5.8.1.1595
 ### Removed
 ### Deployment Changes
 
