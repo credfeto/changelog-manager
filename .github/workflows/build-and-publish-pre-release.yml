@@ -74,6 +74,7 @@ jobs:
     - name: Update Release Notes
       run: |
         dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
-    - name: Publish
+    - if: ${{ github.actor != 'dependabot[bot]' }}
+      name: Publish
       run: |
         dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
