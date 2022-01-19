@@ -32,11 +32,4 @@ jobs:
     - uses: hmarr/auto-approve-action@v2
       with:
         github-token: "${{ secrets.SOURCE_PUSH_TOKEN }}"
-    - uses: ahmadnassri/action-dependabot-auto-merge@v2
-      with:
-        target: patch
-        # Note: This needs to be a PAT with (public) repo rights,
-        #       PAT-owning user needs to have write access to this repo
-        #       (dependabot needs to recognize the comment as coming from an allowed reviewer)
-        github-token: ${{ secrets.SOURCE_PUSH_TOKEN }}
         
