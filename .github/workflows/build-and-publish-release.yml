@@ -47,28 +47,23 @@ jobs:
     - name: Set Define Build Version
       run: dotnet buildversion --BuildNumber $GITHUB_RUN_NUMBER
     - name: Create Release Notes
-      run: |
-        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
+      run: dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
     - id: release-notes
       uses: juliangruber/read-file-action@v1
       with:
         path: RELEASE_NOTES.md
     - name: Build with dotnet
-      run: |
-        cd src
-        dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
+      working-directory: ./src
+      run: dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
     - name: Pack tool
-      run: |
-        cd src
-        dotnet pack --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-restore --output ../dist
+      working-directory: ./src
+      run: dotnet pack --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-restore --output ../dist
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     - name: Update Release Notes with new tool
-      run: |
-        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
+      run: dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
     - name: Publish
-      run: |
-        dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
+      run: dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1.1.4
