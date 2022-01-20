@@ -61,8 +61,7 @@ jobs:
       run: dotnet tool install --local Credfeto.Changelog.Cmd
     - if: steps.check_files.outputs.files_exists == 'true'
       name: Create Release Notes
-      run: |
-        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
+      run: dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
     - if: steps.check_files.outputs.files_exists == 'true'
       id: release-notes
       uses: juliangruber/read-file-action@v1
@@ -70,21 +69,17 @@ jobs:
         path: RELEASE_NOTES.md
     - if: steps.check_files.outputs.files_exists == 'true'
       name: Build with dotnet
-      run: |
-        cd src
-        dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
+      working-directory: ./src
+      run: dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
     - if: steps.check_files.outputs.files_exists == 'true'
       name: Pack tool
-      run: |
-        cd src
-        dotnet pack --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-restore --output ../dist
+      working-directory: ./src
+      run: dotnet pack --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-restore --output ../dist
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
-    - if: {{ steps.check_files.outputs.files_exists == 'true' && github.actor != 'dependabot[bot]' }}
+    - if: ${{ steps.check_files.outputs.files_exists == 'true' && github.actor != 'dependabot[bot]' }}
       name: Update Release Notes
-      run: |
-        dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
-    - if: {{ steps.check_files.outputs.files_exists == 'true' && github.actor != 'dependabot[bot]' }}
+      run: dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
+    - if: ${{ steps.check_files.outputs.files_exists == 'true' && github.actor != 'dependabot[bot]' }}
       name: Publish
-      run: |
-        dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
+      run: dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
