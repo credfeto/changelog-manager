@@ -31,9 +31,8 @@ jobs:
         git branch --remote
     - name: Check file existence
       id: check_files
-      uses: andstor/file-existence-action@v1
-      with:
-        files: "src/global.json"
+      working-directory: ./src
+      run: [[ -f *.sln -a -f **/*.csproj -a -f global.json ]] && echo '::set-output name=files_exist::true' || echo ''::set-output name=files_exist::false'
     - if: steps.check_files.outputs.files_exists == 'true'
       name: Determine .net core version
       uses: credfeto/action-dotnet-version-detect@v1.2.0
