@@ -48,6 +48,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.690
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.692
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.34
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.693
 ### Removed
 ### Deployment Changes
 
