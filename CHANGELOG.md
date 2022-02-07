@@ -53,6 +53,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.Test.Common to 5.8.4.1638
 - FF-1429 - Updated FunFair.Test.Common to 5.8.5.1649
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.8.0.1196
+- FF-1429 - Updated FunFair.Test.Common to 5.9.0.1658
 ### Removed
 ### Deployment Changes
 
