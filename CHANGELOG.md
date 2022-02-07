@@ -51,6 +51,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.693
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.694
 - FF-1429 - Updated FunFair.Test.Common to 5.8.4.1638
+- FF-1429 - Updated FunFair.Test.Common to 5.8.5.1649
 ### Removed
 ### Deployment Changes
 
