@@ -7,8 +7,17 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Additional code analysis fixes
 ### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [1.8.1] - 2022-02-09
+### Added
+- Additional code analysis fixes
 ### Changed
 - FF-1429 - Updated FunFair.Test.Common to 5.7.0.1478
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.29
@@ -55,12 +64,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.8.0.1196
 - FF-1429 - Updated FunFair.Test.Common to 5.9.0.1658
 - FF-3881 - Updated DotNet SDK to 6.0.102
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [1.8.0] - 2021-11-17
 ### Changed
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.0.64
