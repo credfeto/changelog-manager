@@ -21,6 +21,7 @@ jobs:
       OCTOPUS_DEPLOY_PACKAGE: ${{ secrets.OCTOPUS_DEPLOY_PACKAGE }}
       OCTOPUS_PROJECT: ${{ secrets.OCTOPUS_PROJECT }}
       OCTOPUS_CHANNEL: ${{ secrets.OCTOPUS_PRERELEASE_CHANNEL }}
+      OCTOPUS_DEPLOY_TO: ${{ secrets.OCTOPUS_DEPLOYTO_PRERELEASE }}
       OCTOPUS_SERVER: ${{ secrets.OCTOPUS_SERVER }}
       OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
       NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
@@ -43,8 +44,6 @@ jobs:
       run: |
         if [[ -f global.json && $(compgen -G "*.sln") && $(compgen -G "**/*.csproj") ]]; then echo '::set-output name=FILES_EXIST::true'; else echo '::set-output name=FILES_EXIST::false'; fi
         if [[ -f global.json && $(compgen -G "*.sln") && $(compgen -G "**/*.csproj") ]]; then echo 'Exists: true'; else echo 'Exists: false'; fi
-    - name: Status
-      run: echo "XXXX ${{ steps.check_files.outputs.FILES_EXIST }}"
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Determine .net core version
       uses: credfeto/action-dotnet-version-detect@v1.2.0
@@ -105,12 +104,12 @@ jobs:
       working-directory: ./src/${{ env.OCTOPUS_DEPLOY_PACKAGE }}
       run: dotnet publish --no-restore -warnaserror -p:PublishSingleFile=true --configuration:Release -r:linux-x64 --self-contained:true -p:PublishReadyToRun=False -p:PublishReadyToRunShowWarnings=True -p:PublishTrimmed=False -p:DisableSwagger=False -p:TreatWarningsAsErrors=True -p:Version=${{ env.BUILD_VERSION }} -p:IncludeNativeLibrariesForSelfExtract=false -p:SolutionDir=..\\ --output ../server-dist
     - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' }}
-      name: Pack Packages for Octopus
+      name: Zip Packages for Octopus
       working-directory: ./src/server-dist
-      run: zip -9r ../../${{ env.OCTOPUS_DEPLOY_PACKAGE != '' }}.zip .
+      run: zip -9r ../../${{ env.OCTOPUS_DEPLOY_PACKAGE }}.${{ env.BUILD_VERSION }}.zip .
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.OCTOPUS_DEPLOY_PACKAGE != '' }}
-      name: Push package to octopus 
+      name: Push package to Octopus 
       run: octo push --package *.zip  --server="${{ env.OCTOPUS_SERVER }}" --apiKey="${{ env.OCTOPUS_API_KEY}}" --enableServiceMessages --debug --overwrite-mode=IgnoreIfExists    
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.OCTOPUS_DEPLOY_PACKAGE != '' && env.OCTOPUS_CHANNEL != '' }}
       name: Deploy 
-      run: octo create-release --project=${{ env.OCTOPUS_PROJECT }} --version=${{env.BUILD_VERSION}} --channel=${{ env.OCTOPUS_CHANNEL }} --package=${{ secrets.OCTOPUS_DEPLOY_PACKAGE }}:${{env.DOWNLOADED_VERSION}} --deployTo=Work --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug
+      run: octo create-release --project=${{ env.OCTOPUS_PROJECT }} --version=${{env.BUILD_VERSION}} --channel=${{ env.OCTOPUS_CHANNEL }} --package=${{ env.OCTOPUS_DEPLOY_PACKAGE }}:${{env.BUILD_VERSION}} --deployTo=${{ env.OCTOPUS_DEPLOY_TO }} --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug  --releaseNotesFile=RELEASE_NOTES.md
