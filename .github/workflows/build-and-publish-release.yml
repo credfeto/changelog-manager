@@ -44,6 +44,11 @@ jobs:
       run: dotnet tool install --local Credfeto.Package.Push
     - name: Install Changelog Tool
       run: dotnet tool install --local Credfeto.Changelog.Cmd
+    - if: ${{ secrets.OCTOPUS_DEPLOY_PACKAGE != '' }}
+      name: install Octopus Deploy CLI
+      uses: OctopusDeploy/install-octocli@v1.1.8
+      with:
+        version: 7.4.2
     - name: Set Define Build Version
       run: dotnet buildversion --BuildNumber $GITHUB_RUN_NUMBER
     - name: Create Release Notes
@@ -55,6 +60,8 @@ jobs:
     - name: Build with dotnet
       working-directory: ./src
       run: dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
+
+    ## NUGET PACKAGES
     - if: ${{ && secrets.NUGET_API_KEY != '' }}
       name: Pack tool
       working-directory: ./src
@@ -62,8 +69,26 @@ jobs:
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     - if: ${{ && secrets.NUGET_API_KEY != '' }}
-      name: Publish
+      name: Publish Packages to Nuget
       run: dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
+
+    ## OCTOPUS PACKAGES
+    - if: ${{ secrets.OCTOPUS_DEPLOY_PACKAGE != '' }}
+      name: Pack Packages for Octopus
+      working-directory: ./src/${{ secrets.OCTOPUS_DEPLOY_PACKAGE }}
+      run: dotnet publish --configuration Release /p:Version=${{ env.BUILD_VERSION }}  --no-restore --output ../server-dist
+    - if: ${{ secrets.OCTOPUS_DEPLOY_PACKAGE != '' }}
+      name: Pack Packages for Octopus
+      working-directory: ./src/server-dist
+      run: zip -9r ../../${{ secrets.OCTOPUS_DEPLOY_PACKAGE != '' }} .
+    - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' }}
+      name: Push package to octopus 
+      run: octo push --package *.zip  --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug --overwrite-mode=IgnoreIfExists    
+    - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' && secrets.OCTOPUS_RELEASE_CHANNEL != '' }}
+      name: Deploy 
+      run: octo create-release --project=${{ secrets.OCTOPUS_PROJECT }} --version=${{env.BUILD_VERSION}} --channel=${{ secrets.OCTOPUS_RELEASE_CHANNEL }} --package=${{ secrets.OCTOPUS_DEPLOY_PACKAGE }}:${{env.DOWNLOADED_VERSION}} --deployTo=Work --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug
+
+    # Create Github Release      
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1.1.4
