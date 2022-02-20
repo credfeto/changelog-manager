@@ -58,6 +58,11 @@ jobs:
     - if: steps.check_files.outputs.files_exists == 'true'
       name: Install Changelog Tool
       run: dotnet tool install --local Credfeto.Changelog.Cmd
+    - if: ${{ secrets.OCTOPUS_DEPLOY_PACKAGE != '' }}
+      name: install Octopus Deploy CLI
+      uses: OctopusDeploy/install-octocli@v1.1.8
+      with:
+        version: 7.4.2
     - if: steps.check_files.outputs.files_exists == 'true'
       name: Create Release Notes
       run: dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
