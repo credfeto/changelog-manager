@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OCTOPUS_DEPLOY_PACKAGE: ${{ secrets.OCTOPUS_DEPLOY_PACKAGE }}
+      OCTOPUS_DEPLOY_PACKAGE_ZIP: ${{ secrets.OCTOPUS_DEPLOY_PACKAGE_ZIP }}
       OCTOPUS_PROJECT: ${{ secrets.OCTOPUS_PROJECT }}
       OCTOPUS_CHANNEL: ${{ secrets.OCTOPUS_PRERELEASE_CHANNEL }}
       OCTOPUS_DEPLOY_TO: ${{ secrets.OCTOPUS_DEPLOYTO_PRERELEASE }}
@@ -106,10 +107,10 @@ jobs:
     - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' }}
       name: Zip Packages for Octopus
       working-directory: ./src/server-dist
-      run: zip -9r ../../${{ env.OCTOPUS_DEPLOY_PACKAGE }}.${{ env.BUILD_VERSION }}.zip .
+      run: zip -9r ../../${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}.${{ env.BUILD_VERSION }}.zip .
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.OCTOPUS_DEPLOY_PACKAGE != '' }}
       name: Push package to Octopus 
       run: octo push --package *.zip  --server="${{ env.OCTOPUS_SERVER }}" --apiKey="${{ env.OCTOPUS_API_KEY}}" --enableServiceMessages --debug --overwrite-mode=IgnoreIfExists    
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.OCTOPUS_DEPLOY_PACKAGE != '' && env.OCTOPUS_CHANNEL != '' }}
       name: Deploy 
-      run: octo create-release --project=${{ env.OCTOPUS_PROJECT }} --version=${{env.BUILD_VERSION}} --channel=${{ env.OCTOPUS_CHANNEL }} --package=${{ env.OCTOPUS_DEPLOY_PACKAGE }}:${{env.BUILD_VERSION}} --deployTo=${{ env.OCTOPUS_DEPLOY_TO }} --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug  --releaseNotesFile=RELEASE_NOTES.md
+      run: octo create-release --project=${{ env.OCTOPUS_PROJECT }} --version=${{env.BUILD_VERSION}} --channel=${{ env.OCTOPUS_CHANNEL }} --package=${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}:${{env.BUILD_VERSION}} --deployTo=${{ env.OCTOPUS_DEPLOY_TO }} --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug  --releaseNotesFile=RELEASE_NOTES.md
