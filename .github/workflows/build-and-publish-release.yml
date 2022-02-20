@@ -14,6 +14,7 @@ jobs:
       OCTOPUS_DEPLOY_PACKAGE: ${{ secrets.OCTOPUS_DEPLOY_PACKAGE }}
       OCTOPUS_PROJECT: ${{ secrets.OCTOPUS_PROJECT }}
       OCTOPUS_CHANNEL: ${{ secrets.OCTOPUS_RELEASE_CHANNEL }}
+      OCTOPUS_DEPLOY_TO: ${{ secrets.OCTOPUS_DEPLOYTO_RELEASE }}
       OCTOPUS_SERVER: ${{ secrets.OCTOPUS_SERVER }}
       OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
       NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
@@ -88,13 +89,14 @@ jobs:
     - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' }}
       name: Pack Packages for Octopus
       working-directory: ./src/server-dist
-      run: zip -9r ../../${{ env.OCTOPUS_DEPLOY_PACKAGE }}.zip .
+      run: zip -9r ../../${{ env.OCTOPUS_DEPLOY_PACKAGE }}.${{ env.BUILD_VERSION }}.zip .
     - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' }}
       name: Push package to octopus 
       run: octo push --package *.zip  --server="${{ env.OCTOPUS_SERVER }}" --apiKey="${{ env.OCTOPUS_API_KEY}}" --enableServiceMessages --debug --overwrite-mode=IgnoreIfExists    
     - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' && env.OCTOPUS_CHANNEL != '' }}
       name: Deploy to Octopus
-      run: octo create-release --project=${{ env.OCTOPUS_PROJECT }} --version=${{env.BUILD_VERSION}} --channel=${{ env.OCTOPUS_CHANNEL }} --package=${{ secrets.OCTOPUS_DEPLOY_PACKAGE }}:${{env.DOWNLOADED_VERSION}} --deployTo=Work --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug
+      run: octo create-release --project=${{ env.OCTOPUS_PROJECT }} --version=${{env.BUILD_VERSION}} --channel=${{ env.OCTOPUS_CHANNEL }} --package=${{ env.OCTOPUS_DEPLOY_PACKAGE }}:${{env.BUILD_VERSION}} --deployTo=${{ env.OCTOPUS_DEPLOY_TO }} --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug
+      --package=${{ env.OCTOPUS_DEPLOY_PACKAGE }}:${{ env.BUILD_VERSION }} --deploymenttimeout=00:20:00 --releaseNotesFile=RELEASE_NOTES.md
 
     # Create Github Release      
     - name: Create Release
