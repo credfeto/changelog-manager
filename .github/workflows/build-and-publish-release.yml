@@ -55,14 +55,14 @@ jobs:
     - name: Build with dotnet
       working-directory: ./src
       run: dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
-    - name: Pack tool
+    - if: ${{ && secrets.NUGET_API_KEY != '' }}
+      name: Pack tool
       working-directory: ./src
       run: dotnet pack --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-restore --output ../dist
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
-    - name: Update Release Notes with new tool
-      run: dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
-    - name: Publish
+    - if: ${{ && secrets.NUGET_API_KEY != '' }}
+      name: Publish
       run: dotnet pushpackages -folder dist --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
     - name: Create Release
       id: create_release
