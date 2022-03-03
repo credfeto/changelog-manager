@@ -16,6 +16,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.1
 - FF-1429 - Updated TeamCity.VSTest.TestAdapter to 1.0.36
 - FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.2
+- FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.2
 ### Removed
 ### Deployment Changes
 
