@@ -56,7 +56,7 @@ jobs:
       run: dotnet tool install --local Credfeto.Changelog.Cmd
     - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' }}
       name: install Octopus Deploy CLI
-      uses: OctopusDeploy/install-octocli@v1.1.9
+      uses: OctopusDeploy/install-octocli@v1.1.10
       with:
         version: 7.4.2
     - name: Set Define Build Version
