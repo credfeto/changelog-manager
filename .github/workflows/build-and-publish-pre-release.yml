@@ -29,7 +29,7 @@ jobs:
       NUGET_FEED: ${{ secrets.NUGET_FEED }}
 
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
     - name: Fetch tags and master
@@ -50,7 +50,7 @@ jobs:
       uses: credfeto/action-dotnet-version-detect@v1.2.0
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Setup .NET Core
-      uses: actions/setup-dotnet@v1.9.0
+      uses: actions/setup-dotnet@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
