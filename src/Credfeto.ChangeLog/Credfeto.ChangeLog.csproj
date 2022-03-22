@@ -1,17 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <OutputType>Library</OutputType>
-        <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-        <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-        <WarningsAsErrors />
-        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-        <LangVersion>latest</LangVersion>
-        <Features>strict;flow-analysis</Features>
-        <PackAsTool>true</PackAsTool>
-        <IsPackable>true</IsPackable>
-        <Nullable>enable</Nullable>
-        <NoWarn />
-        <ImplicitUsings>disable</ImplicitUsings>
+      <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+      <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+      <EnablePackageValidation>true</EnablePackageValidation>
+      <Features>strict;flow-analysis</Features>
+      <GenerateNeutralResourcesLanguageAttribute>true</GenerateNeutralResourcesLanguageAttribute>
+      <ImplicitUsings>disable</ImplicitUsings>
+      <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+      <IsPackable>true</IsPackable>
+      <IsPublishable>false</IsPublishable>
+      <LangVersion>latest</LangVersion>
+      <NoWarn>1591</NoWarn>
+      <Nullable>enable</Nullable>
+      <OutputType>Library</OutputType>
+      <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+      <TieredCompilation>true</TieredCompilation>
+      <TreatSpecificWarningsAsErrors/>
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+      <WarningsAsErrors/>
     </PropertyGroup>
     <PropertyGroup>
         <AnalysisLevel>latest</AnalysisLevel>
