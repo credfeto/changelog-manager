@@ -33,7 +33,7 @@ jobs:
         echo GIT_BRANCH=$GITHUB_REF >> $GITHUB_ENV
         git branch --remote
     - name: Determine .net core version
-      uses: credfeto/action-dotnet-version-detect@v1.2.0
+      uses: credfeto/action-dotnet-version-detect@v1.2.1
     - name: Setup .NET Core (Old)
       uses: actions/setup-dotnet@v2
       env:
