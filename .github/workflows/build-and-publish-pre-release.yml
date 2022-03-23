@@ -47,7 +47,7 @@ jobs:
         if [[ -f global.json && $(compgen -G "*.sln") && $(compgen -G "**/*.csproj") ]]; then echo 'Exists: true'; else echo 'Exists: false'; fi
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Determine .net core version
-      uses: credfeto/action-dotnet-version-detect@v1.2.0
+      uses: credfeto/action-dotnet-version-detect@v1.2.1
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Setup .NET Core
       uses: actions/setup-dotnet@v2
