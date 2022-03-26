@@ -87,12 +87,16 @@ jobs:
       name: Build with dotnet
       working-directory: ./src
       run: dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
+      env:
+        ReleaseNotes: ${{ steps.release-notes.outputs.content }}
 
     ## RUN TESTS
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Build with dotnet
       working-directory: ./src
       run: dotnet test --no-build --no-restore -noConsoleLogger --configuration Release /p:Version=${{ env.BUILD_VERSION }} -results-directory ./.test-results
+      env:
+        ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Generate xunit test results
       id: xunit-viewer
