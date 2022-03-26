@@ -88,6 +88,24 @@ jobs:
       working-directory: ./src
       run: dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
 
+    ## RUN TESTS
+    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+      name: Build with dotnet
+      working-directory: ./src
+      run: dotnet test --no-build --no-restore -noConsoleLogger --configuration Release /p:Version=${{ env.BUILD_VERSION }} -results-directory ./.test-results
+    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+      name: Generate xunit test results
+      id: xunit-viewer
+      uses: AutoModality/action-xunit-viewer@v1
+      with:
+        results: src/.test-results
+    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+      name: Attach the report
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{ steps.xunit-viewer.outputs.report-name }}
+        path: ${{ steps.xunit-viewer.outputs.report-dir }}
+
     ## NUGET PACKAGES
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.NUGET_API_KEY != '' }}
       name: Pack tool
