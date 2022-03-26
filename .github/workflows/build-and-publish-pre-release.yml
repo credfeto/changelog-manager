@@ -94,15 +94,19 @@ jobs:
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Test with dotnet
       working-directory: ./src
-      run: dotnet test --no-build --no-restore -noConsoleLogger --configuration Release /p:Version=${{ env.BUILD_VERSION }} --filter FullyQualifiedName\!~Integration --results-directory ./.test-results 
+      run: dotnet test --no-build --no-restore -noConsoleLogger --configuration Release /p:Version=${{ env.BUILD_VERSION }} --filter FullyQualifiedName\!~Integration --results-directory ../test-results 
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+      name: Show Test files
+      working-directory: ./test-results
+      run: ls -lar
+    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && always() }}
       name: Generate xunit test results
       id: xunit-viewer
       uses: AutoModality/action-xunit-viewer@v1
       with:
-        results: src/.test-results
+        results: test-results
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Attach the report
       uses: actions/upload-artifact@v1
