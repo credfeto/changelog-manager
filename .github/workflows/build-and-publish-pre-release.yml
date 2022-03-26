@@ -94,25 +94,16 @@ jobs:
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Test with dotnet
       working-directory: ./src
-      run: dotnet test --no-build --no-restore -noConsoleLogger --configuration Release /p:Version=${{ env.BUILD_VERSION }} --filter FullyQualifiedName\!~Integration --results-directory ../test-results 
+      run: dotnet test --no-build --no-restore -noConsoleLogger --configuration Release /p:Version=${{ env.BUILD_VERSION }} --filter FullyQualifiedName\!~Integration --logger:"trx;LogFilePrefix=testResults" --results-directory ../test-results 
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
-    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
-      name: Show Test files
-      working-directory: ./test-results
-      run: ls -lar
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && always() }}
-      name: Generate xunit test results
-      id: xunit-viewer
-      uses: AutoModality/action-xunit-viewer@v1
+      name: Convert tests results to github checks
+      uses: NasAmin/trx-parser@v0.2.0
+      id: trx-parser
       with:
-        results: test-results
-    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
-      name: Attach the report
-      uses: actions/upload-artifact@v1
-      with:
-        name: ${{ steps.xunit-viewer.outputs.report-name }}
-        path: ${{ steps.xunit-viewer.outputs.report-dir }}
+        TRX_PATH: ${{ github.workspace }}/test-results #This should be the path to your TRX files
+        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     ## NUGET PACKAGES
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.NUGET_API_KEY != '' }}
