@@ -14,7 +14,7 @@ on:
      - synchronize
 
 jobs:
-  build:
+  build-pre-release:
 
     runs-on: ubuntu-latest
     env:
