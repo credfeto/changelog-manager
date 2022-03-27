@@ -7,7 +7,7 @@ on:
        - 'hotfix/*'
 
 jobs:
-  build:
+  build-release:
 
     runs-on: ubuntu-latest
     env:
