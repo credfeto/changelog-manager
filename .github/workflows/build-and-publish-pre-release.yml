@@ -27,6 +27,11 @@ jobs:
       OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
       NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
       NUGET_FEED: ${{ secrets.NUGET_FEED }}
+      DOTNET_NOLOGO: true
+      DOTNET_PRINT_TELEMETRY_MESSAGE: false
+      DOTNET_ReadyToRun: 0
+      DOTNET_TC_QuickJitForLoops: 1
+      DOTNET_TieredPGO: 1
 
     steps:
     - uses: actions/checkout@v3
