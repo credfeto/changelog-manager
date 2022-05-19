@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-      <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+      <RunAOTCompilation>true</RunAOTCompilation>
       <EnablePackageValidation>true</EnablePackageValidation>
       <Features>strict;flow-analysis</Features>
       <GenerateNeutralResourcesLanguageAttribute>true</GenerateNeutralResourcesLanguageAttribute>
@@ -10,11 +10,11 @@
       <IsPackable>true</IsPackable>
       <IsPublishable>true</IsPublishable>
       <LangVersion>latest</LangVersion>
-      <NoWarn>1591</NoWarn>
+      <NoWarn/>
       <Nullable>enable</Nullable>
       <OutputType>Exe</OutputType>
       <PackAsTool>true</PackAsTool>
-      <RuntimeIdentifiers>win-x64;win10-x64;win81-x64;osx.10.12-x64;linux-x64;debian.9-x64</RuntimeIdentifiers>
+      <RuntimeIdentifiers>win-x64;win10-x64;win81-x64;osx.10.12-x64;linux-x64;debian.9-x64;linux-arm64</RuntimeIdentifiers>
       <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
       <TieredCompilation>true</TieredCompilation>
       <TreatSpecificWarningsAsErrors/>
