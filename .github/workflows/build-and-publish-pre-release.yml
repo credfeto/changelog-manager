@@ -56,6 +56,9 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+      name: Install dotner workload - Mac OS
+      run: dotnet workload install macos --skip-manifest-update
+    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Enable dotnet tools
       run: dotnet new tool-manifest
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
@@ -72,7 +75,7 @@ jobs:
       run: dotnet tool install --local Credfeto.Changelog.Cmd
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.OCTOPUS_DEPLOY_PACKAGE != '' }}
       name: install Octopus Deploy CLI
-      uses: OctopusDeploy/install-octocli@v1.1.10
+      uses: OctopusDeploy/install-octocli@v1.2.0
       with:
         version: 7.4.2
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
