@@ -109,7 +109,7 @@ jobs:
     - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' }}
       name: Pack Packages for Octopus
       working-directory: ./src/${{ env.OCTOPUS_DEPLOY_PACKAGE }}
-      run: dotnet publish --configuration Release /p:Version=${{ env.BUILD_VERSION }}  --no-restore --output ../server-dist
+      run: dotnet publish --configuration Release /p:Version=${{ env.BUILD_VERSION }} -p:NoWarn=NETSDK1179 --no-restore --output ../server-dist
     - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' }}
       name: Pack Packages for Octopus
       working-directory: ./src/server-dist
