@@ -138,12 +138,12 @@ jobs:
       working-directory: ./src/server-dist/x64
       run: zip -9r ../../../${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-x64.${{ env.BUILD_VERSION }}.zip .
     - if: ${{ env.OCTOPUS_DEPLOY_PACKAGE != '' }}
-      name: Zip Packages for Octopus (amd64)
-      working-directory: ./src/server-dist/amd64
-      run: zip -9r ../../../${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-amd64.${{ env.BUILD_VERSION }}.zip .
+      name: Zip Packages for Octopus (arm64)
+      working-directory: ./src/server-dist/arm64
+      run: zip -9r ../../../${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-arm64.${{ env.BUILD_VERSION }}.zip .
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.OCTOPUS_DEPLOY_PACKAGE != '' }}
       name: Push package to Octopus 
       run: octo push --package *.zip  --server="${{ env.OCTOPUS_SERVER }}" --apiKey="${{ env.OCTOPUS_API_KEY}}" --enableServiceMessages --debug --overwrite-mode=IgnoreIfExists    
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.OCTOPUS_DEPLOY_PACKAGE != '' && env.OCTOPUS_CHANNEL != '' && env.GIT_BRANCH == 'refs/heads/main' }}
       name: Deploy 
-      run: octo create-release --project="${{ env.OCTOPUS_PROJECT }}" --version="${{env.BUILD_VERSION}}" --channel="${{ env.OCTOPUS_CHANNEL }}" --package="${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-x64:${{env.BUILD_VERSION}}" --package="${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-amd64:${{env.BUILD_VERSION}}" --deployTo="${{ env.OCTOPUS_DEPLOY_TO }}" --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug  --releaseNotesFile="RELEASE_NOTES.md"
+      run: octo create-release --project="${{ env.OCTOPUS_PROJECT }}" --version="${{env.BUILD_VERSION}}" --channel="${{ env.OCTOPUS_CHANNEL }}" --package="${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-x64:${{env.BUILD_VERSION}}" --package="${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-arm64:${{env.BUILD_VERSION}}" --deployTo="${{ env.OCTOPUS_DEPLOY_TO }}" --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug  --releaseNotesFile="RELEASE_NOTES.md"
