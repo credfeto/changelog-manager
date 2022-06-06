@@ -10,7 +10,6 @@ on:
 
 jobs:
   pull-request:
-    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
 
     steps:
