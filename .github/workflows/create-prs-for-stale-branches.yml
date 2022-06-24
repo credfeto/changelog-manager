@@ -16,7 +16,7 @@ jobs:
     outputs:
       branches: ${{ steps.set-matrix.outputs.branches }}
 
-  ci:
+  check-branch:
     needs: build-matrix
     runs-on: ubuntu-latest
     strategy:
@@ -29,4 +29,4 @@ jobs:
       #     token: ${{ secrets.SOURCE_PUSH_TOKEN }}
 
       - run: |
-          echo 'Found: ${{ matrix.branch }}''
+          echo 'Found: ${{ matrix.branch }}'
