@@ -58,10 +58,10 @@ jobs:
         env:
           number: ${{ steps.find-pull-request.outputs.number }}
           sha: ${{ steps.find-pull-request.outputs.head-sha }}
-      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && number == '' }}
+      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' }}
         run: |
-          echo "Need to check to see if branch is ahead or behind..."
-          git rev-list --left-right --count  ${{steps.detection.outputs.defaultbranch}}...${{matrix.branch}} | awk '{
-                      print "${{matrix.branch}} is behind ${{steps.detection.outputs.defaultbranch}} by $1 commit"
-                      print "${{matrix.branch}} is ahead of ${{steps.detection.outputs.defaultbranch}} by $1 commit"
+          echo "Check to see if ${{steps.detection.outputs.defaultbranch}} is ahead or behind ${{matrix.branch}}..."
+          git rev-list --left-right --count  origin/${{steps.detection.outputs.defaultbranch}}...origin/${{matrix.branch}} | awk '{
+                      print "${{matrix.branch}} is behind ${{steps.detection.outputs.defaultbranch}} by "$1" commit(s)"
+                      print "${{matrix.branch}} is ahead of ${{steps.detection.outputs.defaultbranch}} by "$2" commit(s)"
                       }'
