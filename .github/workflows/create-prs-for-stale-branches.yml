@@ -11,8 +11,13 @@ jobs:
   build-matrix:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SOURCE_PUSH_TOKEN }}
+
       - id: set-matrix
-        run: echo "::set-output name=branches::$(git branch --remote --format='%(refname:short)' | grep -Po 'origin/\K[^.*]*' | grep -vE 'HEAD|main')"
+        run: echo "::set-output name=branches::$(git branch --remote --format='%(refname:short)' | grep -Po 'origin/\K[^.*]*' | grep -vE 'HEAD|release/|hotfix/' | jq -R -s -c 'split("\n")[:-1]')"
     outputs:
       branches: ${{ steps.set-matrix.outputs.branches }}
 
@@ -23,10 +28,17 @@ jobs:
       matrix:
         branch: ${{ fromJson(needs.build-matrix.outputs.branches) }}
     steps:
-      # - uses: actions/checkout@v3
-      #   with:
-      #     fetch-depth: 0
-      #     token: ${{ secrets.SOURCE_PUSH_TOKEN }}
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SOURCE_PUSH_TOKEN }}
 
+      - id: detection
+        run: |
+          echo "::set-output name=defaultbranch::$(git remote show origin | grep -Po 'HEAD\sbranch:\s+\K[^.*]*')"
       - run: |
           echo 'Found: ${{ matrix.branch }}'
+      - if: ${{ steps.detection.outputs.defaultbranch == matrix.branch }}
+        run: echo "On Default branch - don't do anything"
+      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch }}
+        run: echo "On non-default branch"
