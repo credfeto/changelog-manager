@@ -38,7 +38,23 @@ jobs:
           echo "::set-output name=defaultbranch::$(git remote show origin | grep -Po 'HEAD\sbranch:\s+\K[^.*]*')"
       - run: |
           echo 'Found: ${{ matrix.branch }}'
+
+      # On Default branch
       - if: ${{ steps.detection.outputs.defaultbranch == matrix.branch }}
         run: echo "On Default branch - don't do anything"
+
+
+      # On Non-Default branch
       - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch }}
         run: echo "On non-default branch"
+
+      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch }}
+        uses: juliangruber/find-pull-request-action@v1
+        id: find-pull-request
+        with:
+          branch: ${{ matrix.branch }}
+      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch }}
+        run: echo "Pull Request ${number} (${sha})"
+        env:
+          number: ${{ steps.find-pull-request.outputs.number }}
+          sha: ${{ steps.find-pull-request.outputs.head-sha }}
