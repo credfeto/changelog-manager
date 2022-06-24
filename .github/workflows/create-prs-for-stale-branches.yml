@@ -36,8 +36,8 @@ jobs:
       - id: detection
         run: |
           echo "::set-output name=defaultbranch::$(git remote show origin | grep -Po 'HEAD\sbranch:\s+\K[^.*]*')"
-      - run: git config --global --add safe.directory /github/workspace
 
+      # - run: git config -global --add safe.directory /github/workspace
 
       # On Default branch
       - if: ${{ steps.detection.outputs.defaultbranch == matrix.branch }}
@@ -80,7 +80,7 @@ jobs:
 
       - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 }}
         id: open-pr
-        uses: repo-sync/pull-request@v2.6
+        uses: repo-sync/pull-request@v2.6.2
         with:
           source_branch: ${{matrix.branch}}       # If blank, default: triggered branch
           destination_branch: ${{steps.detection.outputs.defaultbranch}}            # If blank, default: master
@@ -92,7 +92,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 }}
-        name: Details
+        name: New PR Details
         run: |
             echo "URL: ${{steps.open-pr.outputs.pr_url}}"
             echo "PR: ${{steps.open-pr.outputs.pr_number}}"
