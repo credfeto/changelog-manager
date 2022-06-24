@@ -47,8 +47,8 @@ jobs:
     - name: Check file existence
       id: check_files
       run: |
-        if [[ -d src && -f src/global.json && $(compgen -G "*.sln") && $(compgen -G "**/*.csproj") ]]; then echo '::set-output name=FILES_EXIST::true'; else echo '::set-output name=FILES_EXIST::false'; fi
-        if [[ -d src && -f src/global.json && $(compgen -G "*.sln") && $(compgen -G "**/*.csproj") ]]; then echo 'Exists: true'; else echo 'Exists: false'; fi
+        if [[ -d src && -f src/global.json && $(compgen -G "**/*.sln") && $(compgen -G "**/*.csproj") ]]; then echo '::set-output name=FILES_EXIST::true'; else echo '::set-output name=FILES_EXIST::false'; fi
+        if [[ -d src && -f src/global.json && $(compgen -G "**/*.sln") && $(compgen -G "**/*.csproj") ]]; then echo 'Exists: true'; else echo 'Exists: false'; fi
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Determine .net core version
       uses: credfeto/action-dotnet-version-detect@v1.2.1
@@ -58,7 +58,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+        dotnet-version: |
+            5.0.x
+            ${{ env.DOTNET_VERSION }}
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Install dotner workload - Mac OS
       run: dotnet workload install macos --skip-manifest-update
@@ -90,10 +92,23 @@ jobs:
       uses: juliangruber/read-file-action@v1
       with:
         path: RELEASE_NOTES.md
+
+    # BUILD DOTNET
+    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.sln', '**/*.csproj', '**/*.props') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+      name: Restore dotnet packages
+      working-directory: ./src
+      run: dotnet restore
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Build with dotnet
       working-directory: ./src
-      run: dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
+      run: dotnet build --no-restore --configuration Release /p:Version=${{ env.BUILD_VERSION }}
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
 
