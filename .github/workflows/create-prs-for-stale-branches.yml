@@ -79,6 +79,10 @@ jobs:
           path: ./.github/PULL_REQUEST_TEMPLATE.md
 
       - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 }}
+        name: Get last commit message
+        run: echo "COMMIT_MSG=$(git log -1 --pretty=%B ${{matrix.branch}})" >> $GITHUB_ENV
+
+      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 }}
         id: open-pr
         uses: repo-sync/pull-request@v2.6.2
         with:
