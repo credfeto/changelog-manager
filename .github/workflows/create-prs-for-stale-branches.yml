@@ -36,8 +36,8 @@ jobs:
       - id: detection
         run: |
           echo "::set-output name=defaultbranch::$(git remote show origin | grep -Po 'HEAD\sbranch:\s+\K[^.*]*')"
-      - run: |
-          echo 'Found: ${{ matrix.branch }}'
+      - run: git config --global --add safe.directory /github/workspace
+
 
       # On Default branch
       - if: ${{ steps.detection.outputs.defaultbranch == matrix.branch }}
