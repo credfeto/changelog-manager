@@ -69,33 +69,36 @@ jobs:
                       print "${{matrix.branch}} is ahead of ${{steps.detection.outputs.defaultbranch}} by "$2" commit(s)"
                       print "::set-output name=ahead::"$2
                       }'
-
+          echo ""::set-output name=dayssinceupdate=$((($(date +%s)-$(date +%s --date @$(git log -1 --format=%ct origin/${{matrix.branch}})))/(3600*24)))"
+      # get date of last commit in branch
+      # git log -1 --format=%cd origin/release/0.0.1
+      
 
       # Non-default - ahead of default branch, and no -re-existing PR then create one.
-      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 }}
+      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 && steps.aheadbehind.outputs.dayssinceupdate > 7 }}
         id: pr-template
         uses: juliangruber/read-file-action@v1
         with:
           path: ./.github/PULL_REQUEST_TEMPLATE.md
 
-      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 }}
+      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 && steps.aheadbehind.outputs.dayssinceupdate > 7 }}
         name: Get last commit message
         run: echo "COMMIT_MSG=$(git log -1 --pretty=%B ${{matrix.branch}})" >> $GITHUB_ENV
 
-      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 }}
+      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 && steps.aheadbehind.outputs.dayssinceupdate > 7 }}
         id: open-pr
         uses: repo-sync/pull-request@v2.6.2
         with:
           source_branch: ${{matrix.branch}}       # If blank, default: triggered branch
           destination_branch: ${{steps.detection.outputs.defaultbranch}}            # If blank, default: master
           pr_assignee: "${{ github.actor }}"    # Comma-separated list (no spaces)
-          pr_label: "auto-pr"                   # Comma-separated list (no spaces)
+          pr_label: "auto-pr,stale"             # Comma-separated list (no spaces)
           pr_draft: true                        # Creates pull request as draft
           pr_title: "${{ env.COMMIT_MSG }}"
           pr_body: "${{ steps.pr-template.outputs.content }}"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 }}
+      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 && steps.aheadbehind.outputs.dayssinceupdate > 7 }}
         name: New PR Details
         run: |
             echo "URL: ${{steps.open-pr.outputs.pr_url}}"
@@ -112,7 +115,7 @@ jobs:
           pr-number: ${{steps.open-pr.outputs.pr_number}}
 
 
-      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.behind != 0 }}
+      - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.behind != 0 && steps.aheadbehind.outputs.dayssinceupdate > 7 }}
         name: Rebase
         run: echo "Rebase?"
       - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' }}
