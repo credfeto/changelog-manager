@@ -1,15 +1,13 @@
 name: Find branches without PR's
 
 on:
-  # push:
-  #   branches:
-  #     - "main"
   schedule:
   - cron: "0 1 * * *"
 
 jobs:
   build-matrix:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -36,8 +34,6 @@ jobs:
       - id: detection
         run: |
           echo "::set-output name=defaultbranch::$(git remote show origin | grep -Po 'HEAD\sbranch:\s+\K[^.*]*')"
-
-      # - run: git config -global --add safe.directory /github/workspace
 
       # On Default branch
       - if: ${{ steps.detection.outputs.defaultbranch == matrix.branch }}
@@ -71,9 +67,6 @@ jobs:
                       print "::set-output name=ahead::"$2
                       }'
           echo ""::set-output name=dayssinceupdate=$((($(date +%s)-$(date +%s --date @$(git log -1 --format=%ct origin/${{matrix.branch}})))/(3600*24)))"
-      # get date of last commit in branch
-      # git log -1 --format=%cd origin/release/0.0.1
-      
 
       # Non-default - ahead of default branch, and no -re-existing PR then create one.
       - if: ${{ steps.detection.outputs.defaultbranch != matrix.branch && steps.find-pull-request.outputs.number == '' && steps.aheadbehind.outputs.ahead != 0 && steps.aheadbehind.outputs.dayssinceupdate > 7 }}
