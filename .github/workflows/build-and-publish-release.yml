@@ -114,12 +114,12 @@ jobs:
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && always() }}
-      name: Convert tests results to github checks
-      uses: NasAmin/trx-parser@v0.2.0
-      id: trx-parser
-      with:
-        TRX_PATH: ${{ github.workspace }}/test-results #This should be the path to your TRX files
-        REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # name: Convert tests results to github checks
+      # uses: NasAmin/trx-parser@v0.2.0
+      # id: trx-parser
+      # with:
+      #   TRX_PATH: ${{ github.workspace }}/test-results #This should be the path to your TRX files
+      #   REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     ## NUGET PACKAGES
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.NUGET_API_KEY != '' }}
