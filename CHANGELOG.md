@@ -13,6 +13,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-3881 - Updated DotNet SDK to 6.0.300
 - FF-3881 - Updated DotNet SDK to 6.0.301
 - FF-3881 - Updated DotNet SDK to 6.0.302
+- FF-3881 - Updated DotNet SDK to 6.0.400
 ### Removed
 ### Deployment Changes
 
