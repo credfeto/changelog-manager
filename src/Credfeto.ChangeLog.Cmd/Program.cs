@@ -46,6 +46,13 @@ internal static class Program
             return;
         }
 
+        if (options.Remove != null && options.Message != null)
+        {
+            await RemoveEntryFromUnreleasedChangelogAsync(options);
+
+            return;
+        }
+
         if (options.CheckInsert != null)
         {
             await CheckInsertPositionAsync(options);
@@ -121,6 +128,18 @@ internal static class Program
         return ChangeLogUpdater.AddEntryAsync(changeLogFileName: changeLog, type: changeType, message: message);
     }
 
+    private static Task RemoveEntryFromUnreleasedChangelogAsync(Options options)
+    {
+        string changeType = options.Remove!;
+        string message = options.Message!;
+        string changeLog = FindChangeLog(options);
+        Console.WriteLine($"Using Changelog {changeLog}");
+        Console.WriteLine($"Change Type: {changeType}");
+        Console.WriteLine($"Message: {message}");
+
+        return ChangeLogUpdater.RemoveEntryAsync(changeLogFileName: changeLog, type: changeType, message: message);
+    }
+
     private static async Task ExtractChangeLogTextForVersionAsync(Options options)
     {
         string outputFileName = options.Extract!;
@@ -154,7 +173,9 @@ internal static class Program
                                                        .WithNotParsed(NotParsed)
                                                        .WithParsedAsync(ParsedOkAsync);
 
-            return parser.Tag == ParserResultType.Parsed ? SUCCESS : ERROR;
+            return parser.Tag == ParserResultType.Parsed
+                ? SUCCESS
+                : ERROR;
         }
         catch (Exception exception)
         {

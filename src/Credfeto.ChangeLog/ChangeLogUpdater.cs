@@ -23,6 +23,15 @@ public static class ChangeLogUpdater
         await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8);
     }
 
+    public static async Task RemoveEntryAsync(string changeLogFileName, string type, string message)
+    {
+        string textBlock = await ReadChangeLogAsync(changeLogFileName);
+
+        string content = RemoveEntry(changeLog: textBlock, type: type, message: message);
+
+        await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8);
+    }
+
     private static async Task<string> ReadChangeLogAsync(string changeLogFileName)
     {
         if (!File.Exists(changeLogFileName))
@@ -53,12 +62,50 @@ public static class ChangeLogUpdater
                      .Trim();
     }
 
+    public static string RemoveEntry(string changeLog, string type, string message)
+    {
+        List<string> text = EnsureChangelog(changeLog)
+                            .SplitToLines()
+                            .ToList();
+
+        string entryText = CreateEntryText(message);
+        int index = FindRemovePosition(changeLog: text, type: type, entryText: entryText);
+
+        if (index != -1)
+        {
+            text.RemoveAt(index: index);
+        }
+
+        return string.Join(separator: Environment.NewLine, values: text)
+                     .Trim();
+    }
+
     private static string CreateEntryText(string message)
     {
         return "- " + message;
     }
 
     private static int FindInsertPosition(List<string> changeLog, string type, string entryText)
+    {
+        return FindMatchPosition(changeLog: changeLog,
+                                 type: type,
+                                 isMatch: s => StringComparer.OrdinalIgnoreCase.Equals(x: s, y: entryText),
+                                 exactMatchAction: _ => -1,
+                                 emptySectionAction: line => line,
+                                 findSection: true);
+    }
+
+    private static int FindRemovePosition(List<string> changeLog, string type, string entryText)
+    {
+        return FindMatchPosition(changeLog: changeLog,
+                                 type: type,
+                                 isMatch: s => s.StartsWith(value: entryText, comparisonType: StringComparison.Ordinal),
+                                 exactMatchAction: line => line,
+                                 emptySectionAction: _ => -1,
+                                 findSection: false);
+    }
+
+    private static int FindMatchPosition(List<string> changeLog, string type, Func<string, bool> isMatch, Func<int, int> exactMatchAction, Func<int, int> emptySectionAction, bool findSection)
     {
         bool foundUnreleased = false;
 
@@ -82,28 +129,30 @@ public static class ChangeLogUpdater
                     throw new InvalidChangeLogException($"Could not find {type} heading");
                 }
 
-                if (line == search)
+                if (!StringComparer.Ordinal.Equals(x: line, y: search))
                 {
-                    int next = index + 1;
+                    continue;
+                }
 
-                    while (next < changeLog.Count)
+                int next = index + 1;
+
+                while (next < changeLog.Count)
+                {
+                    if (isMatch(changeLog[next]))
                     {
-                        if (StringComparer.InvariantCultureIgnoreCase.Equals(x: entryText, changeLog[next]))
-                        {
-                            // Found matching text
-                            return -1;
-                        }
-
-                        if (IsNextItem(changeLog[next]))
-                        {
-                            return FindPreviousNonBlankEntry(changeLog: changeLog, earliest: index, latest: next);
-                        }
-
-                        ++next;
+                        // Found matching text
+                        return exactMatchAction(next);
                     }
 
-                    return index + 1;
+                    if (findSection && IsNextItem(changeLog[next]))
+                    {
+                        return FindPreviousNonBlankEntry(changeLog: changeLog, earliest: index, latest: next);
+                    }
+
+                    ++next;
                 }
+
+                return emptySectionAction(index + 1);
             }
         }
 
@@ -164,7 +213,7 @@ public static class ChangeLogUpdater
 
         List<string> newRelease = new();
 
-        removeIndexes = new List<int>();
+        removeIndexes = new();
 
         bool inComment = false;
 
@@ -211,7 +260,9 @@ public static class ChangeLogUpdater
 
     private static string CreateReleaseDate(bool pending)
     {
-        return pending ? "TBD" : CurrentDate();
+        return pending
+            ? "TBD"
+            : CurrentDate();
     }
 
     private static string AddLineToRelease(List<string> text, string previousLine, List<string> newRelease, List<int> removeIndexes, int i)

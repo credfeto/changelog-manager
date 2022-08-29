@@ -7,12 +7,10 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- Adding support for removing items
 ### Fixed
 ### Changed
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.698
-- FF-3881 - Updated DotNet SDK to 6.0.300
-- FF-3881 - Updated DotNet SDK to 6.0.301
-- FF-3881 - Updated DotNet SDK to 6.0.302
 - FF-3881 - Updated DotNet SDK to 6.0.400
 ### Removed
 ### Deployment Changes
