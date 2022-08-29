@@ -7,18 +7,23 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- Adding support for removing items
 ### Fixed
 ### Changed
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.698
-- FF-3881 - Updated DotNet SDK to 6.0.400
 ### Removed
-- Removed support for running under dotnet 5.0
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.9.0] - 2022-08-29
+### Added
+- Adding support for removing items
+### Changed
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.698
+- FF-3881 - Updated DotNet SDK to 6.0.400
+### Removed
+- Removed support for running under dotnet 5.0
+
 ## [1.8.3] - 2022-03-10
 ### Changed
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.1.46
