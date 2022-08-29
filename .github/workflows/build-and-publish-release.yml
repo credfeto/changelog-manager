@@ -25,7 +25,7 @@ jobs:
       DOTNET_ReadyToRun: 0
       DOTNET_TC_QuickJitForLoops: 1
       DOTNET_TieredPGO: 1
-      
+
     steps:
     - uses: actions/checkout@v3
       with:
@@ -110,7 +110,7 @@ jobs:
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Test with dotnet
       working-directory: ./src
-      run: dotnet test --no-build --no-restore -noConsoleLogger --configuration Release /p:Version=${{ env.BUILD_VERSION }} --filter FullyQualifiedName\!~Integration --logger:"trx;LogFilePrefix=testResults" --results-directory ../test-results 
+      run: dotnet test --no-build --no-restore -noConsoleLogger --configuration Release /p:Version=${{ env.BUILD_VERSION }} --filter FullyQualifiedName\!~Integration --logger:"trx;LogFilePrefix=testResults" --results-directory ../test-results
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     # - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && always() }}
@@ -125,7 +125,7 @@ jobs:
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.NUGET_API_KEY != '' }}
       name: Pack tool
       working-directory: ./src
-      run: dotnet pack --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-restore --output ../dist
+      run: dotnet pack --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-restore -p:NoWarn=NU5104 --output ../dist
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.NUGET_API_KEY != '' }}
@@ -150,13 +150,13 @@ jobs:
       working-directory: ./src/server-dist/arm64
       run: zip -9r ../../../${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-arm64.${{ env.BUILD_VERSION }}.zip .
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.OCTOPUS_DEPLOY_PACKAGE != '' }}
-      name: Push package to Octopus 
-      run: octo push --package ${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-x64.${{ env.BUILD_VERSION }}.zip --package ${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-arm64.${{ env.BUILD_VERSION }}.zip  --server="${{ env.OCTOPUS_SERVER }}" --apiKey="${{ env.OCTOPUS_API_KEY}}" --enableServiceMessages --debug --overwrite-mode=IgnoreIfExists    
+      name: Push package to Octopus
+      run: octo push --package ${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-x64.${{ env.BUILD_VERSION }}.zip --package ${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-arm64.${{ env.BUILD_VERSION }}.zip  --server="${{ env.OCTOPUS_SERVER }}" --apiKey="${{ env.OCTOPUS_API_KEY}}" --enableServiceMessages --debug --overwrite-mode=IgnoreIfExists
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && env.OCTOPUS_DEPLOY_PACKAGE != '' && env.OCTOPUS_CHANNEL != '' }}
-      name: Deploy 
+      name: Deploy
       run: octo create-release --project="${{ env.OCTOPUS_PROJECT }}" --version="${{env.BUILD_VERSION}}" --channel="${{ env.OCTOPUS_CHANNEL }}" --package="${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-x64:${{env.BUILD_VERSION}}" --package="${{ env.OCTOPUS_DEPLOY_PACKAGE_ZIP }}-arm64:${{env.BUILD_VERSION}}" --deployTo="${{ env.OCTOPUS_DEPLOY_TO }}" --server="${{ secrets.OCTOPUS_SERVER }}" --apiKey="${{ secrets.OCTOPUS_API_KEY}}" --enableServiceMessages --debug  --releaseNotesFile="RELEASE_NOTES.md"
 
-    # Create Github Release      
+    # Create Github Release
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Create Release
       id: create_release
