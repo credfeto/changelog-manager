@@ -23,6 +23,15 @@ public static class ChangeLogUpdater
         await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8);
     }
 
+    public static async Task RemoveEntryAsync(string changeLogFileName, string type, string message)
+    {
+        string textBlock = await ReadChangeLogAsync(changeLogFileName);
+
+        string content = RemoveEntry(changeLog: textBlock, type: type, message: message);
+
+        await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8);
+    }
+
     private static async Task<string> ReadChangeLogAsync(string changeLogFileName)
     {
         if (!File.Exists(changeLogFileName))
