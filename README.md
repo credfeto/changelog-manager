@@ -74,15 +74,42 @@ dotnet changelog --changelog CHANGELOG.md --add Removed --message "Change descri
 dotnet changelog --changelog CHANGELOG.md --add "Deployment Changes" --message "Change description"
 ```
 
+### Remove an entry from the [Unreleased] section
+
+Note the value of the `--add` parameter matches exactly the heading section in the [Unreleased] section. It will not
+create/update a new section if it that section does not exist.
+
+```shell
+dotnet changelog --changelog CHANGELOG.md --remove Added --message "Change description"
+```
+
+```shell
+dotnet changelog --changelog CHANGELOG.md --remove Changed --message "Change description"
+```
+
+```shell
+dotnet changelog --changelog CHANGELOG.md --remove Fixed --message "Change description"
+```
+
+```shell
+dotnet changelog --changelog CHANGELOG.md --remove Removed --message "Change description"
+```
+
+```shell
+dotnet changelog --changelog CHANGELOG.md --remove "Deployment Changes" --message "Change description"
+```
+
 ### Create a release
 
-This pulls out all the changes in the [Unreleased] section and adds them to to the release given by the version number and sets the release date to be today.
+This pulls out all the changes in the [Unreleased] section and adds them to to the release given by the version number
+and sets the release date to be today.
 
 ```shell
 dotnet changelog -changelog CHANGELOG.md --create-release 1.2.3
 ```
 
-This pulls out all the changes in the [Unreleased] section and adds them to to the release given by the version number and sets the release date to pending.
+This pulls out all the changes in the [Unreleased] section and adds them to to the release given by the version number
+and sets the release date to pending.
 
 ```shell
 dotnet changelog -changelog CHANGELOG.md --create-release 1.2.3 --pending
