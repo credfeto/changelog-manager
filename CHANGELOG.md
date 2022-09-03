@@ -7,7 +7,9 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- All matching items in unreleased section are removed
 ### Fixed
+- Items being removed from released if not present in unreleased
 ### Changed
 ### Removed
 ### Deployment Changes
