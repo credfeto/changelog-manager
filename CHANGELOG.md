@@ -7,9 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-- All matching items in unreleased section are removed
 ### Fixed
-- Items being removed from released if not present in unreleased
 ### Changed
 ### Removed
 ### Deployment Changes
@@ -17,6 +15,12 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.9.1] - 2022-09-03
+### Added
+- All matching items in unreleased section are removed
+### Fixed
+- Items being removed from released if not present in unreleased
+
 ## [1.9.0] - 2022-08-29
 ### Added
 - Adding support for removing items
