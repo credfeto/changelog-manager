@@ -71,9 +71,13 @@ public static class ChangeLogUpdater
         string entryText = CreateEntryText(message);
         int index = FindRemovePosition(changeLog: text, type: type, entryText: entryText);
 
-        if (index != -1)
+        while (index != -1)
+
         {
             text.RemoveAt(index: index);
+
+            // check for another item to remove
+            index = FindRemovePosition(changeLog: text, type: type, entryText: entryText);
         }
 
         return string.Join(separator: Environment.NewLine, values: text)
