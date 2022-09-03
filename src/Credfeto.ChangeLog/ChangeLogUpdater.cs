@@ -144,9 +144,14 @@ public static class ChangeLogUpdater
                         return exactMatchAction(next);
                     }
 
-                    if (findSection && IsNextItem(changeLog[next]))
+                    if (IsNextItem(changeLog[next]))
                     {
-                        return FindPreviousNonBlankEntry(changeLog: changeLog, earliest: index, latest: next);
+                        if (findSection)
+                        {
+                            return FindPreviousNonBlankEntry(changeLog: changeLog, earliest: index, latest: next);
+                        }
+
+                        return -1;
                     }
 
                     ++next;
