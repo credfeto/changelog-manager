@@ -18,6 +18,12 @@
       <TreatSpecificWarningsAsErrors/>
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
       <WarningsAsErrors/>
+      <!-- Dotnet 7 features -->
+      <TieredPGO>true</TieredPGO>
+      <UseSystemResourceKeys>true</UseSystemResourceKeys>
+      <IlcOptimizationPreference>Size</IlcOptimizationPreference>
+      <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+      <DebuggerSupport>true</DebuggerSupport>
     </PropertyGroup>
     <PropertyGroup>
         <AnalysisLevel>latest</AnalysisLevel>
