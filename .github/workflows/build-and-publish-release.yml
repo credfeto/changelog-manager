@@ -53,10 +53,11 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         dotnet-version: |
+            6.0.*
             ${{ env.DOTNET_VERSION }}
-    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
-      name: Install dotnet workload - Mac OS
-      run: dotnet workload install macos --skip-manifest-update
+#    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+#      name: Install dotnet workload - Mac OS
+#      run: dotnet workload install macos --skip-manifest-update
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Enable dotnet tools
       run: dotnet new tool-manifest
