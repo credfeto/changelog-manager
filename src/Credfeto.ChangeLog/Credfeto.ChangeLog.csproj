@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
       <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-      <RunAOTCompilation>true</RunAOTCompilation>
+      <RunAOTCompilation>false</RunAOTCompilation>
       <EnablePackageValidation>true</EnablePackageValidation>
       <Features>strict;flow-analysis</Features>
       <GenerateNeutralResourcesLanguageAttribute>true</GenerateNeutralResourcesLanguageAttribute>

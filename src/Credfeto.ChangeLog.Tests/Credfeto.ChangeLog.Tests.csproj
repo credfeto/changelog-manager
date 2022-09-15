@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-      <RunAOTCompilation>true</RunAOTCompilation>
+      <RunAOTCompilation>false</RunAOTCompilation>
       <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
       <EnablePackageValidation>true</EnablePackageValidation>
       <Features>strict;flow-analysis</Features>
