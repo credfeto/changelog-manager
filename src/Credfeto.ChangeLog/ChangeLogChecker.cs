@@ -13,10 +13,6 @@ namespace Credfeto.ChangeLog;
 
 public static class ChangeLogChecker
 {
-    private static readonly Regex HunkPositionRegex = new(pattern: @"^@@\s*\-(?<OriginalFileStart>\d*)(,(?<OriginalFileEnd>\d*))?\s*\+(?<CurrentFileStart>\d*)(,(?<CurrentFileChangeLength>\d*))?\s*@@",
-                                                          RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.ExplicitCapture,
-                                                          matchTimeout: RegexTimeouts.Short);
-
     public static async Task<bool> ChangeLogModifiedInReleaseSectionAsync(string changeLogFileName, string originBranchName)
     {
         changeLogFileName = GetFullChangeLogFilePath(changeLogFileName);
@@ -73,7 +69,7 @@ public static class ChangeLogChecker
         string patchDetails = ExtractPatchDetails(change.Patch);
         Console.WriteLine(patchDetails);
 
-        MatchCollection matches = HunkPositionRegex.Matches(patchDetails);
+        MatchCollection matches = CommonRegex.HunkPositionRegex.Matches(patchDetails);
 
         foreach (Match? match in matches)
         {
@@ -114,7 +110,7 @@ public static class ChangeLogChecker
 
         RemoveLastLineIfBlank(lines);
 
-        int lastHunk = lines.FindLastIndex(x => HunkPositionRegex.IsMatch(x));
+        int lastHunk = lines.FindLastIndex(x => CommonRegex.HunkPositionRegex.IsMatch(x));
 
         if (lastHunk != -1)
         {
