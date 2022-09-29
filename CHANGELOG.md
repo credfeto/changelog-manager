@@ -7,17 +7,21 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
-.NET RC1 build
 ### Fixed
 ### Changed
-- FF-3881 - Updated DotNet SDK to 6.0.401
-- Source generated Regex when building with .net 7
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.10.0] - 2022-09-29
+### Added
+.NET RC1 build
+### Changed
+- FF-3881 - Updated DotNet SDK to 6.0.401
+- Source generated Regex when building with .net 7
+
 ## [1.9.1] - 2022-09-03
 ### Added
 - All matching items in unreleased section are removed
