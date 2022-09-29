@@ -7,6 +7,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+.NET RC1 build
 ### Fixed
 ### Changed
 - FF-3881 - Updated DotNet SDK to 6.0.401
