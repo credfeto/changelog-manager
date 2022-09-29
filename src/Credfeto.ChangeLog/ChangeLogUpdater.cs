@@ -429,7 +429,7 @@ public static class ChangeLogUpdater
             return Constants.Unreleased;
         }
 
-        Match match = CommonRegex.VersionHeaderMatch.Match(line);
+        Match match = CommonRegex.VersionHeader.Match(line);
 
         return match.Groups["version"]
                     .Value;
@@ -437,7 +437,7 @@ public static class ChangeLogUpdater
 
     private static bool IsRelease(string line)
     {
-        return line == Constants.UnreleasedHeader || CommonRegex.VersionHeaderMatch.IsMatch(line);
+        return line == Constants.UnreleasedHeader || CommonRegex.VersionHeader.IsMatch(line);
     }
 
     private static int FindPreviousNonBlankEntry(List<string> changeLog, int earliest, int latest)

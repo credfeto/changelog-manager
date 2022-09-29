@@ -69,7 +69,7 @@ public static class ChangeLogChecker
         string patchDetails = ExtractPatchDetails(change.Patch);
         Console.WriteLine(patchDetails);
 
-        MatchCollection matches = CommonRegex.HunkPositionRegex.Matches(patchDetails);
+        MatchCollection matches = CommonRegex.GitHunkPosition.Matches(patchDetails);
 
         foreach (Match? match in matches)
         {
@@ -110,7 +110,7 @@ public static class ChangeLogChecker
 
         RemoveLastLineIfBlank(lines);
 
-        int lastHunk = lines.FindLastIndex(x => CommonRegex.HunkPositionRegex.IsMatch(x));
+        int lastHunk = lines.FindLastIndex(x => CommonRegex.GitHunkPosition.IsMatch(x));
 
         if (lastHunk != -1)
         {

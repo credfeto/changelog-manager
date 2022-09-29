@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - FF-3881 - Updated DotNet SDK to 6.0.401
+- Source generated Regex when building with .net 7
 ### Removed
 ### Deployment Changes
 

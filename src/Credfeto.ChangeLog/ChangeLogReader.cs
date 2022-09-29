@@ -85,7 +85,7 @@ public static class ChangeLogReader
         {
             string line = changelog[lineIndex];
 
-            if (CommonRegex.VersionHeaderMatch.IsMatch(line))
+            if (CommonRegex.VersionHeader.IsMatch(line))
             {
                 // Line indexes start from 1
                 return lineIndex + 1;
@@ -129,7 +129,9 @@ public static class ChangeLogReader
 
         static IEnumerable<string> Candidates(Version expected)
         {
-            int build = expected.Build is 0 or -1 ? 0 : expected.Build;
+            int build = expected.Build is 0 or -1
+                ? 0
+                : expected.Build;
 
             yield return $"## [{expected.Major}.{expected.Minor}.{build}]";
 
