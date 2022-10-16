@@ -9,6 +9,9 @@ on:
     - '**/*.py'
     - '**/requirements.txt'
 
+permissions:
+  contents: write
+
 jobs:
   analyze_py:
     if: github.event.pull_request.draft == false && !contains(github.event.pull_request.labels.*.name, 'dependencies')
