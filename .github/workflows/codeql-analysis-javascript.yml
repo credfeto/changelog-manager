@@ -3,10 +3,11 @@ name: "CodeQL -js"
 on:
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: 
-    - master
+    branches:
+    - main
     paths:
     - '**/*.js'
+    - '**/*.ts'
     - '**/package.json'
 
 jobs:
@@ -26,8 +27,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Check file existence
+      id: check_files
+      run: |
+        echo "Hash: ${{hashfiles('**/package.json', '**/*.ts', '**/*.js')}}"
+        if [[ ${{ hashfiles('**/package.json', '**/*.ts', '**/*.js') }} != '' ]]; then echo '::set-output name=FILES_EXIST::true'; else echo '::set-output name=FILES_EXIST::false'; fi
+        if [[ ${{ hashfiles('**/package.json', '**/*.ts', '**/*.js') }} != '' ]]; then echo 'Exists: true'; else echo 'Exists: false'; fi
+
     # Initializes the CodeQL tools for scanning.
-    - name: Initialize CodeQL
+    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+      name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
@@ -38,7 +47,8 @@ jobs:
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Autobuild
+    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+      name: Autobuild
       uses: github/codeql-action/autobuild@v2
 
     # ℹ️ Command-line programs to run using the OS shell.
@@ -52,5 +62,6 @@ jobs:
     #   make bootstrap
     #   make release
 
-    - name: Perform CodeQL Analysis
+    - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
+      name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
