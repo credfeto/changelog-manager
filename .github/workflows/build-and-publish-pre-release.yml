@@ -13,6 +13,9 @@ on:
      - edited
      - synchronize
 
+permissions:
+  contents: write
+
 jobs:
   build-pre-release:
 
