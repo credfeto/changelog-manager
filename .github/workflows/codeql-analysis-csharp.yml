@@ -10,6 +10,9 @@ on:
     - '**.csproj'
     - '**.sln'
 
+permissions:
+  contents: write
+
 jobs:
   analyze-cs:
     if: github.event.pull_request.draft == false && !contains(github.event.pull_request.labels.*.name, 'dependencies')
