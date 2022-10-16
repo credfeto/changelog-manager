@@ -10,6 +10,9 @@ on:
     - '**/*.ts'
     - '**/package.json'
 
+permissions:
+  contents: write
+
 jobs:
   analyze-js:
     if: github.event.pull_request.draft == false && !contains(github.event.pull_request.labels.*.name, 'dependencies')
