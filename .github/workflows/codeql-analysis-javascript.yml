@@ -34,8 +34,8 @@ jobs:
       id: check_files
       run: |
         echo "Hash: ${{hashfiles('**/package.json', '**/*.ts', '**/*.js')}}"
-        if [[ ${{ hashfiles('**/package.json', '**/*.ts', '**/*.js') }} != '' ]]; then echo '::set-output name=FILES_EXIST::true'; else echo '::set-output name=FILES_EXIST::false'; fi
-        if [[ ${{ hashfiles('**/package.json', '**/*.ts', '**/*.js') }} != '' ]]; then echo 'Exists: true'; else echo 'Exists: false'; fi
+        if [[ '${{ hashfiles('**/package.json', '**/*.ts', '**/*.js') }}' != '' ]]; then echo 'FILES_EXIST=true' >> $GITHUB_OUTPUT; else echo 'FILES_EXIST=false' >> $GITHUB_OUTPUT; fi
+        if [[ '${{ hashfiles('**/package.json', '**/*.ts', '**/*.js') }}' != '' ]]; then echo 'Exists: true'; else echo 'Exists: false'; fi
 
     # Initializes the CodeQL tools for scanning.
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
