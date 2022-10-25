@@ -53,11 +53,14 @@ jobs:
       id: check_files
       run: |
         echo "Hash: ${{hashfiles('**/*.sln', '**/*.csproj', '**/*.cs')}}"
-        if [[ -d src && -f src/global.json && ${{ hashfiles('**/*.sln', '**/*.csproj', '**/*.cs') }} != '' ]]; then echo '::set-output name=FILES_EXIST::true'; else echo '::set-output name=FILES_EXIST::false'; fi
-        if [[ -d src && -f src/global.json && ${{ hashfiles('**/*.sln', '**/*.csproj', '**/*.cs') }} != '' ]]; then echo 'Exists: true'; else echo 'Exists: false'; fi
+        if [[ -d src && -f src/global.json && '${{ hashfiles('**/*.sln', '**/*.csproj', '**/*.cs') }}' != '' ]]; then echo 'FILES_EXIST=true' >> $GITHUB_OUTPUT; else echo 'FILES_EXIST=false' >> $GITHUB_OUTPUT; fi
+        if [[ -d src && -f src/global.json && '${{ hashfiles('**/*.sln', '**/*.csproj', '**/*.cs') }}' != '' ]]; then echo 'Exists: true'; else echo 'Exists: false'; fi
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Determine .net core version
-      uses: credfeto/action-dotnet-version-detect@v1.2.1
+      uses: credfeto/action-dotnet-version-detect@v1.3.0
+      with:
+        file: src/global.json
+        fallback: 6.0.*
 
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Setup .NET Core
@@ -90,7 +93,7 @@ jobs:
       name: install Octopus Deploy CLI
       uses: OctopusDeploy/install-octocli@v1.2.0
       with:
-        version: 7.4.2
+        version: latest
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Create Release Notes
       run: dotnet changelog --changelog CHANGELOG.md --extract RELEASE_NOTES.md --version ${{ env.BUILD_VERSION }}
@@ -127,7 +130,7 @@ jobs:
       env:
         ReleaseNotes: ${{ steps.release-notes.outputs.content }}
     # - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' && always() }}
-    #   name: Convert tests results to github checks
+    #   name: Convert tests results to GitHub checks
     #   uses: NasAmin/trx-parser@v0.2.0
     #   id: trx-parser
     #   with:
