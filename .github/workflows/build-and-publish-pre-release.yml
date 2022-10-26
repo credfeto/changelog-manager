@@ -1,4 +1,4 @@
-name: .NET Core [Pre-Release]
+name: .NET [Pre-Release]
 
 on:
   push:
