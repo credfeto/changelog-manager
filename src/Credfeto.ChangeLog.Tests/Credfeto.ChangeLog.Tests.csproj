@@ -45,6 +45,7 @@
     <ItemGroup>
         <PackageReference Include="AsyncFixer" Version="1.5.1" PrivateAssets="All" />
         <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="All" />
+    <PackageReference Include="Credfeto.Enumeration.Source.Generation" Version="0.0.1.6-main" PrivateAssets="All"/>
         <PackageReference Include="FunFair.CodeAnalysis" Version="5.8.1.1203" PrivateAssets="All" />
         <PackageReference Include="Meziantou.Analyzer" Version="1.0.698" PrivateAssets="All" />
         <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.1.46" PrivateAssets="All" />
