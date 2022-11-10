@@ -21,6 +21,7 @@
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
       <ValidateExecutableReferencesMatchSelfContained>true</ValidateExecutableReferencesMatchSelfContained>
       <ToolCommandName>changelog</ToolCommandName>
+      <WarningsAsErrors/>
 
       <!-- Dotnet 7 features -->
       <TieredPGO>true</TieredPGO>
