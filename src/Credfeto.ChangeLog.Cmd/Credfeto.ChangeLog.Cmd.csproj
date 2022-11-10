@@ -21,6 +21,13 @@
       <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
       <ValidateExecutableReferencesMatchSelfContained>true</ValidateExecutableReferencesMatchSelfContained>
       <ToolCommandName>changelog</ToolCommandName>
+
+      <!-- Dotnet 7 features -->
+      <TieredPGO>true</TieredPGO>
+      <UseSystemResourceKeys>true</UseSystemResourceKeys>
+      <IlcOptimizationPreference>Size</IlcOptimizationPreference>
+      <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+      <DebuggerSupport>true</DebuggerSupport>
     </PropertyGroup>
     <PropertyGroup>
         <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
