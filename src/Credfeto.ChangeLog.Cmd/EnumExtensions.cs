@@ -1,0 +1,13 @@
+using System.Diagnostics.CodeAnalysis;
+using CommandLine;
+using Credfeto.Enumeration.Source.Generation.Attributes;
+using LibGit2Sharp;
+
+namespace Credfeto.ChangeLog.Cmd;
+
+[EnumText(typeof(LogLevel))]
+[EnumText(typeof(ErrorType))]
+[SuppressMessage(category: "ReSharper", checkId: "PartialTypeWithSinglePart", Justification = "Needed for generated code")]
+internal static partial class EnumExtensions
+{
+}
