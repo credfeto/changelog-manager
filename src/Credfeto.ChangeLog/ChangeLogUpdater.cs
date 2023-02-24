@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Credfeto.ChangeLog.Exceptions;
 using Credfeto.ChangeLog.Helpers;
@@ -14,37 +15,42 @@ namespace Credfeto.ChangeLog;
 
 public static class ChangeLogUpdater
 {
-    public static async Task AddEntryAsync(string changeLogFileName, string type, string message)
+    public static async Task AddEntryAsync(string changeLogFileName, string type, string message, CancellationToken cancellationToken)
     {
-        string textBlock = await ReadChangeLogAsync(changeLogFileName);
+        string textBlock = await ReadChangeLogAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
 
-        string content = AddEntry(changeLog: textBlock, type: type, message: message);
+        string content = AddEntryCommon(changeLog: textBlock, type: type, message: message);
 
-        await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8);
+        await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
     }
 
-    public static async Task RemoveEntryAsync(string changeLogFileName, string type, string message)
+    public static async Task RemoveEntryAsync(string changeLogFileName, string type, string message, CancellationToken cancellationToken)
     {
-        string textBlock = await ReadChangeLogAsync(changeLogFileName);
+        string textBlock = await ReadChangeLogAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
 
-        string content = RemoveEntry(changeLog: textBlock, type: type, message: message);
+        string content = RemoveEntryCommon(changeLog: textBlock, type: type, message: message);
 
-        await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8);
+        await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
     }
 
-    private static async Task<string> ReadChangeLogAsync(string changeLogFileName)
+    private static async Task<string> ReadChangeLogAsync(string changeLogFileName, CancellationToken cancellationToken)
     {
         if (!File.Exists(changeLogFileName))
         {
-            await CreateEmptyAsync(changeLogFileName);
+            await CreateEmptyAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
 
             return TemplateFile.Initial;
         }
 
-        return await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
+        return await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
     }
 
     public static string AddEntry(string changeLog, string type, string message)
+    {
+        return AddEntryCommon(changeLog: changeLog, type: type, message: message);
+    }
+
+    private static string AddEntryCommon(string changeLog, string type, string message)
     {
         List<string> text = EnsureChangelog(changeLog)
                             .SplitToLines()
@@ -63,6 +69,11 @@ public static class ChangeLogUpdater
     }
 
     public static string RemoveEntry(string changeLog, string type, string message)
+    {
+        return RemoveEntryCommon(changeLog: changeLog, type: type, message: message);
+    }
+
+    private static string RemoveEntryCommon(string changeLog, string type, string message)
     {
         List<string> text = EnsureChangelog(changeLog)
                             .SplitToLines()
@@ -173,16 +184,21 @@ public static class ChangeLogUpdater
         return "### " + type;
     }
 
-    public static async Task CreateReleaseAsync(string changeLogFileName, string version, bool pending)
+    public static async Task CreateReleaseAsync(string changeLogFileName, string version, bool pending, CancellationToken cancellationToken)
     {
-        string originalChangeLog = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
+        string originalChangeLog = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
 
-        string newChangeLog = CreateRelease(changeLog: originalChangeLog, version: version, pending: pending);
+        string newChangeLog = CreateReleaseCommon(changeLog: originalChangeLog, version: version, pending: pending);
 
-        await File.WriteAllTextAsync(path: changeLogFileName, contents: newChangeLog, encoding: Encoding.UTF8);
+        await File.WriteAllTextAsync(path: changeLogFileName, contents: newChangeLog, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
     }
 
     public static string CreateRelease(string changeLog, string version, bool pending)
+    {
+        return CreateReleaseCommon(changeLog: changeLog, version: version, pending: pending);
+    }
+
+    private static string CreateReleaseCommon(string changeLog, string version, bool pending)
     {
         List<string> text = EnsureChangelog(changeLog)
                             .SplitToLines()
@@ -459,7 +475,7 @@ public static class ChangeLogUpdater
 
     private static bool IsNextItem(string line)
     {
-        return line.StartsWith(value: "#", comparisonType: StringComparison.Ordinal) || line.StartsWith(value: "<!--", comparisonType: StringComparison.Ordinal);
+        return line.StartsWith('#') || line.StartsWith(value: "<!--", comparisonType: StringComparison.Ordinal);
     }
 
     private static string EnsureChangelog(string changeLog)
@@ -472,8 +488,8 @@ public static class ChangeLogUpdater
         return changeLog;
     }
 
-    public static Task CreateEmptyAsync(string changeLogFileName)
+    public static Task CreateEmptyAsync(string changeLogFileName, in CancellationToken cancellationToken)
     {
-        return File.WriteAllTextAsync(path: changeLogFileName, contents: TemplateFile.Initial, encoding: Encoding.UTF8);
+        return File.WriteAllTextAsync(path: changeLogFileName, contents: TemplateFile.Initial, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
     }
 }

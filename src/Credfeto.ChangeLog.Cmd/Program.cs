@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using CommandLine;
 using Credfeto.ChangeLog.Cmd.Exceptions;
@@ -32,44 +33,46 @@ internal static class Program
 
     private static async Task ParsedOkAsync(Options options)
     {
+        CancellationToken cancellationToken = CancellationToken.None;
+
         if (options.Extract != null && options.Version != null)
         {
-            await ExtractChangeLogTextForVersionAsync(options);
+            await ExtractChangeLogTextForVersionAsync(options: options, cancellationToken: cancellationToken);
 
             return;
         }
 
         if (options.Add != null && options.Message != null)
         {
-            await AddEntryToUnreleasedChangelogAsync(options);
+            await AddEntryToUnreleasedChangelogAsync(options: options, cancellationToken: cancellationToken);
 
             return;
         }
 
         if (options.Remove != null && options.Message != null)
         {
-            await RemoveEntryFromUnreleasedChangelogAsync(options);
+            await RemoveEntryFromUnreleasedChangelogAsync(options: options, cancellationToken: cancellationToken);
 
             return;
         }
 
         if (options.CheckInsert != null)
         {
-            await CheckInsertPositionAsync(options);
+            await CheckInsertPositionAsync(options: options, cancellationToken: cancellationToken);
 
             return;
         }
 
         if (options.CreateRelease != null)
         {
-            await CreateNewReleaseAsync(options);
+            await CreateNewReleaseAsync(options: options, cancellationToken: cancellationToken);
 
             return;
         }
 
         if (options.DisplayUnreleased)
         {
-            await OutputUnreleasedContentAsync(options);
+            await OutputUnreleasedContentAsync(options: options, cancellationToken: cancellationToken);
 
             return;
         }
@@ -77,34 +80,34 @@ internal static class Program
         throw new InvalidOptionsException();
     }
 
-    private static async Task OutputUnreleasedContentAsync(Options options)
+    private static async Task OutputUnreleasedContentAsync(Options options, CancellationToken cancellationToken)
     {
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
 
         Console.WriteLine();
         Console.WriteLine("Unreleased Content:");
-        string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: "0.0.0.0-unreleased");
+        string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: "0.0.0.0-unreleased", cancellationToken: cancellationToken);
         Console.WriteLine(text);
     }
 
-    private static Task CreateNewReleaseAsync(Options options)
+    private static Task CreateNewReleaseAsync(Options options, in CancellationToken cancellationToken)
     {
         string releaseVersion = options.CreateRelease!;
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Release Version: {releaseVersion}");
 
-        return ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: releaseVersion, pending: options.Pending);
+        return ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: releaseVersion, pending: options.Pending, cancellationToken: cancellationToken);
     }
 
-    private static async Task CheckInsertPositionAsync(Options options)
+    private static async Task CheckInsertPositionAsync(Options options, CancellationToken cancellationToken)
     {
         string originBranchName = options.CheckInsert!;
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Branch: {originBranchName}");
-        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: originBranchName);
+        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: originBranchName, cancellationToken: cancellationToken);
 
         if (valid)
         {
@@ -116,7 +119,7 @@ internal static class Program
         throw new ChangeLogInvalidFailedException("Changelog modified in released section");
     }
 
-    private static Task AddEntryToUnreleasedChangelogAsync(Options options)
+    private static Task AddEntryToUnreleasedChangelogAsync(Options options, in CancellationToken cancellationToken)
     {
         string changeType = options.Add!;
         string message = options.Message!;
@@ -125,10 +128,10 @@ internal static class Program
         Console.WriteLine($"Change Type: {changeType}");
         Console.WriteLine($"Message: {message}");
 
-        return ChangeLogUpdater.AddEntryAsync(changeLogFileName: changeLog, type: changeType, message: message);
+        return ChangeLogUpdater.AddEntryAsync(changeLogFileName: changeLog, type: changeType, message: message, cancellationToken: cancellationToken);
     }
 
-    private static Task RemoveEntryFromUnreleasedChangelogAsync(Options options)
+    private static Task RemoveEntryFromUnreleasedChangelogAsync(Options options, in CancellationToken cancellationToken)
     {
         string changeType = options.Remove!;
         string message = options.Message!;
@@ -137,10 +140,10 @@ internal static class Program
         Console.WriteLine($"Change Type: {changeType}");
         Console.WriteLine($"Message: {message}");
 
-        return ChangeLogUpdater.RemoveEntryAsync(changeLogFileName: changeLog, type: changeType, message: message);
+        return ChangeLogUpdater.RemoveEntryAsync(changeLogFileName: changeLog, type: changeType, message: message, cancellationToken: cancellationToken);
     }
 
-    private static async Task ExtractChangeLogTextForVersionAsync(Options options)
+    private static async Task ExtractChangeLogTextForVersionAsync(Options options, CancellationToken cancellationToken)
     {
         string outputFileName = options.Extract!;
         string version = options.Version!;
@@ -148,9 +151,9 @@ internal static class Program
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Version {version}");
 
-        string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: version);
+        string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: version, cancellationToken: cancellationToken);
 
-        await File.WriteAllTextAsync(path: outputFileName, contents: text, encoding: Encoding.UTF8);
+        await File.WriteAllTextAsync(path: outputFileName, contents: text, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
     }
 
     private static void NotParsed(IEnumerable<Error> errors)

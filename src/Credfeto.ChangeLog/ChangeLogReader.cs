@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Credfeto.ChangeLog.Helpers;
 
@@ -10,9 +11,9 @@ namespace Credfeto.ChangeLog;
 
 public static class ChangeLogReader
 {
-    public static async Task<string> ExtractReleaseNodesFromFileAsync(string changeLogFileName, string version)
+    public static async Task<string> ExtractReleaseNodesFromFileAsync(string changeLogFileName, string version, CancellationToken cancellationToken)
     {
-        string textBlock = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8);
+        string textBlock = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
 
         return ExtractReleaseNotes(changeLog: textBlock, version: version);
     }
@@ -77,9 +78,9 @@ public static class ChangeLogReader
                            .Trim();
     }
 
-    public static async Task<int?> FindFirstReleaseVersionPositionAsync(string changeLogFileName)
+    public static async Task<int?> FindFirstReleaseVersionPositionAsync(string changeLogFileName, CancellationToken cancellationToken)
     {
-        IReadOnlyList<string> changelog = await File.ReadAllLinesAsync(path: changeLogFileName, encoding: Encoding.UTF8);
+        IReadOnlyList<string> changelog = await File.ReadAllLinesAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
 
         for (int lineIndex = 0; lineIndex < changelog.Count; ++lineIndex)
         {

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Credfeto.ChangeLog.Exceptions;
 using Credfeto.ChangeLog.Helpers;
@@ -13,10 +14,10 @@ namespace Credfeto.ChangeLog;
 
 public static class ChangeLogChecker
 {
-    public static async Task<bool> ChangeLogModifiedInReleaseSectionAsync(string changeLogFileName, string originBranchName)
+    public static async Task<bool> ChangeLogModifiedInReleaseSectionAsync(string changeLogFileName, string originBranchName, CancellationToken cancellationToken)
     {
         changeLogFileName = GetFullChangeLogFilePath(changeLogFileName);
-        int? position = await ChangeLogReader.FindFirstReleaseVersionPositionAsync(changeLogFileName);
+        int? position = await ChangeLogReader.FindFirstReleaseVersionPositionAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
 
         if (position == null)
         {
