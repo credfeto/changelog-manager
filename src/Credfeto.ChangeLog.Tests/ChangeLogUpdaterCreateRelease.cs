@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Credfeto.ChangeLog.Exceptions;
 using FunFair.Test.Common;
 using Xunit;
@@ -6,6 +7,7 @@ using Xunit.Abstractions;
 
 namespace Credfeto.ChangeLog.Tests;
 
+[SuppressMessage(category: "Meziantou.Analyzer", checkId: "MA0045:Use async overload", Justification = "Testing the bit that changes the file rather than reading/writing")]
 public sealed class ChangeLogUpdaterCreateRelease : TestBase
 {
     private readonly ITestOutputHelper _output;
