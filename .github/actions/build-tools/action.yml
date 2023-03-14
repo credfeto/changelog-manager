@@ -20,38 +20,40 @@ runs:
     uses: actions/setup-dotnet@v3
     env:
       GITHUB_TOKEN: ${{inputs.GITHUB_TOKEN}}
+      DOTNET_INSTALL_DIR: ${{github.workspace}}/.dotnet
     with:
       dotnet-version: |
-          6.0.406
+          6.0.*
           ${{env.DOTNET_VERSION}}
 
   - name: Enable dotnet tools
     shell: bash
-    # TODO: if there's already a tool-manifest, don't do this, but do a restore
-    run: dotnet new tool-manifest
+    run: |
+      [ -f .config/dotnet-tools.json ] && dotnet tool restore --local
+      [ ! -f .config/dotnet-tools.json ] && dotnet new tool-manifest
     env:
-      DOTNET_NOLOGO: true
-      DOTNET_PRINT_TELEMETRY_MESSAGE: false
-      DOTNET_ReadyToRun: 0
-      DOTNET_TC_QuickJitForLoops: 1
-      DOTNET_TieredPGO: 1
+      DOTNET_NOLOGO: "true"
+      DOTNET_PRINT_TELEMETRY_MESSAGE: "false"
+      DOTNET_ReadyToRun: "0"
+      DOTNET_TC_QuickJitForLoops: "1"
+      DOTNET_TieredPGO: "1"
 
   - name: Install Build Version Tool
     shell: bash
     run: dotnet tool install --local FunFair.BuildVersion
     env:
-      DOTNET_NOLOGO: true
-      DOTNET_PRINT_TELEMETRY_MESSAGE: false
-      DOTNET_ReadyToRun: 0
-      DOTNET_TC_QuickJitForLoops: 1
-      DOTNET_TieredPGO: 1
+      DOTNET_NOLOGO: "true"
+      DOTNET_PRINT_TELEMETRY_MESSAGE: "false"
+      DOTNET_ReadyToRun: "0"
+      DOTNET_TC_QuickJitForLoops: "1"
+      DOTNET_TieredPGO: "1"
 
   - name: Install Changelog Tool
     shell: bash
     run: dotnet tool install --local Credfeto.Changelog.Cmd
     env:
-      DOTNET_NOLOGO: true
-      DOTNET_PRINT_TELEMETRY_MESSAGE: false
-      DOTNET_ReadyToRun: 0
-      DOTNET_TC_QuickJitForLoops: 1
-      DOTNET_TieredPGO: 1
+      DOTNET_NOLOGO: "true"
+      DOTNET_PRINT_TELEMETRY_MESSAGE: "false"
+      DOTNET_ReadyToRun: "0"
+      DOTNET_TC_QuickJitForLoops: "1"
+      DOTNET_TieredPGO: "1"
