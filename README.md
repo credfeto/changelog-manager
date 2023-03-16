@@ -2,6 +2,13 @@
 
 Changelog manager is a .net tool that works on all supported .net platforms (windows/linux/mac).
 
+## Build Status
+
+| Branch  | Status                                                                                                                                                                                                                                  |
+|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| main    | [![Build: Pre-Release](https://github.com/credfeto/changelog-manager/actions/workflows/build-and-publish-pre-release.yml/badge.svg)](https://github.com/credfeto/changelog-manager/actions/workflows/build-and-publish-pre-release.yml) |
+| release | [![Build: Release](https://github.com/credfeto/changelog-manager/actions/workflows/build-and-publish-release.yml/badge.svg)](https://github.com/credfeto/changelog-manager/actions/workflows/build-and-publish-release.yml)             |
+
 ## Release Notes
 
 See [CHANGELOG.md](CHANGELOG.md) managed by this tool.
@@ -9,6 +16,7 @@ See [CHANGELOG.md](CHANGELOG.md) managed by this tool.
 ## Installation
 
 ### Install as a global tool
+
 ```shell
 dotnet tool install Credfeto.ChangeLog.Cmd
 ```
