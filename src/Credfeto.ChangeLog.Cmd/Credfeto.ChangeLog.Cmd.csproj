@@ -29,6 +29,8 @@
       <IlcOptimizationPreference>Size</IlcOptimizationPreference>
       <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
       <DebuggerSupport>true</DebuggerSupport>
+      <IncludeSymbols>true</IncludeSymbols>
+      <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
     <PropertyGroup>
       <AnalysisLevel>latest</AnalysisLevel>
