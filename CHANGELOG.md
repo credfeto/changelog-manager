@@ -22,6 +22,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Roslynator.Analyzers to 4.2.0
 - Dependencies - Updated SecurityCodeScan.VS2019 to 5.6.7
 - Dependencies - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.8
+- Dependencies - Updated SonarAnalyzer.CSharp to 8.55.0.65544
 ### Removed
 ### Deployment Changes
 
