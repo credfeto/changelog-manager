@@ -15,6 +15,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.0.7.19
 - Dependencies - Updated FunFair.CodeAnalysis to 5.9.0.1493
 - Dependencies - Updated Meziantou.Analyzer to 2.0.29
+- Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.5.22
 ### Removed
 ### Deployment Changes
 
