@@ -19,6 +19,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated NSubstitute.Analyzers.CSharp to 1.0.16
 - Dependencies - Updated Philips.CodeAnalysis.DuplicateCodeAnalyzer to 1.1.7
 - Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.2.32
+- Dependencies - Updated Roslynator.Analyzers to 4.2.0
 ### Removed
 ### Deployment Changes
 
