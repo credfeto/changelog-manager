@@ -16,6 +16,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated FunFair.CodeAnalysis to 5.9.0.1493
 - Dependencies - Updated Meziantou.Analyzer to 2.0.29
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.5.22
+- Dependencies - Updated NSubstitute.Analyzers.CSharp to 1.0.16
 ### Removed
 ### Deployment Changes
 
