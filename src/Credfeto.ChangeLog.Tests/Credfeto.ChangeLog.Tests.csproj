@@ -35,7 +35,7 @@
     <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FunFair.Test.Common" Version="5.9.3.1699" />
+    <PackageReference Include="FunFair.Test.Common" Version="6.0.26.2754" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="NSubstitute" Version="4.3.0" />
     <PackageReference Include="TeamCity.VSTest.TestAdapter" Version="1.0.36" />
