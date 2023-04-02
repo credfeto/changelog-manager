@@ -26,6 +26,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit.analyzers to 1.1.0
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.5.0
 - Dependencies - Updated NSubstitute to 5.0.0
+- Dependencies - Updated xunit to 2.4.2
 ### Removed
 ### Deployment Changes
 
