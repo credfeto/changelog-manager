@@ -14,6 +14,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated AsyncFixer to 1.6.0
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.0.7.19
 - Dependencies - Updated FunFair.CodeAnalysis to 5.9.0.1493
+- Dependencies - Updated Meziantou.Analyzer to 2.0.29
 ### Removed
 ### Deployment Changes
 
