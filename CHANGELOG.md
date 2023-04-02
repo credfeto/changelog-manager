@@ -23,6 +23,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated SecurityCodeScan.VS2019 to 5.6.7
 - Dependencies - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.8
 - Dependencies - Updated SonarAnalyzer.CSharp to 8.55.0.65544
+- Dependencies - Updated xunit.analyzers to 1.1.0
 ### Removed
 ### Deployment Changes
 
