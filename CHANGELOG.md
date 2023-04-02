@@ -27,6 +27,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.5.0
 - Dependencies - Updated NSubstitute to 5.0.0
 - Dependencies - Updated xunit to 2.4.2
+- Dependencies - Updated xunit.runner.visualstudio to 2.4.5
 ### Removed
 ### Deployment Changes
 
