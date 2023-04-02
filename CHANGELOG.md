@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - FF-3881 - Updated DotNet SDK to 7.0.200
 - SDK - Updated DotNet SDK to 7.0.202
+- Dependencies - Updated AsyncFixer to 1.6.0
 ### Removed
 ### Deployment Changes
 

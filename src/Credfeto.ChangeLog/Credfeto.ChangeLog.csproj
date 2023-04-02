@@ -1,71 +1,71 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-      <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-      <RunAOTCompilation>false</RunAOTCompilation>
-      <EnablePackageValidation>true</EnablePackageValidation>
-      <Features>strict;flow-analysis</Features>
-      <GenerateNeutralResourcesLanguageAttribute>true</GenerateNeutralResourcesLanguageAttribute>
-      <ImplicitUsings>disable</ImplicitUsings>
-      <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
-      <IsPackable>true</IsPackable>
-      <IsPublishable>false</IsPublishable>
-      <LangVersion>latest</LangVersion>
-      <NoWarn/>
-      <Nullable>enable</Nullable>
-      <OutputType>Library</OutputType>
-      <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-      <TieredCompilation>true</TieredCompilation>
-      <TreatSpecificWarningsAsErrors/>
-      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-      <WarningsAsErrors/>
-      <!-- Dotnet 7 features -->
-      <TieredPGO>true</TieredPGO>
-      <UseSystemResourceKeys>true</UseSystemResourceKeys>
-      <IlcOptimizationPreference>Size</IlcOptimizationPreference>
-      <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
-      <DebuggerSupport>true</DebuggerSupport>
-      <IncludeSymbols>true</IncludeSymbols>
-      <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    </PropertyGroup>
-    <PropertyGroup>
-        <AnalysisLevel>latest</AnalysisLevel>
-        <AnalysisMode>AllEnabledByDefault</AnalysisMode>
-        <EnableNETAnalyzers>true</EnableNETAnalyzers>
-        <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-        <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <PropertyGroup>
-        <Authors>Mark Ridgwell</Authors>
-        <Company>Mark Ridgwell</Company>
-        <Copyright>Mark Ridgwell</Copyright>
-        <Product>Changelog management tool</Product>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Description>Changelog manager common library.</Description>
-        <PackageTags>Changelog</PackageTags>
-        <RepositoryUrl>https://github.com/credfeto/changelog-manager</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <NeutralLanguage>en-GB</NeutralLanguage>
-        <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="LibGit2Sharp" Version="0.27.0-preview-0096" />
-    </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="AsyncFixer" Version="1.5.1" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="Credfeto.Enumeration.Source.Generation" Version="0.0.6.8" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="FunFair.CodeAnalysis" Version="5.8.1.1203" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="Meziantou.Analyzer" Version="1.0.698" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.1.46" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="Nullable.Extended.Analyzer" Version="1.10.4539" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="Philips.CodeAnalysis.DuplicateCodeAnalyzer" Version="1.1.6" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="Philips.CodeAnalysis.MaintainabilityAnalyzers" Version="1.2.27" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="Roslynator.Analyzers" Version="4.0.2" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.2" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="SmartAnalyzers.CSharpExtensions.Annotations" Version="4.2.2" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="SonarAnalyzer.CSharp" Version="8.36.1.44192" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" ExcludeAssets="runtime"/>
-      <PackageReference Include="ToStringWithoutOverrideAnalyzer" Version="0.6.0" PrivateAssets="All" ExcludeAssets="runtime"/>
-    </ItemGroup>
+  <PropertyGroup>
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+    <RunAOTCompilation>false</RunAOTCompilation>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <Features>strict;flow-analysis</Features>
+    <GenerateNeutralResourcesLanguageAttribute>true</GenerateNeutralResourcesLanguageAttribute>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    <IsPackable>true</IsPackable>
+    <IsPublishable>false</IsPublishable>
+    <LangVersion>latest</LangVersion>
+    <NoWarn />
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TieredCompilation>true</TieredCompilation>
+    <TreatSpecificWarningsAsErrors />
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <!-- Dotnet 7 features -->
+    <TieredPGO>true</TieredPGO>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    <IlcOptimizationPreference>Size</IlcOptimizationPreference>
+    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+    <DebuggerSupport>true</DebuggerSupport>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Authors>Mark Ridgwell</Authors>
+    <Company>Mark Ridgwell</Company>
+    <Copyright>Mark Ridgwell</Copyright>
+    <Product>Changelog management tool</Product>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>Changelog manager common library.</Description>
+    <PackageTags>Changelog</PackageTags>
+    <RepositoryUrl>https://github.com/credfeto/changelog-manager</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="LibGit2Sharp" Version="0.27.0-preview-0096" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AsyncFixer" Version="1.6.0" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="Credfeto.Enumeration.Source.Generation" Version="0.0.6.8" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="FunFair.CodeAnalysis" Version="5.8.1.1203" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="Meziantou.Analyzer" Version="1.0.698" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.1.46" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="Nullable.Extended.Analyzer" Version="1.10.4539" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="Philips.CodeAnalysis.DuplicateCodeAnalyzer" Version="1.1.6" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="Philips.CodeAnalysis.MaintainabilityAnalyzers" Version="1.2.27" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="Roslynator.Analyzers" Version="4.0.2" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.2" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="SmartAnalyzers.CSharpExtensions.Annotations" Version="4.2.2" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.36.1.44192" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="ToStringWithoutOverrideAnalyzer" Version="0.6.0" PrivateAssets="All" ExcludeAssets="runtime" />
+  </ItemGroup>
 </Project>
