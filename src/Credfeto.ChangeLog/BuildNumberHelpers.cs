@@ -16,6 +16,6 @@ internal static class BuildNumberHelpers
             return null;
         }
 
-        return new Version(version);
+        return new(version);
     }
 }

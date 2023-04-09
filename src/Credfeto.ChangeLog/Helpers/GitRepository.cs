@@ -8,6 +8,6 @@ internal static class GitRepository
     {
         string found = Repository.Discover(workDir);
 
-        return new Repository(found);
+        return new(found);
     }
 }

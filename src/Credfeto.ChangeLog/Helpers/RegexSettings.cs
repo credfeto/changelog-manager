@@ -10,5 +10,7 @@ internal static class RegexSettings
     public const RegexOptions VERSION_HEADER_OPTIONS = RegexOptions.Compiled | RegexOptions.ExplicitCapture;
     public const string VERSION_HEADER_REGEX = @"^##\s\[(?<version>\d+(.\d+)+)\]";
     public const RegexOptions GIT_HUNK_POSITION_OPTIONS = RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.ExplicitCapture;
-    public const string GIT_HUNK_POSITION_REGEX = @"^@@\s*\-(?<OriginalFileStart>\d*)(,(?<OriginalFileEnd>\d*))?\s*\+(?<CurrentFileStart>\d*)(,(?<CurrentFileChangeLength>\d*))?\s*@@";
+
+    public const string GIT_HUNK_POSITION_REGEX =
+        @"^@@\s*\-(?<OriginalFileStart>\d*)(,(?<OriginalFileEnd>\d*))?\s*\+(?<CurrentFileStart>\d*)(,(?<CurrentFileChangeLength>\d*))?\s*@@";
 }

@@ -128,8 +128,8 @@ public static class ChangeLogChecker
 
     private static void CompareHunk(List<string> lines, int lastHunk, out List<string> before, out List<string> after)
     {
-        before = new List<string>();
-        after = new List<string>();
+        before = new();
+        after = new();
 
         foreach (string line in lines.Skip(lastHunk + 1))
         {

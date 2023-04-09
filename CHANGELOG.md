@@ -24,6 +24,10 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.8
 - Dependencies - Updated SonarAnalyzer.CSharp to 8.55.0.65544
 - Dependencies - Updated xunit.analyzers to 1.1.0
+- Dependencies - Updated Microsoft.NET.Test.Sdk to 17.5.0
+- Dependencies - Updated NSubstitute to 5.0.0
+- Dependencies - Updated xunit to 2.4.2
+- Dependencies - Updated xunit.runner.visualstudio to 2.4.5
 - Dependencies - Updated FunFair.Test.Common to 6.0.26.2754
 ### Removed
 ### Deployment Changes
