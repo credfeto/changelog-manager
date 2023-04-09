@@ -28,6 +28,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated NSubstitute to 5.0.0
 - Dependencies - Updated xunit to 2.4.2
 - Dependencies - Updated xunit.runner.visualstudio to 2.4.5
+- Dependencies - Updated FunFair.Test.Common to 6.0.26.2754
 ### Removed
 ### Deployment Changes
 
