@@ -1,10 +1,11 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Credfeto.ChangeLog.Helpers;
 
-// ReSharper disable once UnusedType.Global
+[SuppressMessage(category: "ReSharper", checkId: "UnusedType.Global", Justification = "TODO: Review")]
 internal static class Net6Compat
 {
-    // ReSharper disable once UnusedMember.Global
+    [SuppressMessage(category: "ReSharper", checkId: "UnusedMember.Global", Justification = "TODO: Review")]
     public static readonly TimeSpan Short = TimeSpan.FromMilliseconds(RegexSettings.TimeoutMilliseconds);
 }
