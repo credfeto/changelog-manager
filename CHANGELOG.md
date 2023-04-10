@@ -14,7 +14,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated AsyncFixer to 1.6.0
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.0.7.19
 - Dependencies - Updated FunFair.CodeAnalysis to 5.9.0.1493
-- Dependencies - Updated Meziantou.Analyzer to 2.0.29
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.5.22
 - Dependencies - Updated NSubstitute.Analyzers.CSharp to 1.0.16
 - Dependencies - Updated Philips.CodeAnalysis.DuplicateCodeAnalyzer to 1.1.7
@@ -29,6 +28,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit to 2.4.2
 - Dependencies - Updated xunit.runner.visualstudio to 2.4.5
 - Dependencies - Updated FunFair.Test.Common to 6.0.26.2754
+- Dependencies - Updated Meziantou.Analyzer to 2.0.32
 ### Removed
 ### Deployment Changes
 
