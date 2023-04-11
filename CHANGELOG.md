@@ -9,6 +9,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+- Dependencies - Updated LibGit2Sharp to 0.27.0
 ### Removed
 ### Deployment Changes
 
