@@ -9,14 +9,17 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- Dependencies - Updated LibGit2Sharp to 0.27.2
-- Dependencies - Updated Meziantou.Analyzer to 2.0.33
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.10.3] - 2023-04-13
+### Changed
+- Dependencies - Updated LibGit2Sharp to 0.27.2
+- Dependencies - Updated Meziantou.Analyzer to 2.0.33
+
 ## [1.10.2] - 2023-04-12
 ### Changed
 - Dependencies - Updated LibGit2Sharp to 0.27.1
