@@ -193,6 +193,6 @@ public static class ChangeLogChecker
     private static string FindChangeLogPositionInRepo(Repository repo, string changeLogFileName)
     {
         return changeLogFileName.Substring(repo.Info.WorkingDirectory.Length)
-                                .Replace(oldValue: "\\", newValue: "/", comparisonType: StringComparison.Ordinal);
+                                .Replace(oldChar: '\\', newChar: '/');
     }
 }
