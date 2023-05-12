@@ -20,7 +20,7 @@
     <RunAOTCompilation>false</RunAOTCompilation>
     <RuntimeIdentifiers>win-x64;win10-x64;win81-x64;osx-x64;linux-x64;debian.9-x64;linux-arm64</RuntimeIdentifiers>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <TieredCompilation>true</TieredCompilation>
     <TieredPGO>true</TieredPGO>
     <ToolCommandName>changelog</ToolCommandName>
