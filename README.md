@@ -137,6 +137,18 @@ dotnet changelog --changelog CHANGELOG.md --check-insert origin/target
 ```
 
 Notes
+
 - Assumes that the branch to be merged into is up-to-date with the latest changes.
 - Assumes that all entries have been committed to the local repo.
 - All changes in non-committed (staged and unstaged) files are ignored.
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
