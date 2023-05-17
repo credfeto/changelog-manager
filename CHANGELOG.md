@@ -14,6 +14,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Meziantou.Analyzer to 2.0.50
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.0.18
 - Dependencies - .NET 8 Preview 3
+- SDK - Updated DotNet SDK to 8.0.100-preview.4.23260.5
 ### Removed
 ### Deployment Changes
 
