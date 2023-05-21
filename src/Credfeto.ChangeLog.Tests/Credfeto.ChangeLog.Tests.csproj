@@ -50,8 +50,8 @@
   <ItemGroup>
     <PackageReference Include="AsyncFixer" Version="1.6.0" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="All" ExcludeAssets="runtime" />
-    <PackageReference Include="coverlet.collector" Version="3.2.0" PrivateAssets="All" ExcludeAssets="runtime" />
-    <PackageReference Include="coverlet.msbuild" Version="3.2.0" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="coverlet.msbuild" Version="6.0.0" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="Credfeto.Enumeration.Source.Generation" Version="1.0.9.588" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="FunFair.CodeAnalysis" Version="7.0.0.18" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="Meziantou.Analyzer" Version="2.0.52" PrivateAssets="All" ExcludeAssets="runtime" />
