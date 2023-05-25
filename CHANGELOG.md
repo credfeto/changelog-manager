@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - Dependencies - Updated coverlet to 6.0.0
+- Dependencies - Updated Meziantou.Analyzer to 2.0.54
 ### Removed
 ### Deployment Changes
 
