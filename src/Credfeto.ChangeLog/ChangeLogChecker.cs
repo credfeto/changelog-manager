@@ -19,7 +19,7 @@ public static class ChangeLogChecker
         changeLogFileName = GetFullChangeLogFilePath(changeLogFileName);
         int? position = await ChangeLogReader.FindFirstReleaseVersionPositionAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
 
-        if (position == null)
+        if (position is null)
         {
             return false;
         }
@@ -33,7 +33,7 @@ public static class ChangeLogChecker
 
             Branch? originBranch = repo.Branches.FirstOrDefault(b => b.FriendlyName == originBranchName);
 
-            if (originBranch == null)
+            if (originBranch is null)
             {
                 throw new BranchMissingException($"Could not find branch {originBranchName}");
             }
@@ -53,7 +53,7 @@ public static class ChangeLogChecker
 
             PatchEntryChanges? change = changes.FirstOrDefault(candidate => candidate.Path == changeLogInRepoPath);
 
-            if (change != null)
+            if (change is not null)
             {
                 return CheckForChangesAfterFirstRelease(change: change, firstReleaseVersionIndex: firstReleaseVersionIndex);
             }
@@ -74,7 +74,7 @@ public static class ChangeLogChecker
 
         foreach (Match? match in matches)
         {
-            if (match == null)
+            if (match is null)
             {
                 continue;
             }

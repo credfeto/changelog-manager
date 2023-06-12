@@ -123,7 +123,7 @@ public static class ChangeLogReader
 
     private static bool IsMatchingVersion(Version? version, string line)
     {
-        if (version == null)
+        if (version is null)
         {
             return StringComparer.InvariantCultureIgnoreCase.Equals(x: line, y: Constants.UnreleasedHeader);
         }

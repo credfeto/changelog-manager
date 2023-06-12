@@ -18,7 +18,7 @@ internal static class Program
     {
         string? changeLog = options.ChangeLog;
 
-        if (changeLog != null)
+        if (changeLog is not null)
         {
             return changeLog;
         }
@@ -35,35 +35,35 @@ internal static class Program
     {
         CancellationToken cancellationToken = CancellationToken.None;
 
-        if (options.Extract != null && options.Version != null)
+        if (options.Extract is not null && options.Version is not null)
         {
             await ExtractChangeLogTextForVersionAsync(options: options, cancellationToken: cancellationToken);
 
             return;
         }
 
-        if (options.Add != null && options.Message != null)
+        if (options.Add is not null && options.Message is not null)
         {
             await AddEntryToUnreleasedChangelogAsync(options: options, cancellationToken: cancellationToken);
 
             return;
         }
 
-        if (options.Remove != null && options.Message != null)
+        if (options.Remove is not null && options.Message is not null)
         {
             await RemoveEntryFromUnreleasedChangelogAsync(options: options, cancellationToken: cancellationToken);
 
             return;
         }
 
-        if (options.CheckInsert != null)
+        if (options.CheckInsert is not null)
         {
             await CheckInsertPositionAsync(options: options, cancellationToken: cancellationToken);
 
             return;
         }
 
-        if (options.CreateRelease != null)
+        if (options.CreateRelease is not null)
         {
             await CreateNewReleaseAsync(options: options, cancellationToken: cancellationToken);
 
@@ -107,9 +107,7 @@ internal static class Program
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Branch: {originBranchName}");
-        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog,
-                                                                                   originBranchName: originBranchName,
-                                                                                   cancellationToken: cancellationToken);
+        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: originBranchName, cancellationToken: cancellationToken);
 
         if (valid)
         {
@@ -186,7 +184,7 @@ internal static class Program
         {
             Console.WriteLine($"ERROR: {exception.Message}");
 
-            if (exception.StackTrace != null)
+            if (exception.StackTrace is not null)
             {
                 Console.WriteLine(exception.StackTrace);
             }
