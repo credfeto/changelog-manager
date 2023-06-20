@@ -34,8 +34,8 @@
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
     <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
+    <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Credfeto.ChangeLog\Credfeto.ChangeLog.csproj" />
