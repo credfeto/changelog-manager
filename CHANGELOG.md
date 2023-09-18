@@ -24,6 +24,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit to 2.5.1
 - Dependencies - Updated xunit.runner.visualstudio to 2.5.1
 - Used ThisAssembly.AssemblyInfo to generate static version information
+- Dependencies - Updated FunFair.Test.Common to 6.1.10.156
 ### Removed
 ### Deployment Changes
 
