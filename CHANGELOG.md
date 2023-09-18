@@ -22,6 +22,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated NSubstitute to 5.1.0
 - Dependencies - Updated TeamCity.VSTest.TestAdapter to 1.0.37
 - Dependencies - Updated xunit to 2.5.1
+- Dependencies - Updated xunit.runner.visualstudio to 2.5.1
 ### Removed
 ### Deployment Changes
 
