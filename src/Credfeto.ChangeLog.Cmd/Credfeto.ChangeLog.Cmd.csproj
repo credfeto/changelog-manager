@@ -21,7 +21,7 @@
     <OutputType>Exe</OutputType>
     <PackAsTool>true</PackAsTool>
     <RunAOTCompilation>false</RunAOTCompilation>
-    <RuntimeIdentifiers>win-x64;win10-x64;win81-x64;osx-x64;linux-x64;debian.9-x64;linux-arm64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win-x64;win-arm64;osx-x64;osx-arm64;linux-x64;linux-arm64</RuntimeIdentifiers>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     <TieredCompilation>true</TieredCompilation>
