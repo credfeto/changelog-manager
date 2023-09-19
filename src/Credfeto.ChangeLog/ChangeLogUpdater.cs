@@ -452,8 +452,7 @@ public static class ChangeLogUpdater
 
         Match match = CommonRegex.VersionHeader.Match(line);
 
-        return match.Groups["version"]
-                    .Value;
+        return match.Groups["version"].Value;
     }
 
     private static bool IsRelease(string line)

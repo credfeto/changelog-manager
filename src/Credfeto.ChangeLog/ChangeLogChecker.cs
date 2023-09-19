@@ -79,15 +79,9 @@ public static class ChangeLogChecker
                 continue;
             }
 
-            int changeStart = Convert.ToInt32(value: match.Groups["CurrentFileStart"]
-                                                          .Value,
-                                              provider: CultureInfo.InvariantCulture);
+            int changeStart = Convert.ToInt32(value: match.Groups["CurrentFileStart"].Value, provider: CultureInfo.InvariantCulture);
 
-            if (!int.TryParse(s: match.Groups["CurrentFileChangeLength"]
-                                      .Value,
-                              style: NumberStyles.Integer,
-                              provider: CultureInfo.InvariantCulture,
-                              out int changeLength))
+            if (!int.TryParse(s: match.Groups["CurrentFileChangeLength"].Value, style: NumberStyles.Integer, provider: CultureInfo.InvariantCulture, out int changeLength))
             {
                 changeLength = 1;
             }

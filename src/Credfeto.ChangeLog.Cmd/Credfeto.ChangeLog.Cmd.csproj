@@ -16,6 +16,7 @@
     <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
     <LangVersion>latest</LangVersion>
     <NoWarn />
+    <NuGetAudit>true</NuGetAudit>
     <Nullable>enable</Nullable>
     <OptimizationPreference>speed</OptimizationPreference>
     <OutputType>Exe</OutputType>
@@ -32,7 +33,6 @@
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <ValidateExecutableReferencesMatchSelfContained>true</ValidateExecutableReferencesMatchSelfContained>
     <WarningsAsErrors />
-    <NuGetAudit>true</NuGetAudit>
   </PropertyGroup>
   <PropertyGroup>
     <AnalysisLevel>latest</AnalysisLevel>
@@ -79,7 +79,7 @@
     <PackageReference Include="SmartAnalyzers.CSharpExtensions.Annotations" Version="4.2.8" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="9.10.0.77988" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" ExcludeAssets="runtime" />
-    <PackageReference Include="ThisAssembly.AssemblyInfo" Version="1.4.1" PrivateAssets="All" ExcludeAssets="runtime"/>
+    <PackageReference Include="ThisAssembly.AssemblyInfo" Version="1.4.1" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="ToStringWithoutOverrideAnalyzer" Version="0.6.0" PrivateAssets="All" ExcludeAssets="runtime" />
   </ItemGroup>
 </Project>
