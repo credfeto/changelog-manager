@@ -9,7 +9,14 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+### Removed
+### Deployment Changes
 
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [1.10.12] - 2023-09-20
+### Changed
 - SDK - Updated DotNet SDK to 8.0.100-rc.1.23455.8
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.1.0.138
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.3.138
@@ -25,12 +32,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit.runner.visualstudio to 2.5.1
 - Used ThisAssembly.AssemblyInfo to generate static version information
 - Dependencies - Updated FunFair.Test.Common to 6.1.10.156
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [1.10.11] - 2023-08-08
 ### Changed
 - SDK Updated DotNet SDK to 7.0.400
