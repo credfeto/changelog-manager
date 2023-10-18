@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - Dependencies - Updated TeamCity.VSTest.TestAdapter to 1.0.38
+- Dependencies - Updated Roslynator.Analyzers to 4.6.0
 ### Removed
 ### Deployment Changes
 
