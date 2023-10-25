@@ -12,9 +12,9 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated TeamCity.VSTest.TestAdapter to 1.0.38
 - Dependencies - Updated xunit to 2.5.3
 - Dependencies - Updated FunFair.Test.Common to 6.1.14.194
-- Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.3.0
 - Dependencies - Updated Roslynator.Analyzers to 4.6.1
 - Dependencies - Updated Meziantou.Analyzer to 2.0.98
+- Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.3.1
 ### Removed
 ### Deployment Changes
 
