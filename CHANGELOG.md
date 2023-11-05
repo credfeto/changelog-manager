@@ -9,6 +9,14 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [1.10.14] - 2023-11-05
+### Changed
 - Dependencies - Updated TeamCity.VSTest.TestAdapter to 1.0.38
 - Dependencies - Updated FunFair.Test.Common to 6.1.14.194
 - Dependencies - Updated Roslynator.Analyzers to 4.6.1
@@ -16,12 +24,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Meziantou.Analyzer to 2.0.103
 - Dependencies - Updated xunit to 2.6.1
 - Dependencies - Updated LibGit2Sharp to 0.28.0
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [1.10.13] - 2023-10-13
 ### Changed
 - SDK - Updated DotNet SDK to 8.0.100-rc.2.23502.2
