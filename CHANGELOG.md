@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Dependencies - Updated FunFair.Test.Common to 6.1.16.218
 - Dependencies - Updated Roslynator.Analyzers to 4.6.2
+- Dependencies - Updated xunit.analyzers to 1.5.0
 ### Removed
 ### Deployment Changes
 
