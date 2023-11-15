@@ -128,6 +128,9 @@ public static class ChangeLogReader
             return StringComparer.InvariantCultureIgnoreCase.Equals(x: line, y: Constants.UnreleasedHeader);
         }
 
+        return Candidates(version)
+            .Any(candidate => line.StartsWith(value: candidate, comparisonType: StringComparison.OrdinalIgnoreCase));
+
         static IEnumerable<string> Candidates(Version expected)
         {
             int build = expected.Build is 0 or -1
@@ -141,8 +144,5 @@ public static class ChangeLogReader
                 yield return $"## [{expected.Major}.{expected.Minor}]";
             }
         }
-
-        return Candidates(version)
-            .Any(candidate => line.StartsWith(value: candidate, comparisonType: StringComparison.OrdinalIgnoreCase));
     }
 }
