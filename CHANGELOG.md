@@ -9,6 +9,14 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [1.10.17] - 2023-12-04
+### Changed
 - Dependencies - Updated xunit.analyzers to 1.6.0
 - Dependencies - Updated xunit to 2.6.2
 - Dependencies - Updated xunit.runner.visualstudio to 2.5.4
@@ -17,12 +25,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Meziantou.Analyzer to 2.0.118
 - Dependencies - Updated Roslynator.Analyzers to 4.7.0
 - Dependencies - Updated LibGit2Sharp to 0.29.0
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [1.10.16] - 2023-11-16
 ### Changed
 - Dependencies - Updated Roslynator.Analyzers to 4.6.2
