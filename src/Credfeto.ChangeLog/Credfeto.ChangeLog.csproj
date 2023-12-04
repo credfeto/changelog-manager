@@ -53,7 +53,7 @@
     <RepositoryUrl>https://github.com/credfeto/changelog-manager</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LibGit2Sharp" Version="0.28.0" />
+    <PackageReference Include="LibGit2Sharp" Version="0.29.0" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AsyncFixer" Version="1.6.0" PrivateAssets="All" ExcludeAssets="runtime" />
