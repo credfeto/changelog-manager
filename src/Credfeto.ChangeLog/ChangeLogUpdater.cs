@@ -52,9 +52,7 @@ public static class ChangeLogUpdater
 
     private static string AddEntryCommon(string changeLog, string type, string message)
     {
-        List<string> text = EnsureChangelog(changeLog)
-                            .SplitToLines()
-                            .ToList();
+        List<string> text = ChangeLogAsLines(changeLog);
 
         string entryText = CreateEntryText(message);
         int index = FindInsertPosition(changeLog: text, type: type, entryText: entryText);
@@ -68,6 +66,13 @@ public static class ChangeLogUpdater
                      .Trim();
     }
 
+    private static List<string> ChangeLogAsLines(string changeLog)
+    {
+        return EnsureChangelog(changeLog)
+               .SplitToLines()
+               .ToList();
+    }
+
     public static string RemoveEntry(string changeLog, string type, string message)
     {
         return RemoveEntryCommon(changeLog: changeLog, type: type, message: message);
@@ -75,9 +80,7 @@ public static class ChangeLogUpdater
 
     private static string RemoveEntryCommon(string changeLog, string type, string message)
     {
-        List<string> text = EnsureChangelog(changeLog)
-                            .SplitToLines()
-                            .ToList();
+        List<string> text = ChangeLogAsLines(changeLog);
 
         string entryText = CreateEntryText(message);
         int index = FindRemovePosition(changeLog: text, type: type, entryText: entryText);
@@ -120,12 +123,7 @@ public static class ChangeLogUpdater
                                  findSection: false);
     }
 
-    private static int FindMatchPosition(List<string> changeLog,
-                                         string type,
-                                         Func<string, bool> isMatch,
-                                         Func<int, int> exactMatchAction,
-                                         Func<int, int> emptySectionAction,
-                                         bool findSection)
+    private static int FindMatchPosition(List<string> changeLog, string type, Func<string, bool> isMatch, Func<int, int> exactMatchAction, Func<int, int> emptySectionAction, bool findSection)
     {
         bool foundUnreleased = false;
 
@@ -205,9 +203,7 @@ public static class ChangeLogUpdater
 
     private static string CreateReleaseCommon(string changeLog, string version, bool pending)
     {
-        List<string> text = EnsureChangelog(changeLog)
-                            .SplitToLines()
-                            .ToList();
+        List<string> text = ChangeLogAsLines(changeLog);
 
         Dictionary<string, int> releases = FindReleasePositions(text);
 
@@ -283,7 +279,7 @@ public static class ChangeLogUpdater
     private static string CreateReleaseVersionHeader(string version, bool pending)
     {
         string releaseDate = CreateReleaseDate(pending);
-        string releaseVersionHeader = "## [" + version + "] - " + releaseDate;
+        string releaseVersionHeader = string.Concat("## [", version, "] - ", releaseDate);
 
         return releaseVersionHeader;
     }
@@ -396,9 +392,7 @@ public static class ChangeLogUpdater
 
     private static int FindInsertPosition(string releaseVersionToFind, IReadOnlyDictionary<string, int> releases, int endOfFilePosition)
     {
-        string? latestRelease = releases.Keys.Where(x => x != Constants.Unreleased)
-                                        .OrderByDescending(x => new Version(x))
-                                        .FirstOrDefault();
+        string? latestRelease = GetLatestRelease(releases);
 
         int releaseInsertPos;
 
@@ -411,12 +405,12 @@ public static class ChangeLogUpdater
 
             if (latestNumeric == numericalVersion)
             {
-                throw new ReleaseAlreadyExistsException($"Release {releaseVersionToFind} already exists");
+                return ReleaseAlreadyExists(releaseVersionToFind);
             }
 
             if (latestNumeric > numericalVersion)
             {
-                throw new ReleaseTooOldException($"Release {latestRelease} already exists and is newer than {releaseVersionToFind}");
+                return ReleaseTooOld(releaseVersionToFind: releaseVersionToFind, latestRelease: latestRelease);
             }
 
             releaseInsertPos = releases[latestRelease];
@@ -429,18 +423,48 @@ public static class ChangeLogUpdater
         return releaseInsertPos;
     }
 
+    [DoesNotReturn]
+    private static int ReleaseTooOld(string releaseVersionToFind, string latestRelease)
+    {
+        throw new ReleaseTooOldException($"Release {latestRelease} already exists and is newer than {releaseVersionToFind}");
+    }
+
+    [DoesNotReturn]
+    private static int ReleaseAlreadyExists(string releaseVersionToFind)
+    {
+        throw new ReleaseAlreadyExistsException($"Release {releaseVersionToFind} already exists");
+    }
+
+    private static string? GetLatestRelease(IReadOnlyDictionary<string, int> releases)
+    {
+        return releases.Keys.Where(x => x != Constants.Unreleased)
+                       .OrderByDescending(x => new Version(x))
+                       .FirstOrDefault();
+    }
+
     private static Dictionary<string, int> FindReleasePositions(IReadOnlyList<string> text)
     {
-        Dictionary<string, int> releases = text.Select((line, index) => new { line, index })
-                                               .Where(i => IsRelease(i.line))
-                                               .ToDictionary(keySelector: i => ExtractRelease(i.line), elementSelector: i => i.index, comparer: StringComparer.Ordinal);
+        Dictionary<string, int> releases = GetReleasePositions(text);
 
         if (releases.Count == 0)
         {
-            throw new EmptyChangeLogException("Could not find unreleased section");
+            return CouldNotFindUnreleasedSection();
         }
 
         return releases;
+    }
+
+    [DoesNotReturn]
+    private static Dictionary<string, int> CouldNotFindUnreleasedSection()
+    {
+        throw new EmptyChangeLogException("Could not find unreleased section");
+    }
+
+    private static Dictionary<string, int> GetReleasePositions(IReadOnlyList<string> text)
+    {
+        return text.Select((line, index) => new { line, index })
+                   .Where(i => IsRelease(i.line))
+                   .ToDictionary(keySelector: i => ExtractRelease(i.line), elementSelector: i => i.index, comparer: StringComparer.Ordinal);
     }
 
     private static string ExtractRelease(string line)
