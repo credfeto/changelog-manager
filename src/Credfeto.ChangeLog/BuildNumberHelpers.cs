@@ -16,6 +16,11 @@ internal static class BuildNumberHelpers
             return null;
         }
 
-        return new(version);
+        if (!Version.TryParse(input: version, out Version? parsedVersion))
+        {
+            return null;
+        }
+
+        return parsedVersion;
     }
 }

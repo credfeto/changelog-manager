@@ -107,9 +107,7 @@ internal static class Program
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Branch: {originBranchName}");
-        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog,
-                                                                                   originBranchName: originBranchName,
-                                                                                   cancellationToken: cancellationToken);
+        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: originBranchName, cancellationToken: cancellationToken);
 
         if (valid)
         {
@@ -174,9 +172,7 @@ internal static class Program
 
         try
         {
-            ParserResult<Options> parser = await Parser.Default.ParseArguments<Options>(args)
-                                                       .WithNotParsed(NotParsed)
-                                                       .WithParsedAsync(ParsedOkAsync);
+            ParserResult<Options> parser = await ParseOptionsAsync(args);
 
             return parser.Tag == ParserResultType.Parsed
                 ? SUCCESS
@@ -193,5 +189,12 @@ internal static class Program
 
             return ERROR;
         }
+    }
+
+    private static Task<ParserResult<Options>> ParseOptionsAsync(IEnumerable<string> args)
+    {
+        return Parser.Default.ParseArguments<Options>(args)
+                     .WithNotParsed(NotParsed)
+                     .WithParsedAsync(ParsedOkAsync);
     }
 }
