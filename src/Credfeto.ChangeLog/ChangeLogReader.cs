@@ -22,9 +22,7 @@ public static class ChangeLogReader
     {
         Version? releaseVersion = BuildNumberHelpers.DetermineVersionForChangeLog(version);
 
-        IReadOnlyList<string> text = CommonRegex.RemoveComments.Replace(input: changeLog, replacement: string.Empty)
-                                                .Trim()
-                                                .SplitToLines();
+        IReadOnlyList<string> text = RemoveComments(changeLog);
 
         FindSectionForBuild(text: text, version: releaseVersion, out int foundStart, out int foundEnd);
 
@@ -76,6 +74,13 @@ public static class ChangeLogReader
 
         return releaseNotes.ToString()
                            .Trim();
+    }
+
+    private static IReadOnlyList<string> RemoveComments(string changeLog)
+    {
+        return CommonRegex.RemoveComments.Replace(input: changeLog, replacement: string.Empty)
+                          .Trim()
+                          .SplitToLines();
     }
 
     public static async Task<int?> FindFirstReleaseVersionPositionAsync(string changeLogFileName, CancellationToken cancellationToken)
