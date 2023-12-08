@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -29,7 +30,7 @@ public static class ChangeLogChecker
 
         using (Repository repo = GitRepository.OpenRepository(changelogDir))
         {
-            string sha = repo.Head.Tip.Sha;
+            string sha = HeadSha(repo);
 
             Branch? originBranch = repo.Branches.FirstOrDefault(b => b.FriendlyName == originBranchName);
 
@@ -49,7 +50,7 @@ public static class ChangeLogChecker
 
             int firstReleaseVersionIndex = position.Value;
 
-            Patch changes = repo.Diff.Compare<Patch>(oldTree: originBranch.Tip.Tree, newTree: repo.Head.Tip.Tree, compareOptions: CompareSettings.BuildCompareOptions);
+            Patch changes = repo.Diff.Compare<Patch>(oldTree: BranchTree(originBranch), newTree: HeadTree(repo), compareOptions: CompareSettings.BuildCompareOptions);
 
             PatchEntryChanges? change = changes.FirstOrDefault(candidate => candidate.Path == changeLogInRepoPath);
 
@@ -64,6 +65,26 @@ public static class ChangeLogChecker
         return true;
     }
 
+    private static Tree BranchTree(Branch branch)
+    {
+        return branch.Tip.Tree;
+    }
+
+    private static Tree HeadTree(Repository repo)
+    {
+        return BranchTree(repo.Head);
+    }
+
+    private static string BranchSha(Branch branch)
+    {
+        return branch.Tip.Sha;
+    }
+
+    private static string HeadSha(Repository repo)
+    {
+        return BranchSha(repo.Head);
+    }
+
     private static bool CheckForChangesAfterFirstRelease(PatchEntryChanges change, int firstReleaseVersionIndex)
     {
         Console.WriteLine("Change Details");
@@ -72,7 +93,7 @@ public static class ChangeLogChecker
 
         MatchCollection matches = CommonRegex.GitHunkPosition.Matches(patchDetails);
 
-        foreach (Match? match in matches)
+        foreach (Match? match in matches.OfType<Match?>())
         {
             if (match is null)
             {
@@ -109,7 +130,7 @@ public static class ChangeLogChecker
 
         if (lastHunk != -1)
         {
-            CompareHunk(lines: lines, lastHunk: lastHunk, out List<string> before, out List<string> after);
+            (List<string> before, List<string> after) = CompareHunk(lines: lines, lastHunk: lastHunk);
 
             if (before.SequenceEqual(second: after, comparer: StringComparer.Ordinal))
             {
@@ -120,48 +141,58 @@ public static class ChangeLogChecker
         return string.Join(separator: Environment.NewLine, values: lines);
     }
 
-    private static void CompareHunk(List<string> lines, int lastHunk, out List<string> before, out List<string> after)
+    private static (List<string> before, List<string> after) CompareHunk(List<string> lines, int lastHunk)
     {
-        before = new();
-        after = new();
+        List<string> before = [];
+        List<string> after = [];
 
         foreach (string line in lines.Skip(lastHunk + 1))
         {
             switch (line[0])
             {
                 case '+':
-                    after.Add(line.Substring(1));
+                    after.Add(line[1..]);
 
                     break;
 
                 case '-':
-                    before.Add(line.Substring(1));
+                    before.Add(line[1..]);
 
                     break;
 
                 case '\\':
-                    if (line == @"\ No newline at end of file")
+                    if (StringComparer.Ordinal.Equals(x: line, y: @"\ No newline at end of file"))
                     {
                         break;
                     }
 
-                    throw new DiffException($"Could not process diff line: {line}");
+                    return CouldNotProcessDiffLine(line);
 
-                default: throw new DiffException($"Could not process diff line: {line}");
+                default: return CouldNotProcessDiffLine(line);
             }
         }
+
+        return (before, after);
+    }
+
+    [DoesNotReturn]
+    private static (List<string> before, List<string> after) CouldNotProcessDiffLine(string line)
+    {
+        throw new DiffException($"Could not process diff line: {line}");
     }
 
     private static void RemoveLastLineIfBlank(List<string> lines)
     {
         int lastLine = lines.Count - 1;
 
-        if (lastLine >= 0)
+        if (lastLine < 0)
         {
-            if (string.IsNullOrEmpty(lines[lastLine]))
-            {
-                lines.RemoveAt(lastLine);
-            }
+            return;
+        }
+
+        if (string.IsNullOrEmpty(lines[lastLine]))
+        {
+            lines.RemoveAt(lastLine);
         }
     }
 
