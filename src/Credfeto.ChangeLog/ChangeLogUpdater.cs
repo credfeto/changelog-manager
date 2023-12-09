@@ -237,9 +237,9 @@ public static class ChangeLogUpdater
     {
         string previousLine = string.Empty;
 
-        List<string> newRelease = new();
+        List<string> newRelease = [];
 
-        removeIndexes = new();
+        removeIndexes = [];
 
         bool inComment = false;
 
