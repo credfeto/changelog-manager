@@ -93,7 +93,7 @@ internal static class Program
 
     private static Task CreateNewReleaseAsync(Options options, in CancellationToken cancellationToken)
     {
-        string releaseVersion = options.CreateRelease!;
+        string releaseVersion = GetCreateRelease(options);
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Release Version: {releaseVersion}");
@@ -101,9 +101,14 @@ internal static class Program
         return ChangeLogUpdater.CreateReleaseAsync(changeLogFileName: changeLog, version: releaseVersion, pending: options.Pending, cancellationToken: cancellationToken);
     }
 
+    private static string GetCreateRelease(Options options)
+    {
+        return options.CreateRelease ?? throw new InvalidOptionsException(nameof(options.CreateRelease) + " is null");
+    }
+
     private static async Task CheckInsertPositionAsync(Options options, CancellationToken cancellationToken)
     {
-        string originBranchName = options.CheckInsert!;
+        string originBranchName = GetCheckInsert(options);
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Branch: {originBranchName}");
@@ -119,10 +124,15 @@ internal static class Program
         throw new ChangeLogInvalidFailedException("Changelog modified in released section");
     }
 
+    private static string GetCheckInsert(Options options)
+    {
+        return options.CheckInsert ?? throw new InvalidOptionsException(nameof(options.CheckInsert) + " is null");
+    }
+
     private static Task AddEntryToUnreleasedChangelogAsync(Options options, in CancellationToken cancellationToken)
     {
-        string changeType = options.Add!;
-        string message = options.Message!;
+        string changeType = GetAdd(options);
+        string message = GetMessage(options);
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Change Type: {changeType}");
@@ -131,10 +141,15 @@ internal static class Program
         return ChangeLogUpdater.AddEntryAsync(changeLogFileName: changeLog, type: changeType, message: message, cancellationToken: cancellationToken);
     }
 
+    private static string GetAdd(Options options)
+    {
+        return options.Add ?? throw new InvalidOptionsException(nameof(options.Add) + " is null");
+    }
+
     private static Task RemoveEntryFromUnreleasedChangelogAsync(Options options, in CancellationToken cancellationToken)
     {
-        string changeType = options.Remove!;
-        string message = options.Message!;
+        string changeType = GetChangeType(options);
+        string message = GetMessage(options);
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Change Type: {changeType}");
@@ -143,10 +158,20 @@ internal static class Program
         return ChangeLogUpdater.RemoveEntryAsync(changeLogFileName: changeLog, type: changeType, message: message, cancellationToken: cancellationToken);
     }
 
+    private static string GetChangeType(Options options)
+    {
+        return options.Remove ?? throw new InvalidOptionsException(nameof(options.Remove) + " is null");
+    }
+
+    private static string GetMessage(Options options)
+    {
+        return options.Message ?? throw new InvalidOptionsException(nameof(options.Message) + " is null");
+    }
+
     private static async Task ExtractChangeLogTextForVersionAsync(Options options, CancellationToken cancellationToken)
     {
-        string outputFileName = options.Extract!;
-        string version = options.Version!;
+        string outputFileName = GetExtract(options);
+        string version = GetVersion(options);
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Version {version}");
@@ -154,6 +179,16 @@ internal static class Program
         string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: version, cancellationToken: cancellationToken);
 
         await File.WriteAllTextAsync(path: outputFileName, contents: text, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
+    }
+
+    private static string GetVersion(Options options)
+    {
+        return options.Version ?? throw new InvalidOptionsException(nameof(options.Version) + " is null");
+    }
+
+    private static string GetExtract(Options options)
+    {
+        return options.Extract ?? throw new InvalidOptionsException(nameof(options.Extract) + " is null");
     }
 
     private static void NotParsed(IEnumerable<Error> errors)
