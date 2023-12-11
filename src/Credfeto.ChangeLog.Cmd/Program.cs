@@ -112,7 +112,9 @@ internal static class Program
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Branch: {originBranchName}");
-        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: originBranchName, cancellationToken: cancellationToken);
+        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog,
+                                                                                   originBranchName: originBranchName,
+                                                                                   cancellationToken: cancellationToken);
 
         if (valid)
         {

@@ -50,7 +50,7 @@ public static class ChangeLogChecker
 
             int firstReleaseVersionIndex = position.Value;
 
-            Patch changes = repo.Diff.Compare<Patch>(oldTree: BranchTree(originBranch), newTree: HeadTree(repo), compareOptions: CompareSettings.BuildCompareOptions);
+            Patch changes = repo.Diff.Compare<Patch>(BranchTree(originBranch), HeadTree(repo), compareOptions: CompareSettings.BuildCompareOptions);
 
             PatchEntryChanges? change = changes.FirstOrDefault(candidate => candidate.Path == changeLogInRepoPath);
 

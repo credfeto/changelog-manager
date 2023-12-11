@@ -123,7 +123,12 @@ public static class ChangeLogUpdater
                                  findSection: false);
     }
 
-    private static int FindMatchPosition(List<string> changeLog, string type, Func<string, bool> isMatch, Func<int, int> exactMatchAction, Func<int, int> emptySectionAction, bool findSection)
+    private static int FindMatchPosition(List<string> changeLog,
+                                         string type,
+                                         Func<string, bool> isMatch,
+                                         Func<int, int> exactMatchAction,
+                                         Func<int, int> emptySectionAction,
+                                         bool findSection)
     {
         bool foundUnreleased = false;
 
@@ -279,7 +284,7 @@ public static class ChangeLogUpdater
     private static string CreateReleaseVersionHeader(string version, bool pending)
     {
         string releaseDate = CreateReleaseDate(pending);
-        string releaseVersionHeader = string.Concat("## [", version, "] - ", releaseDate);
+        string releaseVersionHeader = string.Concat(str0: "## [", str1: version, str2: "] - ", str3: releaseDate);
 
         return releaseVersionHeader;
     }
