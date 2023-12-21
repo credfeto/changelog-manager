@@ -87,7 +87,7 @@ internal static class Program
 
         Console.WriteLine();
         Console.WriteLine("Unreleased Content:");
-        string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: "0.0.0.0-unreleased", cancellationToken: cancellationToken);
+        string text = await ChangeLogReader.ExtractReleaseNotesFromFileAsync(changeLogFileName: changeLog, version: "0.0.0.0-unreleased", cancellationToken: cancellationToken);
         Console.WriteLine(text);
     }
 
@@ -112,9 +112,7 @@ internal static class Program
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Branch: {originBranchName}");
-        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog,
-                                                                                   originBranchName: originBranchName,
-                                                                                   cancellationToken: cancellationToken);
+        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: originBranchName, cancellationToken: cancellationToken);
 
         if (valid)
         {
@@ -178,7 +176,7 @@ internal static class Program
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Version {version}");
 
-        string text = await ChangeLogReader.ExtractReleaseNodesFromFileAsync(changeLogFileName: changeLog, version: version, cancellationToken: cancellationToken);
+        string text = await ChangeLogReader.ExtractReleaseNotesFromFileAsync(changeLogFileName: changeLog, version: version, cancellationToken: cancellationToken);
 
         await File.WriteAllTextAsync(path: outputFileName, contents: text, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
     }

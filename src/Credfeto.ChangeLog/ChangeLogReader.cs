@@ -11,7 +11,7 @@ namespace Credfeto.ChangeLog;
 
 public static class ChangeLogReader
 {
-    public static async Task<string> ExtractReleaseNodesFromFileAsync(string changeLogFileName, string version, CancellationToken cancellationToken)
+    public static async Task<string> ExtractReleaseNotesFromFileAsync(string changeLogFileName, string version, CancellationToken cancellationToken)
     {
         string textBlock = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
 
