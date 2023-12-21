@@ -16,38 +16,7 @@ public static class ChangeLogDetector
         {
             using (Repository repository = GitRepository.OpenRepository(Environment.CurrentDirectory))
             {
-                string repoRoot = repository.Info.WorkingDirectory;
-
-                IReadOnlyList<string> changelogs = Directory.GetFiles(path: repoRoot, searchPattern: Constants.ChangeLogFileName, searchOption: SearchOption.AllDirectories);
-
-                switch (changelogs.Count)
-                {
-                    case 0:
-                        changeLogFileName = null;
-
-                        return false;
-
-                    case 1:
-                        changeLogFileName = changelogs[0];
-
-                        return true;
-
-                    default:
-                    {
-                        string changeLogAtRepoRoot = Path.Combine(path1: repoRoot, path2: Constants.ChangeLogFileName);
-
-                        if (changelogs.Contains(value: changeLogAtRepoRoot, comparer: StringComparer.Ordinal))
-                        {
-                            changeLogFileName = changeLogAtRepoRoot;
-
-                            return true;
-                        }
-
-                        changeLogFileName = null;
-
-                        return false;
-                    }
-                }
+                return TryFindChangeLog(changeLogFileName: out changeLogFileName, repository: repository);
             }
         }
         catch (Exception)
@@ -56,6 +25,42 @@ public static class ChangeLogDetector
             changeLogFileName = null;
 
             return false;
+        }
+    }
+
+    public static bool TryFindChangeLog(Repository repository, [NotNullWhen(true)] out string? changeLogFileName)
+    {
+        string repoRoot = repository.Info.WorkingDirectory;
+
+        IReadOnlyList<string> changelogs = Directory.GetFiles(path: repoRoot, searchPattern: Constants.ChangeLogFileName, searchOption: SearchOption.AllDirectories);
+
+        switch (changelogs.Count)
+        {
+            case 0:
+                changeLogFileName = null;
+
+                return false;
+
+            case 1:
+                changeLogFileName = changelogs[0];
+
+                return true;
+
+            default:
+            {
+                string changeLogAtRepoRoot = Path.Combine(path1: repoRoot, path2: Constants.ChangeLogFileName);
+
+                if (changelogs.Contains(value: changeLogAtRepoRoot, comparer: StringComparer.Ordinal))
+                {
+                    changeLogFileName = changeLogAtRepoRoot;
+
+                    return true;
+                }
+
+                changeLogFileName = null;
+
+                return false;
+            }
         }
     }
 }
