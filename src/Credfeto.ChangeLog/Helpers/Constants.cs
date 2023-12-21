@@ -6,5 +6,5 @@ internal static class Constants
 
     public const string UnreleasedHeader = "## [" + Unreleased + "]";
 
-    public const string ChangeLogFileName = @"CHANGELOG.md";
+    public const string ChangeLogFileName = "CHANGELOG.md";
 }
