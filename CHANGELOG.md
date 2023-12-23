@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Dependencies - Updated xunit.analyzers to 1.8.0
 - Dependencies - Updated xunit to 2.6.4
+- Dependencies - Updated xunit.runner.visualstudio to 2.5.6
 ### Removed
 ### Deployment Changes
 
