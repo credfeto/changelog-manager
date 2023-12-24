@@ -9,15 +9,18 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- Dependencies - Updated xunit.analyzers to 1.8.0
-- Dependencies - Updated xunit to 2.6.4
-- Dependencies - Updated xunit.runner.visualstudio to 2.5.6
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.10.19] - 2023-12-24
+### Changed
+- Dependencies - Updated xunit.analyzers to 1.8.0
+- Dependencies - Updated xunit to 2.6.4
+- Dependencies - Updated xunit.runner.visualstudio to 2.5.6
+
 ## [1.10.18] - 2023-12-22
 ### Changed
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.14.6129
