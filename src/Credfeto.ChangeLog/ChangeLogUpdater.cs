@@ -123,12 +123,7 @@ public static class ChangeLogUpdater
                                  findSection: false);
     }
 
-    private static int FindMatchPosition(List<string> changeLog,
-                                         string type,
-                                         Func<string, bool> isMatch,
-                                         Func<int, int> exactMatchAction,
-                                         Func<int, int> emptySectionAction,
-                                         bool findSection)
+    private static int FindMatchPosition(List<string> changeLog, string type, Func<string, bool> isMatch, Func<int, int> exactMatchAction, Func<int, int> emptySectionAction, bool findSection)
     {
         bool foundUnreleased = false;
 
@@ -140,7 +135,7 @@ public static class ChangeLogUpdater
 
             if (!foundUnreleased)
             {
-                if (line == Constants.UnreleasedHeader)
+                if (StringComparer.Ordinal.Equals(x: line, y: Constants.UnreleasedHeader))
                 {
                     foundUnreleased = true;
                 }
@@ -442,7 +437,7 @@ public static class ChangeLogUpdater
 
     private static string? GetLatestRelease(IReadOnlyDictionary<string, int> releases)
     {
-        return releases.Keys.Where(x => x != Constants.Unreleased)
+        return releases.Keys.Where(x => !StringComparer.Ordinal.Equals(x: x, y: Constants.Unreleased))
                        .OrderByDescending(x => new Version(x))
                        .FirstOrDefault();
     }
@@ -474,7 +469,7 @@ public static class ChangeLogUpdater
 
     private static string ExtractRelease(string line)
     {
-        if (line == Constants.UnreleasedHeader)
+        if (StringComparer.Ordinal.Equals(x: line, y: Constants.UnreleasedHeader))
         {
             return Constants.Unreleased;
         }
@@ -486,7 +481,7 @@ public static class ChangeLogUpdater
 
     private static bool IsRelease(string line)
     {
-        return line == Constants.UnreleasedHeader || CommonRegex.VersionHeader.IsMatch(line);
+        return StringComparer.Ordinal.Equals(x: line, y: Constants.UnreleasedHeader) || CommonRegex.VersionHeader.IsMatch(line);
     }
 
     private static int FindPreviousNonBlankEntry(List<string> changeLog, int earliest, int latest)

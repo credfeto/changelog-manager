@@ -32,14 +32,14 @@ public static class ChangeLogChecker
         {
             string sha = HeadSha(repo);
 
-            Branch? originBranch = repo.Branches.FirstOrDefault(b => b.FriendlyName == originBranchName);
+            Branch? originBranch = repo.Branches.FirstOrDefault(b => StringComparer.Ordinal.Equals(x: b.FriendlyName, y: originBranchName));
 
             if (originBranch is null)
             {
                 throw new BranchMissingException($"Could not find branch {originBranchName}");
             }
 
-            if (originBranch.Tip.Sha == sha)
+            if (StringComparer.Ordinal.Equals(x: originBranch.Tip.Sha, y: sha))
             {
                 // same branch/commit
                 return false;
@@ -52,7 +52,7 @@ public static class ChangeLogChecker
 
             Patch changes = repo.Diff.Compare<Patch>(BranchTree(originBranch), HeadTree(repo), compareOptions: CompareSettings.BuildCompareOptions);
 
-            PatchEntryChanges? change = changes.FirstOrDefault(candidate => candidate.Path == changeLogInRepoPath);
+            PatchEntryChanges? change = changes.FirstOrDefault(candidate => StringComparer.Ordinal.Equals(x: candidate.Path, y: changeLogInRepoPath));
 
             if (change is not null)
             {
