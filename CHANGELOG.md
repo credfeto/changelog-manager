@@ -10,12 +10,12 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6169
-- Dependencies - Updated FunFair.Test.Common to 6.1.27.296
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.6.239
 - Dependencies - Updated Meziantou.Analyzer to 2.0.136
 - Dependencies - Updated Roslynator.Analyzers to 4.9.0
 - Dependencies - Updated xunit.analyzers to 1.10.0
 - Dependencies - Updated xunit to 2.6.6
+- Dependencies - Updated FunFair.Test.Common to 6.1.39.333
 ### Removed
 ### Deployment Changes
 
