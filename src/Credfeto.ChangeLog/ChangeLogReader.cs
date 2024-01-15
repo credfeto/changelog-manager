@@ -130,7 +130,7 @@ public static class ChangeLogReader
     {
         if (version is null)
         {
-            return StringComparer.InvariantCultureIgnoreCase.Equals(x: line, y: Constants.UnreleasedHeader);
+            return Unreleased.IsUnreleasedHeader(line);
         }
 
         return Candidates(version)

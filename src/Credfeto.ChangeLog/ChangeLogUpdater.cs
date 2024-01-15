@@ -135,7 +135,7 @@ public static class ChangeLogUpdater
 
             if (!foundUnreleased)
             {
-                if (StringComparer.Ordinal.Equals(x: line, y: Constants.UnreleasedHeader))
+                if (Unreleased.IsUnreleasedHeader(line))
                 {
                     foundUnreleased = true;
                 }
@@ -469,7 +469,7 @@ public static class ChangeLogUpdater
 
     private static string ExtractRelease(string line)
     {
-        if (StringComparer.Ordinal.Equals(x: line, y: Constants.UnreleasedHeader))
+        if (Unreleased.IsUnreleasedHeader(line))
         {
             return Constants.Unreleased;
         }
@@ -481,7 +481,7 @@ public static class ChangeLogUpdater
 
     private static bool IsRelease(string line)
     {
-        return StringComparer.Ordinal.Equals(x: line, y: Constants.UnreleasedHeader) || CommonRegex.VersionHeader.IsMatch(line);
+        return Unreleased.IsUnreleasedHeader(line) || CommonRegex.VersionHeader.IsMatch(line);
     }
 
     private static int FindPreviousNonBlankEntry(List<string> changeLog, int earliest, int latest)
