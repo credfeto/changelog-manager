@@ -123,7 +123,12 @@ public static class ChangeLogUpdater
                                  findSection: false);
     }
 
-    private static int FindMatchPosition(List<string> changeLog, string type, Func<string, bool> isMatch, Func<int, int> exactMatchAction, Func<int, int> emptySectionAction, bool findSection)
+    private static int FindMatchPosition(List<string> changeLog,
+                                         string type,
+                                         Func<string, bool> isMatch,
+                                         Func<int, int> exactMatchAction,
+                                         Func<int, int> emptySectionAction,
+                                         bool findSection)
     {
         bool foundUnreleased = false;
 
