@@ -155,6 +155,7 @@ jobs:
         uses: ./.github/actions/dotnet-tool
         with:
           TOOL_NAME: Credfeto.ChangeLog.Cmd
+          TOOL_VERSION: latest
       - name: "Check Changelog"
         if: (github.actor != 'dependabot[bot]' && !endsWith(github.repository , '-template'))
         shell: bash
