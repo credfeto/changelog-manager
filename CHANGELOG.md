@@ -25,6 +25,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated coverlet to 6.0.2
 - SDK - Updated DotNet SDK to 8.0.203
 - Dependencies - Updated Meziantou.Analyzer to 2.0.146
+- Dependencies - Updated LibGit2Sharp to 0.30.0
 ### Removed
 ### Deployment Changes
 
