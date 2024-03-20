@@ -13,7 +13,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.9.0
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.9.28
 - Dependencies - Updated NSubstitute.Analyzers.CSharp to 1.0.17
-- Dependencies - Updated Roslynator.Analyzers to 4.11.0
 - Dependencies - Updated xunit.analyzers to 1.11.0
 - Dependencies - Updated xunit.runner.visualstudio to 2.5.7
 - Dependencies - Updated xunit to 2.7.0
@@ -26,6 +25,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - SDK - Updated DotNet SDK to 8.0.203
 - Dependencies - Updated Meziantou.Analyzer to 2.0.146
 - Dependencies - Updated LibGit2Sharp to 0.30.0
+- Dependencies - Updated Roslynator.Analyzers to 4.12.0
 ### Removed
 ### Deployment Changes
 
