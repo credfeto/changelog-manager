@@ -123,12 +123,7 @@ public static class ChangeLogUpdater
                                  findSection: false);
     }
 
-    private static int FindMatchPosition(List<string> changeLog,
-                                         string type,
-                                         Func<string, bool> isMatch,
-                                         Func<int, int> exactMatchAction,
-                                         Func<int, int> emptySectionAction,
-                                         bool findSection)
+    private static int FindMatchPosition(List<string> changeLog, string type, Func<string, bool> isMatch, Func<int, int> exactMatchAction, Func<int, int> emptySectionAction, bool findSection)
     {
         bool foundUnreleased = false;
 
@@ -219,7 +214,7 @@ public static class ChangeLogUpdater
 
         int releaseInsertPos = FindInsertPosition(releaseVersionToFind: version, releases: releases, endOfFilePosition: text.Count);
 
-        MoveUnreleasedToRelease(version: version, pending: pending, unreleasedIndex: unreleasedIndex, releaseInsertPos: releaseInsertPos, text: text);
+        MoveUnreleasedToRelease(version: version, unreleasedIndex: unreleasedIndex, releaseInsertPos: releaseInsertPos, text: text, pending: pending);
 
         return string.Join(separator: Environment.NewLine, values: text)
                      .Trim();

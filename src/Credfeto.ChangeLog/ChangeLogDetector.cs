@@ -16,7 +16,7 @@ public static class ChangeLogDetector
         {
             using (Repository repository = GitRepository.OpenRepository(Environment.CurrentDirectory))
             {
-                return TryFindChangeLog(changeLogFileName: out changeLogFileName, repository: repository);
+                return TryFindChangeLog(repository: repository, changeLogFileName: out changeLogFileName);
             }
         }
         catch (Exception)
