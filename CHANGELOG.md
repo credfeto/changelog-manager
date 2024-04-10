@@ -18,7 +18,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit to 2.7.0
 - Dependencies - Updated TeamCity.VSTest.TestAdapter to 1.0.40
 - Dependencies - Updated coverlet to 6.0.2
-- SDK - Updated DotNet SDK to 8.0.203
 - Dependencies - Updated Meziantou.Analyzer to 2.0.146
 - Dependencies - Updated LibGit2Sharp to 0.30.0
 - Dependencies - Updated Roslynator.Analyzers to 4.12.0
@@ -26,6 +25,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.12.324
 - Dependencies - Updated FunFair.Test.Common to 6.1.48.414
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.23.1.88495
+- SDK - Updated DotNet SDK to 8.0.204
 ### Removed
 ### Deployment Changes
 
