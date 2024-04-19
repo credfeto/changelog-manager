@@ -121,12 +121,14 @@ public static class ChangeLogChecker
     private static string ExtractPatchDetails(string patch)
     {
         Console.WriteLine(patch);
-        List<string> lines = patch.Split('\n')
-                                  .ToList();
+        List<string> lines =
+        [
+            ..patch.Split('\n')
+        ];
 
         RemoveLastLineIfBlank(lines);
 
-        int lastHunk = lines.FindLastIndex(x => CommonRegex.GitHunkPosition.IsMatch(x));
+        int lastHunk = lines.FindLastIndex(CommonRegex.GitHunkPosition.IsMatch);
 
         if (lastHunk != -1)
         {

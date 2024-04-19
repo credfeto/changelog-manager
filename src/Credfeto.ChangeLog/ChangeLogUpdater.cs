@@ -35,14 +35,14 @@ public static class ChangeLogUpdater
 
     private static async Task<string> ReadChangeLogAsync(string changeLogFileName, CancellationToken cancellationToken)
     {
-        if (!File.Exists(changeLogFileName))
+        if (File.Exists(changeLogFileName))
         {
-            await CreateEmptyAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
-
-            return TemplateFile.Initial;
+            return await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
         }
 
-        return await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
+        await CreateEmptyAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
+
+        return TemplateFile.Initial;
     }
 
     public static string AddEntry(string changeLog, string type, string message)
@@ -68,9 +68,11 @@ public static class ChangeLogUpdater
 
     private static List<string> ChangeLogAsLines(string changeLog)
     {
-        return EnsureChangelog(changeLog)
-               .SplitToLines()
-               .ToList();
+        return
+        [
+            .. EnsureChangelog(changeLog)
+                .SplitToLines()
+        ];
     }
 
     public static string RemoveEntry(string changeLog, string type, string message)
