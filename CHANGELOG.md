@@ -26,6 +26,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Meziantou.Analyzer to 2.0.147
 - Dependencies - Updated FunFair.Test.Common to 6.1.49.427
 - SDK - Updated DotNet SDK to 8.0.300
+- Dependencies - Updated Credfeto.Enumeration to 1.1.7.384
 ### Removed
 ### Deployment Changes
 
