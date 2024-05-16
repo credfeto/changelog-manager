@@ -22,11 +22,11 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Roslynator.Analyzers to 4.12.0
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.1.5.315
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.23.1.88495
-- Dependencies - Updated Meziantou.Analyzer to 2.0.147
 - Dependencies - Updated FunFair.Test.Common to 6.1.49.427
 - SDK - Updated DotNet SDK to 8.0.300
 - Dependencies - Updated Credfeto.Enumeration to 1.1.7.384
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.14.369
+- Dependencies - Updated Meziantou.Analyzer to 2.0.150
 ### Removed
 ### Deployment Changes
 
