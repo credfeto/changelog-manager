@@ -1,40 +1,40 @@
-"C#":
- - any: [ './**/*.cs', './**/*.csproj' ]
-"C# Project":
- - any: [ './**/*.csproj' ]
-"C# Solution":
- - any: [ './**/*.sln' ]
-"Powershell":
- - any: [ './**/*.ps1', './**/*.psm1' ]
-"SQL":
- - any: [ 'db/**/*', './**/*.sql' ]
-"Solidity":
- - any: [ './**/*.sol' ]
-"unit-tests":
- - any: [ 'src/*.Tests.*/**/*', 'src/*.Tests/**/*', 'src/*.Tests.Integration.*/**/*', 'src/*.Tests.Integration/**/*' ]
 ".NET update":
- - any: [ 'src/global.json' ]
-"Config Change":
- - any: [ 'src/**/*.json', '!src/global.json' ]
-"Static Code Analysis Rules":
- - any: [ 'src/CodeAnalysis.ruleset' ]
-"Migration Script":
- - any: [ 'tools/MigrationScripts/**/*' ]
-"Legal Text":
- - any: [ 'tools/LegalText/**/*' ]
+ - any: [ ''src/global.json'' ]
+"C#":
+ - any: [ ''./**/*.cs', './**/*.csproj'' ]
+"C# Project":
+ - any: [ ''./**/*.csproj'' ]
+"C# Solution":
+ - any: [ ''./**/*.sln'' ]
 "Change Log":
- - any: [ 'CHANGELOG.md' ]
-"Read Me":
- - any: [ 'README.md' ]
-"Setup":
- - any: [ 'SETUP.md' ]
-"Markdown":
- - any: [ './**/*.md' ]
+ - any: [ ''CHANGELOG.md'' ]
+"Config Change":
+ - any: [ ''src/**/*.json', '!src/global.json'' ]
+"credfeto-changelog":
+ - any: [ ''src/$Credfeto.ChangeLog/**/*'' ]
+"credfeto-changelog-cmd":
+ - any: [ ''src/$Credfeto.ChangeLog.Cmd/**/*'' ]
+"credfeto-changelog-tests":
+ - any: [ ''src/$Credfeto.ChangeLog.Tests/**/*'' ]
 "github-actions":
- - any: [ '.github/workflows/*.yml' ]
-"Credfeto.ChangeLog":
- - any: [ 'src/Credfeto.ChangeLog/**/*' ]
-"Credfeto.ChangeLog.Cmd":
- - any: [ 'src/Credfeto.ChangeLog.Cmd/**/*' ]
-"Credfeto.ChangeLog.Tests":
- - any: [ 'src/Credfeto.ChangeLog.Tests/**/*' ]
+ - any: [ ''.github/workflows/*.yml'' ]
+"Legal Text":
+ - any: [ ''tools/LegalText/**/*'' ]
+"Markdown":
+ - any: [ ''./**/*.md'' ]
+"Migration Script":
+ - any: [ ''tools/MigrationScripts/**/*'' ]
+"Powershell":
+ - any: [ ''./**/*.ps1', './**/*.psm1'' ]
+"Read Me":
+ - any: [ ''README.md'' ]
+"Setup":
+ - any: [ ''SETUP.md'' ]
+"Solidity":
+ - any: [ ''./**/*.sol'' ]
+"SQL":
+ - any: [ ''./**/*.sql', 'db/**/*'' ]
+"Static Code Analysis Rules":
+ - any: [ ''src/CodeAnalysis.ruleset'' ]
+"unit-tests":
+ - any: [ ''src/*.Tests.*/**/*', 'src/*.Tests.Integration.*/**/*', 'src/*.Tests.Integration/**/*', 'src/*.Tests/**/*'' ]
