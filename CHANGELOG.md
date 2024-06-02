@@ -24,10 +24,10 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit.runner.visualstudio to 2.8.1
 - Dependencies - Updated xunit to 2.8.1
 - SDK - Updated DotNet SDK to 8.0.301
-- Dependencies - Updated Meziantou.Analyzer to 2.0.154
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.17.415
 - Dependencies - Updated FunFair.Test.Common to 6.1.58.514
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.26.0.92422
+- Dependencies - Updated Meziantou.Analyzer to 2.0.155
 ### Removed
 ### Deployment Changes
 
