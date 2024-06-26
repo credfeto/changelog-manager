@@ -26,8 +26,8 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated SonarAnalyzer.CSharp to 9.27.0.93347
 - SDK - Updated DotNet SDK to 8.0.302
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.18.436
-- Dependencies - Updated Meziantou.Analyzer to 2.0.158
 - Dependencies - Updated FunFair.Test.Common to 6.1.61.538
+- Dependencies - Updated Meziantou.Analyzer to 2.0.159
 ### Removed
 ### Deployment Changes
 
