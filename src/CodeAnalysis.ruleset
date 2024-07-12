@@ -488,6 +488,8 @@
         <Rule Id="RCS1234" Action="Error"/>
         <!-- RCS1235 - Optimize method call -->
         <Rule Id="RCS1235" Action="Error"/>
+        <!-- RCS1236 - Use Exception filter -->
+        <Rule Id="RCS1236" Action="Error"/>
         <!-- RCS1238 - Avoid nested ?: operators -->
         <Rule Id="RCS1238" Action="Error"/>
         <!-- RCS1240 - Operator is unnecessary -->
