@@ -19,6 +19,8 @@
     <LangVersion>latest</LangVersion>
     <NoWarn />
     <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
+    <NuGetAuditMode>direct</NuGetAuditMode>
     <Nullable>enable</Nullable>
     <OptimizationPreference>speed</OptimizationPreference>
     <OutputType>Exe</OutputType>
