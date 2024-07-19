@@ -32,12 +32,7 @@ public static class ChangeLogChecker
         {
             string sha = HeadSha(repo);
 
-            Branch? originBranch = repo.Branches.FirstOrDefault(b => StringComparer.Ordinal.Equals(x: b.FriendlyName, y: originBranchName));
-
-            if (originBranch is null)
-            {
-                throw new BranchMissingException($"Could not find branch {originBranchName}");
-            }
+            Branch originBranch = FindOriginBranch(repo: repo, originBranchName: originBranchName);
 
             if (StringComparer.Ordinal.Equals(x: originBranch.Tip.Sha, y: sha))
             {
@@ -63,6 +58,12 @@ public static class ChangeLogChecker
         }
 
         return true;
+    }
+
+    private static Branch FindOriginBranch(Repository repo, string originBranchName)
+    {
+        return repo.Branches.FirstOrDefault(b => StringComparer.Ordinal.Equals(x: b.FriendlyName, y: originBranchName)) ??
+               throw new BranchMissingException($"Could not find branch {originBranchName}");
     }
 
     private static Tree BranchTree(Branch branch)
@@ -219,7 +220,7 @@ public static class ChangeLogChecker
 
     private static string FindChangeLogPositionInRepo(Repository repo, string changeLogFileName)
     {
-        return changeLogFileName.Substring(repo.Info.WorkingDirectory.Length)
+        return changeLogFileName[repo.Info.WorkingDirectory.Length..]
                                 .Replace(oldChar: '\\', newChar: '/');
     }
 }
