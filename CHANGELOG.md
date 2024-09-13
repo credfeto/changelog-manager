@@ -17,7 +17,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Credfeto.Enumeration.Source.Generation to 1.1.5.315
 - Dependencies - Updated Credfeto.Enumeration to 1.1.7.384
 - Dependencies - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.11
-- Dependencies - Updated Roslynator.Analyzers to 4.12.4
 - Dependencies - Updated CSharpIsNullAnalyzer to 0.1.593
 - Dependencies - Updated xunit.runner.visualstudio to 2.8.2
 - Dependencies - Updated xunit to 2.9.0
@@ -30,6 +29,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.11.1
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.23.533
 - Dependencies - Updated FunFair.Test.Common to 6.1.69.630
+- Dependencies - Updated Roslynator.Analyzers to 4.12.5
 ### Removed
 ### Deployment Changes
 
