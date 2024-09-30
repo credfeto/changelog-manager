@@ -4,6 +4,7 @@
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
     <EnableMicrosoftExtensionsConfigurationBinderSourceGenerator>true</EnableMicrosoftExtensionsConfigurationBinderSourceGenerator>
     <EnablePackageValidation>true</EnablePackageValidation>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <Features>strict;flow-analysis</Features>
     <GenerateNeutralResourcesLanguageAttribute>true</GenerateNeutralResourcesLanguageAttribute>
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
@@ -29,7 +30,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
     <WarningsAsErrors />
-    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
   </PropertyGroup>
   <PropertyGroup>
     <AnalysisLevel>latest</AnalysisLevel>

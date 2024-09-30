@@ -221,6 +221,6 @@ public static class ChangeLogChecker
     private static string FindChangeLogPositionInRepo(Repository repo, string changeLogFileName)
     {
         return changeLogFileName[repo.Info.WorkingDirectory.Length..]
-                                .Replace(oldChar: '\\', newChar: '/');
+            .Replace(oldChar: '\\', newChar: '/');
     }
 }
