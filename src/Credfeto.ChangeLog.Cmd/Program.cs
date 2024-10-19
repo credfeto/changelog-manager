@@ -112,9 +112,7 @@ internal static class Program
         string changeLog = FindChangeLog(options);
         Console.WriteLine($"Using Changelog {changeLog}");
         Console.WriteLine($"Branch: {originBranchName}");
-        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog,
-                                                                                   originBranchName: originBranchName,
-                                                                                   cancellationToken: cancellationToken);
+        bool valid = await ChangeLogChecker.ChangeLogModifiedInReleaseSectionAsync(changeLogFileName: changeLog, originBranchName: originBranchName, cancellationToken: cancellationToken);
 
         if (valid)
         {
@@ -205,7 +203,7 @@ internal static class Program
 
     private static async Task<int> Main(string[] args)
     {
-        Console.WriteLine($"{typeof(Program).Namespace} {ExecutableVersionInformation.ProgramVersion()}");
+        Console.WriteLine($"{VersionInformation.Product} {VersionInformation.Version}");
 
         try
         {
