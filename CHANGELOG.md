@@ -24,7 +24,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit.analyzers to 1.16.0
 - Dependencies - Updated Microsoft.NET.Test.Sdk to 17.11.1
 - Dependencies - Updated FunFair.Test.Common to 6.1.69.630
-- Dependencies - Updated Meziantou.Analyzer to 2.0.168
 - Dependencies - Updated xunit to 2.9.1
 - Dependencies - Updated Roslynator.Analyzers to 4.12.6
 - SDK - Updated to Dotnet 9.0 RC1
@@ -32,6 +31,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Credfeto.Enumeration to 1.1.14.596
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.2.16
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.24.635
+- Dependencies - Updated Meziantou.Analyzer to 2.0.173
 ### Removed
 ### Deployment Changes
 
