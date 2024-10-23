@@ -31,7 +31,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Meziantou.Analyzer to 2.0.173
 - Dependencies - Updated Roslynator.Analyzers to 4.12.8
 - Dependencies - Updated xunit to 2.9.2
-- Dependencies - Updated FunFair.Test.Common to 6.1.228.895
+- Dependencies - Updated FunFair.Test.Common to 6.1.229.911
 ### Removed
 ### Deployment Changes
 
