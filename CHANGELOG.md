@@ -29,9 +29,9 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit to 2.9.2
 - Dependencies - Updated FunFair.Test.Common to 6.1.229.911
 - Dependencies - Updated Meziantou.Analyzer to 2.0.176
-- Dependencies - Updated Credfeto.Enumeration to 1.1.15.626
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.4.57
 - Dependencies - Updated Roslynator.Analyzers to 4.12.9
+- Dependencies - Updated Credfeto.Enumeration to 1.1.16.631
 ### Removed
 ### Deployment Changes
 
