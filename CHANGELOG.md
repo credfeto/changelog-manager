@@ -14,6 +14,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated FunFair.Test.Common to 6.1.238.970
 - SDK - Updated DotNet SDK to 9.0.100
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.12.19
+- Dependencies - Updated Credfeto.Enumeration to 1.1.23.685
 ### Removed
 ### Deployment Changes
 
