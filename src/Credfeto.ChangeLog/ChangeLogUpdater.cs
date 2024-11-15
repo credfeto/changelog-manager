@@ -125,12 +125,7 @@ public static class ChangeLogUpdater
                                  findSection: false);
     }
 
-    private static int FindMatchPosition(List<string> changeLog,
-                                         string type,
-                                         Func<string, bool> isMatch,
-                                         Func<int, int> exactMatchAction,
-                                         Func<int, int> emptySectionAction,
-                                         bool findSection)
+    private static int FindMatchPosition(List<string> changeLog, string type, Func<string, bool> isMatch, Func<int, int> exactMatchAction, Func<int, int> emptySectionAction, bool findSection)
     {
         bool foundUnreleased = false;
 
@@ -277,7 +272,7 @@ public static class ChangeLogUpdater
 
     private static void RemoveItems(List<string> text, List<int> removeIndexes)
     {
-        foreach (int item in removeIndexes.OrderByDescending(x => x))
+        foreach (int item in removeIndexes.OrderDescending())
         {
             text.RemoveAt(item);
         }
