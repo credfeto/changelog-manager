@@ -15,6 +15,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - SDK - Updated DotNet SDK to 9.0.100
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.12.19
 - Dependencies - Updated Credfeto.Enumeration to 1.1.23.685
+- Dependencies - Updated Meziantou.Analyzer to 2.0.179
 ### Removed
 ### Deployment Changes
 
