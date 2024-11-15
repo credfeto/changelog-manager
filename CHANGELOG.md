@@ -11,11 +11,11 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.32.711
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.11.111
-- Dependencies - Updated FunFair.Test.Common to 6.1.238.970
 - SDK - Updated DotNet SDK to 9.0.100
 - Dependencies - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.12.19
 - Dependencies - Updated Credfeto.Enumeration to 1.1.23.685
 - Dependencies - Updated Meziantou.Analyzer to 2.0.179
+- Dependencies - Updated FunFair.Test.Common to 6.1.239.979
 ### Removed
 ### Deployment Changes
 
