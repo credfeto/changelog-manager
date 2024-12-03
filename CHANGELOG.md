@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Fixed
 ### Changed
 - Dependencies - Updated Credfeto.Enumeration to 1.2.39.744
+- Dependencies - Updated LibGit2Sharp to 0.31.0
 ### Removed
 ### Deployment Changes
 
