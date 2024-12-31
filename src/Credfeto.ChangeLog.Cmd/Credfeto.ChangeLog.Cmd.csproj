@@ -19,6 +19,7 @@
     <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
     <Features>strict;flow-analysis</Features>
     <GenerateNeutralResourcesLanguageAttribute>true</GenerateNeutralResourcesLanguageAttribute>
+    <GenerateSBOM>true</GenerateSBOM>
     <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
     <IlcOptimizationPreference>Size</IlcOptimizationPreference>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -89,5 +90,6 @@
     <PackageReference Include="SonarAnalyzer.CSharp" Version="10.4.0.108396" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" ExcludeAssets="runtime" />
     <PackageReference Include="ToStringWithoutOverrideAnalyzer" Version="0.6.0" PrivateAssets="All" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.Sbom.Targets" Version="3.0.0" PrivateAssets="All" ExcludeAssets="runtime"/>
   </ItemGroup>
 </Project>
