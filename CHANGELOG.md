@@ -14,6 +14,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated FunFair.CodeAnalysis to 7.0.52.823
 - Dependencies - Updated Meziantou.Analyzer to 2.0.184
 - Dependencies - Updated Nullable.Extended.Analyzer to 1.15.6495
+- Dependencies - Updated FunFair.Test.Common to 6.1.242.1044
 ### Removed
 ### Deployment Changes
 
