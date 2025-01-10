@@ -9,15 +9,18 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- Dependencies - Updated Credfeto.Enumeration to 1.2.53.824
-- Dependencies - Updated xunit.analyzers to 1.19.0
-- Dependencies - Updated xunit.runner.visualstudio to 3.0.1
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.10.73] - 2025-01-10
+### Changed
+- Dependencies - Updated Credfeto.Enumeration to 1.2.53.824
+- Dependencies - Updated xunit.analyzers to 1.19.0
+- Dependencies - Updated xunit.runner.visualstudio to 3.0.1
+
 ## [1.10.72] - 2025-01-09
 ### Changed
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.41.250
