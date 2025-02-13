@@ -16,6 +16,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated xunit.runner.visualstudio to 3.0.2
 - Dependencies - Updated FunFair.Test.Common to 6.1.257.1137
 - SDK - Updated DotNet SDK to 9.0.200
+- Dependencies - Updated FunFair.CodeAnalysis to 7.0.67.921
 ### Removed
 ### Deployment Changes
 
