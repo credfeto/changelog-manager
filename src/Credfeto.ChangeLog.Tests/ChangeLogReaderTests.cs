@@ -5,7 +5,8 @@ namespace Credfeto.ChangeLog.Tests;
 
 public sealed class ChangeLogReaderTests : TestBase
 {
-    private const string MULTI_RELEASE_CHANGE_LOG = @"# Changelog
+    private const string MULTI_RELEASE_CHANGE_LOG =
+        @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -45,7 +46,10 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [InlineData("1.0.0.1")]
     public void ReadEmptyChangeLogReturnsEmpty(string version)
     {
-        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: string.Empty, version: version);
+        string result = ChangeLogReader.ExtractReleaseNotes(
+            changeLog: string.Empty,
+            version: version
+        );
         Assert.Empty(result);
     }
 
@@ -54,7 +58,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [InlineData("1.0.0.1-master")]
     public void ReadUnReleasedSectionWithNoContentReturnsEmpty(string version)
     {
-        const string changeLog = @"# Changelog
+        const string changeLog =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -83,7 +88,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [InlineData("1.0.0.1-master")]
     public void ReadUnReleasedSectionWithJustAddedReturnsAddedSectionOnly(string version)
     {
-        const string changeLog = @"# Changelog
+        const string changeLog =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -105,7 +111,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ";
 
         string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-        const string expected = @"### Added
+        const string expected =
+            @"### Added
 - Something was added.";
 
         Assert.Equal(expected.ToLocalEndLine(), actual: result);
@@ -116,7 +123,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [InlineData("1.0.0.1-master")]
     public void ReadUnReleasedSectionWithJustFixedReturnsAddedSectionOnly(string version)
     {
-        const string changeLog = @"# Changelog
+        const string changeLog =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -138,7 +146,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ";
 
         string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-        const string expected = @"### Fixed
+        const string expected =
+            @"### Fixed
 - Something was fixed.";
 
         Assert.Equal(expected.ToLocalEndLine(), actual: result);
@@ -149,7 +158,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [InlineData("1.0.0.1-master")]
     public void ReadUnReleasedSectionWithJustChangedReturnsChangedSectionOnly(string version)
     {
-        const string changeLog = @"# Changelog
+        const string changeLog =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -171,7 +181,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ";
 
         string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-        const string expected = @"### Changed
+        const string expected =
+            @"### Changed
 - Something was changed.";
 
         Assert.Equal(expected.ToLocalEndLine(), actual: result);
@@ -182,7 +193,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [InlineData("1.0.0.1-master")]
     public void ReadUnReleasedSectionWithJustRemovedReturnsRemovedSectionOnly(string version)
     {
-        const string changeLog = @"# Changelog
+        const string changeLog =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -204,7 +216,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ";
 
         string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-        const string expected = @"### Removed
+        const string expected =
+            @"### Removed
 - Something was removed.";
 
         Assert.Equal(expected.ToLocalEndLine(), actual: result);
@@ -213,9 +226,12 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [Theory]
     [InlineData("")]
     [InlineData("1.0.0.1-master")]
-    public void ReadUnReleasedSectionWithJustDeploymentChangesReturnsDeploymentChangesSectionOnly(string version)
+    public void ReadUnReleasedSectionWithJustDeploymentChangesReturnsDeploymentChangesSectionOnly(
+        string version
+    )
     {
-        const string changeLog = @"# Changelog
+        const string changeLog =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -237,7 +253,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 ";
 
         string result = ChangeLogReader.ExtractReleaseNotes(changeLog: changeLog, version: version);
-        const string expected = @"### Deployment Changes
+        const string expected =
+            @"### Deployment Changes
 - Need to do something special here on the next deployment.";
 
         Assert.Equal(expected.ToLocalEndLine(), actual: result);
@@ -249,8 +266,12 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [InlineData("1.1.1.3000")]
     public void ReadASpecificReleaseReturnsThatReleaseOnly(string version)
     {
-        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
-        const string expected = @"### Added
+        string result = ChangeLogReader.ExtractReleaseNotes(
+            changeLog: MULTI_RELEASE_CHANGE_LOG,
+            version: version
+        );
+        const string expected =
+            @"### Added
 - Something was added here.";
         Assert.Equal(expected.ToLocalEndLine(), actual: result);
     }
@@ -262,8 +283,12 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [InlineData("1.0.0.3000")]
     public void ReadASpecificReleaseReturnsThatReleaseOnlyIgnoringZeroVersionParts(string version)
     {
-        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
-        const string expected = @"### Added
+        string result = ChangeLogReader.ExtractReleaseNotes(
+            changeLog: MULTI_RELEASE_CHANGE_LOG,
+            version: version
+        );
+        const string expected =
+            @"### Added
 - This is release 1.0.0.";
         Assert.Equal(expected.ToLocalEndLine(), actual: result);
     }
@@ -275,9 +300,13 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [InlineData("0.0.0.3000")]
     public void ReadASpecificReleaseAtEndOfFile(string version)
     {
-        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
+        string result = ChangeLogReader.ExtractReleaseNotes(
+            changeLog: MULTI_RELEASE_CHANGE_LOG,
+            version: version
+        );
 
-        const string expected = @"### Added
+        const string expected =
+            @"### Added
 - Initial version";
         Assert.Equal(expected.ToLocalEndLine(), actual: result);
     }
@@ -289,7 +318,10 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [InlineData("10.3.4.3000")]
     public void ReadNonExistentVersion(string version)
     {
-        string result = ChangeLogReader.ExtractReleaseNotes(changeLog: MULTI_RELEASE_CHANGE_LOG, version: version);
+        string result = ChangeLogReader.ExtractReleaseNotes(
+            changeLog: MULTI_RELEASE_CHANGE_LOG,
+            version: version
+        );
 
         Assert.Equal(expected: string.Empty, actual: result);
     }

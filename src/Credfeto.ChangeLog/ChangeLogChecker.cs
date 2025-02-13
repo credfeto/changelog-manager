@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Credfeto.ChangeLog.Exceptions;
 using Credfeto.ChangeLog.Helpers;
 using LibGit2Sharp;
 
@@ -15,10 +13,17 @@ namespace Credfeto.ChangeLog;
 
 public static class ChangeLogChecker
 {
-    public static async Task<bool> ChangeLogModifiedInReleaseSectionAsync(string changeLogFileName, string originBranchName, CancellationToken cancellationToken)
+    public static async Task<bool> ChangeLogModifiedInReleaseSectionAsync(
+        string changeLogFileName,
+        string originBranchName,
+        CancellationToken cancellationToken
+    )
     {
         changeLogFileName = GetFullChangeLogFilePath(changeLogFileName);
-        int? position = await ChangeLogReader.FindFirstReleaseVersionPositionAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
+        int? position = await ChangeLogReader.FindFirstReleaseVersionPositionAsync(
+            changeLogFileName: changeLogFileName,
+            cancellationToken: cancellationToken
+        );
 
         if (position is null)
         {
@@ -40,18 +45,30 @@ public static class ChangeLogChecker
                 return false;
             }
 
-            string changeLogInRepoPath = FindChangeLogPositionInRepo(repo: repo, changeLogFileName: changeLogFileName);
+            string changeLogInRepoPath = FindChangeLogPositionInRepo(
+                repo: repo,
+                changeLogFileName: changeLogFileName
+            );
             Console.WriteLine($"Relative to Repo Root: {changeLogInRepoPath}");
 
             int firstReleaseVersionIndex = position.Value;
 
-            Patch changes = repo.Diff.Compare<Patch>(BranchTree(originBranch), HeadTree(repo), compareOptions: CompareSettings.BuildCompareOptions);
+            Patch changes = repo.Diff.Compare<Patch>(
+                BranchTree(originBranch),
+                HeadTree(repo),
+                compareOptions: CompareSettings.BuildCompareOptions
+            );
 
-            PatchEntryChanges? change = changes.FirstOrDefault(candidate => StringComparer.Ordinal.Equals(x: candidate.Path, y: changeLogInRepoPath));
+            PatchEntryChanges? change = changes.FirstOrDefault(candidate =>
+                StringComparer.Ordinal.Equals(x: candidate.Path, y: changeLogInRepoPath)
+            );
 
             if (change is not null)
             {
-                return CheckForChangesAfterFirstRelease(change: change, firstReleaseVersionIndex: firstReleaseVersionIndex);
+                return CheckForChangesAfterFirstRelease(
+                    change: change,
+                    firstReleaseVersionIndex: firstReleaseVersionIndex
+                );
             }
 
             Console.WriteLine("Could not find change in diff");
@@ -62,8 +79,9 @@ public static class ChangeLogChecker
 
     private static Branch FindOriginBranch(Repository repo, string originBranchName)
     {
-        return repo.Branches.FirstOrDefault(b => StringComparer.Ordinal.Equals(x: b.FriendlyName, y: originBranchName)) ??
-               throw new BranchMissingException($"Could not find branch {originBranchName}");
+        return repo.Branches.FirstOrDefault(b =>
+                StringComparer.Ordinal.Equals(x: b.FriendlyName, y: originBranchName)
+            ) ?? Throws.CouldNotFindBranch(originBranchName);
     }
 
     private static Tree BranchTree(Branch branch)
@@ -86,7 +104,10 @@ public static class ChangeLogChecker
         return BranchSha(repo.Head);
     }
 
-    private static bool CheckForChangesAfterFirstRelease(PatchEntryChanges change, int firstReleaseVersionIndex)
+    private static bool CheckForChangesAfterFirstRelease(
+        PatchEntryChanges change,
+        int firstReleaseVersionIndex
+    )
     {
         Console.WriteLine("Change Details");
         string patchDetails = ExtractPatchDetails(change.Patch);
@@ -101,9 +122,19 @@ public static class ChangeLogChecker
                 continue;
             }
 
-            int changeStart = Convert.ToInt32(value: match.Groups["CurrentFileStart"].Value, provider: CultureInfo.InvariantCulture);
+            int changeStart = Convert.ToInt32(
+                value: match.Groups["CurrentFileStart"].Value,
+                provider: CultureInfo.InvariantCulture
+            );
 
-            if (!int.TryParse(s: match.Groups["CurrentFileChangeLength"].Value, style: NumberStyles.Integer, provider: CultureInfo.InvariantCulture, out int changeLength))
+            if (
+                !int.TryParse(
+                    s: match.Groups["CurrentFileChangeLength"].Value,
+                    style: NumberStyles.Integer,
+                    provider: CultureInfo.InvariantCulture,
+                    out int changeLength
+                )
+            )
             {
                 changeLength = 1;
             }
@@ -122,10 +153,7 @@ public static class ChangeLogChecker
     private static string ExtractPatchDetails(string patch)
     {
         Console.WriteLine(patch);
-        List<string> lines =
-        [
-            ..patch.Split('\n')
-        ];
+        List<string> lines = [.. patch.Split('\n')];
 
         RemoveLastLineIfBlank(lines);
 
@@ -133,7 +161,10 @@ public static class ChangeLogChecker
 
         if (lastHunk != -1)
         {
-            (List<string> before, List<string> after) = CompareHunk(lines: lines, lastHunk: lastHunk);
+            (List<string> before, List<string> after) = CompareHunk(
+                lines: lines,
+                lastHunk: lastHunk
+            );
 
             if (before.SequenceEqual(second: after, comparer: StringComparer.Ordinal))
             {
@@ -144,7 +175,10 @@ public static class ChangeLogChecker
         return string.Join(separator: Environment.NewLine, values: lines);
     }
 
-    private static (List<string> before, List<string> after) CompareHunk(List<string> lines, int lastHunk)
+    private static (List<string> before, List<string> after) CompareHunk(
+        List<string> lines,
+        int lastHunk
+    )
     {
         List<string> before = [];
         List<string> after = [];
@@ -169,19 +203,14 @@ public static class ChangeLogChecker
                         break;
                     }
 
-                    return CouldNotProcessDiffLine(line);
+                    return Throws.CouldNotProcessDiffLine(line);
 
-                default: return CouldNotProcessDiffLine(line);
+                default:
+                    return Throws.CouldNotProcessDiffLine(line);
             }
         }
 
         return (before, after);
-    }
-
-    [DoesNotReturn]
-    private static (List<string> before, List<string> after) CouldNotProcessDiffLine(string line)
-    {
-        throw new DiffException($"Could not process diff line: {line}");
     }
 
     private static void RemoveLastLineIfBlank(List<string> lines)
@@ -205,7 +234,7 @@ public static class ChangeLogChecker
 
         if (!changeLog.Exists)
         {
-            throw new InvalidChangeLogException($"Could not find {changeLogFileName}");
+            return Throws.CouldNotFindChangeLog(changeLogFileName);
         }
 
         return changeLog.FullName;

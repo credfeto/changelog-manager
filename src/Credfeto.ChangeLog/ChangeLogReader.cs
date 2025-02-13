@@ -11,9 +11,17 @@ namespace Credfeto.ChangeLog;
 
 public static class ChangeLogReader
 {
-    public static async Task<string> ExtractReleaseNotesFromFileAsync(string changeLogFileName, string version, CancellationToken cancellationToken)
+    public static async Task<string> ExtractReleaseNotesFromFileAsync(
+        string changeLogFileName,
+        string version,
+        CancellationToken cancellationToken
+    )
     {
-        string textBlock = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
+        string textBlock = await File.ReadAllTextAsync(
+            path: changeLogFileName,
+            encoding: Encoding.UTF8,
+            cancellationToken: cancellationToken
+        );
 
         return ExtractReleaseNotes(changeLog: textBlock, version: version);
     }
@@ -24,7 +32,12 @@ public static class ChangeLogReader
 
         IReadOnlyList<string> text = RemoveComments(changeLog);
 
-        FindSectionForBuild(text: text, version: releaseVersion, out int foundStart, out int foundEnd);
+        FindSectionForBuild(
+            text: text,
+            version: releaseVersion,
+            out int foundStart,
+            out int foundEnd
+        );
 
         if (foundStart == -1)
         {
@@ -47,16 +60,17 @@ public static class ChangeLogReader
                 continue;
             }
 
-            if (text[i]
-                    .StartsWith(value: "### ", comparisonType: StringComparison.Ordinal) && previousLine.StartsWith(value: "### ", comparisonType: StringComparison.Ordinal))
+            if (
+                text[i].StartsWith(value: "### ", comparisonType: StringComparison.Ordinal)
+                && previousLine.StartsWith(value: "### ", comparisonType: StringComparison.Ordinal)
+            )
             {
                 previousLine = text[i];
 
                 continue;
             }
 
-            if (text[i]
-                .StartsWith(value: "### ", comparisonType: StringComparison.Ordinal))
+            if (text[i].StartsWith(value: "### ", comparisonType: StringComparison.Ordinal))
             {
                 previousLine = text[i];
 
@@ -72,20 +86,27 @@ public static class ChangeLogReader
             previousLine = text[i];
         }
 
-        return releaseNotes.ToString()
-                           .Trim();
+        return releaseNotes.ToString().Trim();
     }
 
     private static IReadOnlyList<string> RemoveComments(string changeLog)
     {
-        return CommonRegex.RemoveComments.Replace(input: changeLog, replacement: string.Empty)
-                          .Trim()
-                          .SplitToLines();
+        return CommonRegex
+            .RemoveComments.Replace(input: changeLog, replacement: string.Empty)
+            .Trim()
+            .SplitToLines();
     }
 
-    public static async Task<int?> FindFirstReleaseVersionPositionAsync(string changeLogFileName, CancellationToken cancellationToken)
+    public static async Task<int?> FindFirstReleaseVersionPositionAsync(
+        string changeLogFileName,
+        CancellationToken cancellationToken
+    )
     {
-        IReadOnlyList<string> changelog = await File.ReadAllLinesAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
+        IReadOnlyList<string> changelog = await File.ReadAllLinesAsync(
+            path: changeLogFileName,
+            encoding: Encoding.UTF8,
+            cancellationToken: cancellationToken
+        );
 
         for (int lineIndex = 0; lineIndex < changelog.Count; ++lineIndex)
         {
@@ -101,7 +122,12 @@ public static class ChangeLogReader
         return null;
     }
 
-    private static void FindSectionForBuild(IReadOnlyList<string> text, Version? version, out int foundStart, out int foundEnd)
+    private static void FindSectionForBuild(
+        IReadOnlyList<string> text,
+        Version? version,
+        out int foundStart,
+        out int foundEnd
+    )
     {
         foundStart = -1;
         foundEnd = -1;
@@ -117,7 +143,10 @@ public static class ChangeLogReader
                 continue;
             }
 
-            if (foundStart != -1 && line.StartsWith(value: "## [", comparisonType: StringComparison.Ordinal))
+            if (
+                foundStart != -1
+                && line.StartsWith(value: "## [", comparisonType: StringComparison.Ordinal)
+            )
             {
                 foundEnd = i;
 
@@ -134,13 +163,16 @@ public static class ChangeLogReader
         }
 
         return Candidates(version)
-            .Any(candidate => line.StartsWith(value: candidate, comparisonType: StringComparison.OrdinalIgnoreCase));
+            .Any(candidate =>
+                line.StartsWith(
+                    value: candidate,
+                    comparisonType: StringComparison.OrdinalIgnoreCase
+                )
+            );
 
         static IEnumerable<string> Candidates(Version expected)
         {
-            int build = expected.Build is 0 or -1
-                ? 0
-                : expected.Build;
+            int build = expected.Build is 0 or -1 ? 0 : expected.Build;
 
             yield return $"## [{expected.Major}.{expected.Minor}.{build}]";
 

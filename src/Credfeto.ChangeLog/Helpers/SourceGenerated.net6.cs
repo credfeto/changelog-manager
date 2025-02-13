@@ -6,13 +6,23 @@ namespace Credfeto.ChangeLog.Helpers;
 
 internal static partial class SourceGenerated
 {
-    private static readonly Regex RegexRemoveComments =
-        new(pattern: RegexSettings.RemoveCommentsRegex, options: RegexSettings.RemoveCommentsOptions, matchTimeout: Net6Compat.Short);
+    private static readonly Regex RegexRemoveComments = new(
+        pattern: RegexSettings.RemoveCommentsRegex,
+        options: RegexSettings.RemoveCommentsOptions,
+        matchTimeout: Net6Compat.Short
+    );
 
-    private static readonly Regex RegexVersionHeader = new(pattern: RegexSettings.VersionHeaderRegex, options: RegexSettings.VersionHeaderOptions, matchTimeout: Net6Compat.Short);
+    private static readonly Regex RegexVersionHeader = new(
+        pattern: RegexSettings.VersionHeaderRegex,
+        options: RegexSettings.VersionHeaderOptions,
+        matchTimeout: Net6Compat.Short
+    );
 
-    private static readonly Regex RegexGitHunkPosition =
-        new(pattern: RegexSettings.GitHunkPositionRegex, options: RegexSettings.GitHunkPositionOptions, matchTimeout: Net6Compat.Short);
+    private static readonly Regex RegexGitHunkPosition = new(
+        pattern: RegexSettings.GitHunkPositionRegex,
+        options: RegexSettings.GitHunkPositionOptions,
+        matchTimeout: Net6Compat.Short
+    );
 
     public static Regex RemoveCommentsRegex()
     {

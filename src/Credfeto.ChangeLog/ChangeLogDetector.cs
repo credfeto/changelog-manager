@@ -14,9 +14,14 @@ public static class ChangeLogDetector
     {
         try
         {
-            using (Repository repository = GitRepository.OpenRepository(Environment.CurrentDirectory))
+            using (
+                Repository repository = GitRepository.OpenRepository(Environment.CurrentDirectory)
+            )
             {
-                return TryFindChangeLog(repository: repository, changeLogFileName: out changeLogFileName);
+                return TryFindChangeLog(
+                    repository: repository,
+                    changeLogFileName: out changeLogFileName
+                );
             }
         }
         catch (Exception)
@@ -28,11 +33,18 @@ public static class ChangeLogDetector
         }
     }
 
-    public static bool TryFindChangeLog(Repository repository, [NotNullWhen(true)] out string? changeLogFileName)
+    public static bool TryFindChangeLog(
+        Repository repository,
+        [NotNullWhen(true)] out string? changeLogFileName
+    )
     {
         string repoRoot = repository.Info.WorkingDirectory;
 
-        IReadOnlyList<string> changelogs = Directory.GetFiles(path: repoRoot, searchPattern: Constants.ChangeLogFileName, searchOption: SearchOption.AllDirectories);
+        IReadOnlyList<string> changelogs = Directory.GetFiles(
+            path: repoRoot,
+            searchPattern: Constants.ChangeLogFileName,
+            searchOption: SearchOption.AllDirectories
+        );
 
         switch (changelogs.Count)
         {
@@ -48,9 +60,17 @@ public static class ChangeLogDetector
 
             default:
             {
-                string changeLogAtRepoRoot = Path.Combine(path1: repoRoot, path2: Constants.ChangeLogFileName);
+                string changeLogAtRepoRoot = Path.Combine(
+                    path1: repoRoot,
+                    path2: Constants.ChangeLogFileName
+                );
 
-                if (changelogs.Contains(value: changeLogAtRepoRoot, comparer: StringComparer.Ordinal))
+                if (
+                    changelogs.Contains(
+                        value: changeLogAtRepoRoot,
+                        comparer: StringComparer.Ordinal
+                    )
+                )
                 {
                     changeLogFileName = changeLogAtRepoRoot;
 
