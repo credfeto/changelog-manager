@@ -8,9 +8,14 @@ public sealed class ChangeLogUpdaterRemoveEntryTests : TestBase
     [Fact]
     public void RemoveFromEmptyChangelog()
     {
-        string result = ChangeLogUpdater.RemoveEntry(changeLog: string.Empty, type: "Added", message: "Added a new entry");
+        string result = ChangeLogUpdater.RemoveEntry(
+            changeLog: string.Empty,
+            type: "Added",
+            message: "Added a new entry"
+        );
 
-        const string expected = @"# Changelog
+        const string expected =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -35,7 +40,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [Fact]
     public void RemoveOnlyLineFromSection()
     {
-        const string existing = @"# Changelog
+        const string existing =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -55,9 +61,14 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.RemoveEntry(changeLog: existing, type: "Added", message: "Remove Me");
+        string result = ChangeLogUpdater.RemoveEntry(
+            changeLog: existing,
+            type: "Added",
+            message: "Remove Me"
+        );
 
-        const string expected = @"# Changelog
+        const string expected =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -82,7 +93,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [Fact]
     public void RemoveFirstLineFromSection()
     {
-        const string existing = @"# Changelog
+        const string existing =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -103,9 +115,14 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.RemoveEntry(changeLog: existing, type: "Added", message: "Remove Me");
+        string result = ChangeLogUpdater.RemoveEntry(
+            changeLog: existing,
+            type: "Added",
+            message: "Remove Me"
+        );
 
-        const string expected = @"# Changelog
+        const string expected =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -131,7 +148,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [Fact]
     public void RemoveLastLineFromSection()
     {
-        const string existing = @"# Changelog
+        const string existing =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -152,9 +170,14 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.RemoveEntry(changeLog: existing, type: "Added", message: "Remove Me");
+        string result = ChangeLogUpdater.RemoveEntry(
+            changeLog: existing,
+            type: "Added",
+            message: "Remove Me"
+        );
 
-        const string expected = @"# Changelog
+        const string expected =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -180,7 +203,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [Fact]
     public void DoesNotRemoveLineFromReleasedSection()
     {
-        const string existing = @"# Changelog
+        const string existing =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -204,9 +228,14 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.RemoveEntry(changeLog: existing, type: "Added", message: "Remove Me");
+        string result = ChangeLogUpdater.RemoveEntry(
+            changeLog: existing,
+            type: "Added",
+            message: "Remove Me"
+        );
 
-        const string expected = @"# Changelog
+        const string expected =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -236,7 +265,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
     [Fact]
     public void RemovesMultipleMatchingFromUnreleased()
     {
-        const string existing = @"# Changelog
+        const string existing =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -258,9 +288,14 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.RemoveEntry(changeLog: existing, type: "Added", message: "Remove Me");
+        string result = ChangeLogUpdater.RemoveEntry(
+            changeLog: existing,
+            type: "Added",
+            message: "Remove Me"
+        );
 
-        const string expected = @"# Changelog
+        const string expected =
+            @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--

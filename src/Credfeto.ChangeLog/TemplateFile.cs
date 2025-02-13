@@ -4,14 +4,17 @@ namespace Credfeto.ChangeLog;
 
 internal static class TemplateFile
 {
-    public const string Initial = @"# Changelog
+    public const string Initial =
+        @"# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
 Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 -->
 
-## [" + Constants.Unreleased + @"]
+## ["
+        + Constants.Unreleased
+        + @"]
 ### Added
 ### Fixed
 ### Changed

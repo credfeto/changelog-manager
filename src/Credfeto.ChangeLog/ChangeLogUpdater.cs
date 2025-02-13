@@ -8,39 +8,74 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Credfeto.ChangeLog.Exceptions;
 using Credfeto.ChangeLog.Helpers;
 
 namespace Credfeto.ChangeLog;
 
 public static class ChangeLogUpdater
 {
-    public static async Task AddEntryAsync(string changeLogFileName, string type, string message, CancellationToken cancellationToken)
+    public static async Task AddEntryAsync(
+        string changeLogFileName,
+        string type,
+        string message,
+        CancellationToken cancellationToken
+    )
     {
-        string textBlock = await ReadChangeLogAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
+        string textBlock = await ReadChangeLogAsync(
+            changeLogFileName: changeLogFileName,
+            cancellationToken: cancellationToken
+        );
 
         string content = AddEntryCommon(changeLog: textBlock, type: type, message: message);
 
-        await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
+        await File.WriteAllTextAsync(
+            path: changeLogFileName,
+            contents: content,
+            encoding: Encoding.UTF8,
+            cancellationToken: cancellationToken
+        );
     }
 
-    public static async Task RemoveEntryAsync(string changeLogFileName, string type, string message, CancellationToken cancellationToken)
+    public static async Task RemoveEntryAsync(
+        string changeLogFileName,
+        string type,
+        string message,
+        CancellationToken cancellationToken
+    )
     {
-        string textBlock = await ReadChangeLogAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
+        string textBlock = await ReadChangeLogAsync(
+            changeLogFileName: changeLogFileName,
+            cancellationToken: cancellationToken
+        );
 
         string content = RemoveEntryCommon(changeLog: textBlock, type: type, message: message);
 
-        await File.WriteAllTextAsync(path: changeLogFileName, contents: content, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
+        await File.WriteAllTextAsync(
+            path: changeLogFileName,
+            contents: content,
+            encoding: Encoding.UTF8,
+            cancellationToken: cancellationToken
+        );
     }
 
-    private static async Task<string> ReadChangeLogAsync(string changeLogFileName, CancellationToken cancellationToken)
+    private static async Task<string> ReadChangeLogAsync(
+        string changeLogFileName,
+        CancellationToken cancellationToken
+    )
     {
         if (File.Exists(changeLogFileName))
         {
-            return await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
+            return await File.ReadAllTextAsync(
+                path: changeLogFileName,
+                encoding: Encoding.UTF8,
+                cancellationToken: cancellationToken
+            );
         }
 
-        await CreateEmptyAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
+        await CreateEmptyAsync(
+            changeLogFileName: changeLogFileName,
+            cancellationToken: cancellationToken
+        );
 
         return TemplateFile.Initial;
     }
@@ -62,17 +97,12 @@ public static class ChangeLogUpdater
             text.Insert(index: index, item: entryText);
         }
 
-        return string.Join(separator: Environment.NewLine, values: text)
-                     .Trim();
+        return string.Join(separator: Environment.NewLine, values: text).Trim();
     }
 
     private static List<string> ChangeLogAsLines(string changeLog)
     {
-        return
-        [
-            .. EnsureChangelog(changeLog)
-                .SplitToLines()
-        ];
+        return [.. EnsureChangelog(changeLog).SplitToLines()];
     }
 
     public static string RemoveEntry(string changeLog, string type, string message)
@@ -88,7 +118,6 @@ public static class ChangeLogUpdater
         int index = FindRemovePosition(changeLog: text, type: type, entryText: entryText);
 
         while (index != -1)
-
         {
             text.RemoveAt(index: index);
 
@@ -96,8 +125,7 @@ public static class ChangeLogUpdater
             index = FindRemovePosition(changeLog: text, type: type, entryText: entryText);
         }
 
-        return string.Join(separator: Environment.NewLine, values: text)
-                     .Trim();
+        return string.Join(separator: Environment.NewLine, values: text).Trim();
     }
 
     private static string CreateEntryText(string message)
@@ -107,25 +135,36 @@ public static class ChangeLogUpdater
 
     private static int FindInsertPosition(List<string> changeLog, string type, string entryText)
     {
-        return FindMatchPosition(changeLog: changeLog,
-                                 type: type,
-                                 isMatch: s => StringComparer.OrdinalIgnoreCase.Equals(x: s, y: entryText),
-                                 exactMatchAction: _ => -1,
-                                 emptySectionAction: line => line,
-                                 findSection: true);
+        return FindMatchPosition(
+            changeLog: changeLog,
+            type: type,
+            isMatch: s => StringComparer.OrdinalIgnoreCase.Equals(x: s, y: entryText),
+            exactMatchAction: _ => -1,
+            emptySectionAction: line => line,
+            findSection: true
+        );
     }
 
     private static int FindRemovePosition(List<string> changeLog, string type, string entryText)
     {
-        return FindMatchPosition(changeLog: changeLog,
-                                 type: type,
-                                 isMatch: s => s.StartsWith(value: entryText, comparisonType: StringComparison.Ordinal),
-                                 exactMatchAction: line => line,
-                                 emptySectionAction: _ => -1,
-                                 findSection: false);
+        return FindMatchPosition(
+            changeLog: changeLog,
+            type: type,
+            isMatch: s => s.StartsWith(value: entryText, comparisonType: StringComparison.Ordinal),
+            exactMatchAction: line => line,
+            emptySectionAction: _ => -1,
+            findSection: false
+        );
     }
 
-    private static int FindMatchPosition(List<string> changeLog, string type, Func<string, bool> isMatch, Func<int, int> exactMatchAction, Func<int, int> emptySectionAction, bool findSection)
+    private static int FindMatchPosition(
+        IReadOnlyList<string> changeLog,
+        string type,
+        Func<string, bool> isMatch,
+        Func<int, int> exactMatchAction,
+        Func<int, int> emptySectionAction,
+        bool findSection
+    )
     {
         bool foundUnreleased = false;
 
@@ -146,7 +185,7 @@ public static class ChangeLogUpdater
             {
                 if (IsRelease(line))
                 {
-                    throw new InvalidChangeLogException($"Could not find {type} heading");
+                    return Throws.CouldNotFindTypeHeading(type);
                 }
 
                 if (!StringComparer.Ordinal.Equals(x: line, y: search))
@@ -154,34 +193,57 @@ public static class ChangeLogUpdater
                     continue;
                 }
 
-                int next = index + 1;
-
-                while (next < changeLog.Count)
-                {
-                    if (isMatch(changeLog[next]))
-                    {
-                        // Found matching text
-                        return exactMatchAction(next);
-                    }
-
-                    if (IsNextItem(changeLog[next]))
-                    {
-                        if (findSection)
-                        {
-                            return FindPreviousNonBlankEntry(changeLog: changeLog, earliest: index, latest: next);
-                        }
-
-                        return -1;
-                    }
-
-                    ++next;
-                }
-
-                return emptySectionAction(index + 1);
+                return FindNext(
+                    changeLog: changeLog,
+                    isMatch: isMatch,
+                    exactMatchAction: exactMatchAction,
+                    emptySectionAction: emptySectionAction,
+                    findSection: findSection,
+                    index: index
+                );
             }
         }
 
-        throw new InvalidChangeLogException("Could not find [" + Constants.Unreleased + "] section of file");
+        return Throws.CouldNotFindUnreleasedSectionInt();
+    }
+
+    private static int FindNext(
+        IReadOnlyList<string> changeLog,
+        Func<string, bool> isMatch,
+        Func<int, int> exactMatchAction,
+        Func<int, int> emptySectionAction,
+        bool findSection,
+        int index
+    )
+    {
+        int next = index + 1;
+
+        while (next < changeLog.Count)
+        {
+            if (isMatch(changeLog[next]))
+            {
+                // Found matching text
+                return exactMatchAction(next);
+            }
+
+            if (IsNextItem(changeLog[next]))
+            {
+                if (findSection)
+                {
+                    return FindPreviousNonBlankEntry(
+                        changeLog: changeLog,
+                        earliest: index,
+                        latest: next
+                    );
+                }
+
+                return -1;
+            }
+
+            ++next;
+        }
+
+        return emptySectionAction(index + 1);
     }
 
     private static string BuildSubHeaderSection(string type)
@@ -189,13 +251,31 @@ public static class ChangeLogUpdater
         return "### " + type;
     }
 
-    public static async Task CreateReleaseAsync(string changeLogFileName, string version, bool pending, CancellationToken cancellationToken)
+    public static async Task CreateReleaseAsync(
+        string changeLogFileName,
+        string version,
+        bool pending,
+        CancellationToken cancellationToken
+    )
     {
-        string originalChangeLog = await File.ReadAllTextAsync(path: changeLogFileName, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
+        string originalChangeLog = await File.ReadAllTextAsync(
+            path: changeLogFileName,
+            encoding: Encoding.UTF8,
+            cancellationToken: cancellationToken
+        );
 
-        string newChangeLog = CreateReleaseCommon(changeLog: originalChangeLog, version: version, pending: pending);
+        string newChangeLog = CreateReleaseCommon(
+            changeLog: originalChangeLog,
+            version: version,
+            pending: pending
+        );
 
-        await File.WriteAllTextAsync(path: changeLogFileName, contents: newChangeLog, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
+        await File.WriteAllTextAsync(
+            path: changeLogFileName,
+            contents: newChangeLog,
+            encoding: Encoding.UTF8,
+            cancellationToken: cancellationToken
+        );
     }
 
     public static string CreateRelease(string changeLog, string version, bool pending)
@@ -211,31 +291,62 @@ public static class ChangeLogUpdater
 
         if (!releases.TryGetValue(key: Constants.Unreleased, out int unreleasedIndex))
         {
-            throw new EmptyChangeLogException("Could not find unreleased section");
+            return Throws.EmptyChangeLogNoUnreleasedSection();
         }
 
-        int releaseInsertPos = FindInsertPosition(releaseVersionToFind: version, releases: releases, endOfFilePosition: text.Count);
+        int releaseInsertPos = FindInsertPosition(
+            releaseVersionToFind: version,
+            releases: releases,
+            endOfFilePosition: text.Count
+        );
 
-        MoveUnreleasedToRelease(version: version, unreleasedIndex: unreleasedIndex, releaseInsertPos: releaseInsertPos, text: text, pending: pending);
+        MoveUnreleasedToRelease(
+            version: version,
+            unreleasedIndex: unreleasedIndex,
+            releaseInsertPos: releaseInsertPos,
+            text: text,
+            pending: pending
+        );
 
-        return string.Join(separator: Environment.NewLine, values: text)
-                     .Trim();
+        return string.Join(separator: Environment.NewLine, values: text).Trim();
     }
 
-    private static void MoveUnreleasedToRelease(string version, int unreleasedIndex, int releaseInsertPos, List<string> text, bool pending)
+    private static void MoveUnreleasedToRelease(
+        string version,
+        int unreleasedIndex,
+        int releaseInsertPos,
+        List<string> text,
+        bool pending
+    )
     {
-        List<string> newRelease = GenerateNewReleaseContents(unreleasedIndex: unreleasedIndex, releaseInsertPos: releaseInsertPos, text: text, out List<int> removeIndexes);
+        List<string> newRelease = GenerateNewReleaseContents(
+            unreleasedIndex: unreleasedIndex,
+            releaseInsertPos: releaseInsertPos,
+            text: text,
+            out List<int> removeIndexes
+        );
 
-        string releaseVersionHeader = CreateReleaseVersionHeader(version: version, pending: pending);
+        string releaseVersionHeader = CreateReleaseVersionHeader(
+            version: version,
+            pending: pending
+        );
 
-        PrependReleaseVersionHeader(newRelease: newRelease, releaseVersionHeader: releaseVersionHeader);
+        PrependReleaseVersionHeader(
+            newRelease: newRelease,
+            releaseVersionHeader: releaseVersionHeader
+        );
 
         text.InsertRange(index: releaseInsertPos, collection: newRelease);
 
         RemoveItems(text: text, removeIndexes: removeIndexes);
     }
 
-    private static List<string> GenerateNewReleaseContents(int unreleasedIndex, int releaseInsertPos, List<string> text, out List<int> removeIndexes)
+    private static List<string> GenerateNewReleaseContents(
+        int unreleasedIndex,
+        int releaseInsertPos,
+        List<string> text,
+        out List<int> removeIndexes
+    )
     {
         string previousLine = string.Empty;
 
@@ -247,24 +358,42 @@ public static class ChangeLogUpdater
 
         for (int i = unreleasedIndex + 1; i < releaseInsertPos; i++)
         {
-            if (SkipComments(text: text, i: i, removeIndexes: removeIndexes, inComment: ref inComment) || SkipEmptyLine(text: text, i: i, removeIndexes: removeIndexes) ||
-                SkipEmptyHeadingSections(text: text, i: i, previousLine: ref previousLine) || SkipHeadingLine(text: text, i: i, previousLine: ref previousLine))
+            if (
+                SkipComments(
+                    text: text,
+                    i: i,
+                    removeIndexes: removeIndexes,
+                    inComment: ref inComment
+                )
+                || SkipEmptyLine(text: text, i: i, removeIndexes: removeIndexes)
+                || SkipEmptyHeadingSections(text: text, i: i, previousLine: ref previousLine)
+                || SkipHeadingLine(text: text, i: i, previousLine: ref previousLine)
+            )
             {
                 continue;
             }
 
-            previousLine = AddLineToRelease(text: text, previousLine: previousLine, newRelease: newRelease, removeIndexes: removeIndexes, i: i);
+            previousLine = AddLineToRelease(
+                text: text,
+                previousLine: previousLine,
+                newRelease: newRelease,
+                removeIndexes: removeIndexes,
+                i: i
+            );
         }
 
         if (newRelease.Count == 0)
         {
-            throw new EmptyChangeLogException();
+            return Throws.NoChangesForTheRelease();
         }
 
         return newRelease;
     }
 
-    private static void PrependReleaseVersionHeader(List<string> newRelease, string releaseVersionHeader)
+    private static void PrependReleaseVersionHeader(
+        List<string> newRelease,
+        string releaseVersionHeader
+    )
     {
         newRelease.Insert(index: 0, item: releaseVersionHeader);
         newRelease.Add(string.Empty);
@@ -281,19 +410,28 @@ public static class ChangeLogUpdater
     private static string CreateReleaseVersionHeader(string version, bool pending)
     {
         string releaseDate = CreateReleaseDate(pending);
-        string releaseVersionHeader = string.Concat(str0: "## [", str1: version, str2: "] - ", str3: releaseDate);
+        string releaseVersionHeader = string.Concat(
+            str0: "## [",
+            str1: version,
+            str2: "] - ",
+            str3: releaseDate
+        );
 
         return releaseVersionHeader;
     }
 
     private static string CreateReleaseDate(bool pending)
     {
-        return pending
-            ? "TBD"
-            : CurrentDate();
+        return pending ? "TBD" : CurrentDate();
     }
 
-    private static string AddLineToRelease(List<string> text, string previousLine, List<string> newRelease, List<int> removeIndexes, int i)
+    private static string AddLineToRelease(
+        List<string> text,
+        string previousLine,
+        List<string> newRelease,
+        List<int> removeIndexes,
+        int i
+    )
     {
         if (IsSubHeading(previousLine))
         {
@@ -343,7 +481,12 @@ public static class ChangeLogUpdater
         return false;
     }
 
-    private static bool SkipComments(List<string> text, int i, List<int> removeIndexes, ref bool inComment)
+    private static bool SkipComments(
+        List<string> text,
+        int i,
+        List<int> removeIndexes,
+        ref bool inComment
+    )
     {
         if (ContainsHtmlCommentStart(text[i]) && !ContainsHtmlCommentEnd(text[i]))
         {
@@ -386,13 +529,21 @@ public static class ChangeLogUpdater
         return line.StartsWith(value: "### ", comparisonType: StringComparison.Ordinal);
     }
 
-    [SuppressMessage(category: "FunFair.CodeAnalysis", checkId: "FFS0001", Justification = "Should always use the local time.")]
+    [SuppressMessage(
+        category: "FunFair.CodeAnalysis",
+        checkId: "FFS0001",
+        Justification = "Should always use the local time."
+    )]
     private static string CurrentDate()
     {
         return DateTime.Now.ToString(format: "yyyy-MM-dd", provider: CultureInfo.InvariantCulture);
     }
 
-    private static int FindInsertPosition(string releaseVersionToFind, IReadOnlyDictionary<string, int> releases, int endOfFilePosition)
+    private static int FindInsertPosition(
+        string releaseVersionToFind,
+        IReadOnlyDictionary<string, int> releases,
+        int endOfFilePosition
+    )
     {
         string? latestRelease = GetLatestRelease(releases);
 
@@ -407,12 +558,15 @@ public static class ChangeLogUpdater
 
             if (latestNumeric == numericalVersion)
             {
-                return ReleaseAlreadyExists(releaseVersionToFind);
+                return Throws.ReleaseAlreadyExists(releaseVersionToFind);
             }
 
             if (latestNumeric > numericalVersion)
             {
-                return ReleaseTooOld(releaseVersionToFind: releaseVersionToFind, latestRelease: latestRelease);
+                return Throws.ReleaseTooOld(
+                    releaseVersionToFind: releaseVersionToFind,
+                    latestRelease: latestRelease
+                );
             }
 
             releaseInsertPos = releases[latestRelease];
@@ -425,23 +579,12 @@ public static class ChangeLogUpdater
         return releaseInsertPos;
     }
 
-    [DoesNotReturn]
-    private static int ReleaseTooOld(string releaseVersionToFind, string latestRelease)
-    {
-        throw new ReleaseTooOldException($"Release {latestRelease} already exists and is newer than {releaseVersionToFind}");
-    }
-
-    [DoesNotReturn]
-    private static int ReleaseAlreadyExists(string releaseVersionToFind)
-    {
-        throw new ReleaseAlreadyExistsException($"Release {releaseVersionToFind} already exists");
-    }
-
     private static string? GetLatestRelease(IReadOnlyDictionary<string, int> releases)
     {
-        return releases.Keys.Where(x => !StringComparer.Ordinal.Equals(x: x, y: Constants.Unreleased))
-                       .OrderByDescending(x => new Version(x))
-                       .FirstOrDefault();
+        return releases
+            .Keys.Where(x => !StringComparer.Ordinal.Equals(x: x, y: Constants.Unreleased))
+            .OrderByDescending(x => new Version(x))
+            .FirstOrDefault();
     }
 
     private static Dictionary<string, int> FindReleasePositions(IReadOnlyList<string> text)
@@ -450,23 +593,21 @@ public static class ChangeLogUpdater
 
         if (releases.Count == 0)
         {
-            return CouldNotFindUnreleasedSection();
+            return Throws.CouldNotFindUnreleasedSectionDictioonary();
         }
 
         return releases;
     }
 
-    [DoesNotReturn]
-    private static Dictionary<string, int> CouldNotFindUnreleasedSection()
-    {
-        throw new EmptyChangeLogException("Could not find unreleased section");
-    }
-
     private static Dictionary<string, int> GetReleasePositions(IReadOnlyList<string> text)
     {
         return text.Select((line, index) => new { line, index })
-                   .Where(i => IsRelease(i.line))
-                   .ToDictionary(keySelector: i => ExtractRelease(i.line), elementSelector: i => i.index, comparer: StringComparer.Ordinal);
+            .Where(i => IsRelease(i.line))
+            .ToDictionary(
+                keySelector: i => ExtractRelease(i.line),
+                elementSelector: i => i.index,
+                comparer: StringComparer.Ordinal
+            );
     }
 
     private static string ExtractRelease(string line)
@@ -486,7 +627,11 @@ public static class ChangeLogUpdater
         return Unreleased.IsUnreleasedHeader(line) || CommonRegex.VersionHeader.IsMatch(line);
     }
 
-    private static int FindPreviousNonBlankEntry(List<string> changeLog, int earliest, int latest)
+    private static int FindPreviousNonBlankEntry(
+        IReadOnlyList<string> changeLog,
+        int earliest,
+        int latest
+    )
     {
         int previous = latest - 1;
 
@@ -505,7 +650,8 @@ public static class ChangeLogUpdater
 
     private static bool IsNextItem(string line)
     {
-        return line.StartsWith('#') || line.StartsWith(value: "<!--", comparisonType: StringComparison.Ordinal);
+        return line.StartsWith('#')
+            || line.StartsWith(value: "<!--", comparisonType: StringComparison.Ordinal);
     }
 
     private static string EnsureChangelog(string changeLog)
@@ -518,8 +664,16 @@ public static class ChangeLogUpdater
         return changeLog;
     }
 
-    public static Task CreateEmptyAsync(string changeLogFileName, in CancellationToken cancellationToken)
+    public static Task CreateEmptyAsync(
+        string changeLogFileName,
+        in CancellationToken cancellationToken
+    )
     {
-        return File.WriteAllTextAsync(path: changeLogFileName, contents: TemplateFile.Initial, encoding: Encoding.UTF8, cancellationToken: cancellationToken);
+        return File.WriteAllTextAsync(
+            path: changeLogFileName,
+            contents: TemplateFile.Initial,
+            encoding: Encoding.UTF8,
+            cancellationToken: cancellationToken
+        );
     }
 }
