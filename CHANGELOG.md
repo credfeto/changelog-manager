@@ -9,7 +9,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- Dependencies - Updated Credfeto.Enumeration to 1.2.66.909
 - Dependencies - Updated Microsoft.Sbom.Targets to 3.1.0
 - Dependencies - Updated xunit.analyzers to 1.20.0
 - Dependencies - Updated xunit.runner.visualstudio to 3.0.2
@@ -22,6 +21,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.55.367
 - Dependencies - Updated SonarAnalyzer.CSharp to 10.7.0.110445
 - Dependencies - Updated FunFair.Test.Common to 6.1.261.1171
+- Dependencies - Updated Credfeto.Enumeration to 1.2.67.955
 ### Removed
 ### Deployment Changes
 
