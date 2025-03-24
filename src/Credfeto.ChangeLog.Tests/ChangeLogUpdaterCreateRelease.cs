@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using Credfeto.ChangeLog.Exceptions;
 using FunFair.Test.Common;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Credfeto.ChangeLog.Tests;
 
