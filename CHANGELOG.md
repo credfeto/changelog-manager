@@ -9,16 +9,19 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- Dependencies - Updated Credfeto.Enumeration to 1.2.71.984
-- Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.57.416
-- Dependencies - Updated FunFair.CodeAnalysis to 7.0.74.984
-- Dependencies - Updated FunFair.Test.Common to 6.1.265.1215
 ### Removed
 ### Deployment Changes
 
 <!--
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->
+## [1.10.89] - 2025-03-25
+### Changed
+- Dependencies - Updated Credfeto.Enumeration to 1.2.71.984
+- Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.57.416
+- Dependencies - Updated FunFair.CodeAnalysis to 7.0.74.984
+- Dependencies - Updated FunFair.Test.Common to 6.1.265.1215
+
 ## [1.10.88] - 2025-03-23
 ### Changed
 - Dependencies - Updated Microsoft.Sbom.Targets to 3.1.0
