@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Credfeto.ChangeLog.Exceptions;
 using FunFair.Test.Common;
 using Xunit;
@@ -15,11 +15,7 @@ public sealed class ChangeLogUpdaterAddEntryTests : TestBase
     [Fact]
     public void AddToEmptyChangelog()
     {
-        string result = ChangeLogUpdater.AddEntry(
-            changeLog: string.Empty,
-            type: "Added",
-            message: "Added a new entry"
-        );
+        string result = ChangeLogUpdater.AddEntry(changeLog: string.Empty, type: "Added", message: "Added a new entry");
 
         const string expected =
             @"# Changelog
@@ -69,11 +65,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.AddEntry(
-            changeLog: existing,
-            type: "Added",
-            message: "Another entry"
-        );
+        string result = ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Another entry");
 
         const string expected =
             @"# Changelog
@@ -124,11 +116,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.AddEntry(
-            changeLog: existing,
-            type: "Added",
-            message: "Added a new entry"
-        );
+        string result = ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Added a new entry");
 
         const string expected =
             @"# Changelog
@@ -179,11 +167,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.AddEntry(
-            changeLog: existing,
-            type: "Added",
-            message: "Another entry"
-        );
+        string result = ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Another entry");
 
         const string expected =
             @"# Changelog
@@ -237,13 +221,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
 ## [0.0.0] - Project created";
 
-        Assert.Throws<InvalidChangeLogException>(
-            () =>
-                ChangeLogUpdater.AddEntry(
-                    changeLog: existing,
-                    type: "Added",
-                    message: "Another entry"
-                )
+        Assert.Throws<InvalidChangeLogException>(() =>
+            ChangeLogUpdater.AddEntry(changeLog: existing, type: "Added", message: "Another entry")
         );
     }
 }
