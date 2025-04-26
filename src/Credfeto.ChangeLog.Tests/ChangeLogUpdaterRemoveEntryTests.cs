@@ -61,11 +61,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.RemoveEntry(
-            changeLog: existing,
-            type: "Added",
-            message: "Remove Me"
-        );
+        string result = ChangeLogUpdater.RemoveEntry(changeLog: existing, type: "Added", message: "Remove Me");
 
         const string expected =
             @"# Changelog
@@ -115,11 +111,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.RemoveEntry(
-            changeLog: existing,
-            type: "Added",
-            message: "Remove Me"
-        );
+        string result = ChangeLogUpdater.RemoveEntry(changeLog: existing, type: "Added", message: "Remove Me");
 
         const string expected =
             @"# Changelog
@@ -170,11 +162,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.RemoveEntry(
-            changeLog: existing,
-            type: "Added",
-            message: "Remove Me"
-        );
+        string result = ChangeLogUpdater.RemoveEntry(changeLog: existing, type: "Added", message: "Remove Me");
 
         const string expected =
             @"# Changelog
@@ -228,11 +216,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.RemoveEntry(
-            changeLog: existing,
-            type: "Added",
-            message: "Remove Me"
-        );
+        string result = ChangeLogUpdater.RemoveEntry(changeLog: existing, type: "Added", message: "Remove Me");
 
         const string expected =
             @"# Changelog
@@ -288,11 +272,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string result = ChangeLogUpdater.RemoveEntry(
-            changeLog: existing,
-            type: "Added",
-            message: "Remove Me"
-        );
+        string result = ChangeLogUpdater.RemoveEntry(changeLog: existing, type: "Added", message: "Remove Me");
 
         const string expected =
             @"# Changelog
