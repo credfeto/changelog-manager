@@ -10,25 +10,19 @@ internal static class Throws
     [DoesNotReturn]
     public static string EmptyChangeLogNoUnreleasedSection()
     {
-        throw new EmptyChangeLogException(
-            "Could not find [" + Constants.Unreleased + "] section of file"
-        );
+        throw new EmptyChangeLogException("Could not find [" + Constants.Unreleased + "] section of file");
     }
 
     [DoesNotReturn]
     public static Dictionary<string, int> CouldNotFindUnreleasedSectionDictioonary()
     {
-        throw new EmptyChangeLogException(
-            "Could not find [" + Constants.Unreleased + "] section of file"
-        );
+        throw new EmptyChangeLogException("Could not find [" + Constants.Unreleased + "] section of file");
     }
 
     [DoesNotReturn]
     public static int CouldNotFindUnreleasedSectionInt()
     {
-        throw new InvalidChangeLogException(
-            "Could not find [" + Constants.Unreleased + "] section of file"
-        );
+        throw new InvalidChangeLogException("Could not find [" + Constants.Unreleased + "] section of file");
     }
 
     [DoesNotReturn]
