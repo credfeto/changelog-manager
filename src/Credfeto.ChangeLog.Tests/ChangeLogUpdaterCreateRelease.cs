@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Credfeto.ChangeLog.Exceptions;
 using FunFair.Test.Common;
@@ -43,13 +43,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        Assert.Throws<EmptyChangeLogException>(
-            () =>
-                ChangeLogUpdater.CreateRelease(
-                    changeLog: changeLog,
-                    version: "1.0.0",
-                    pending: true
-                )
+        Assert.Throws<EmptyChangeLogException>(() =>
+            ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true)
         );
     }
 
@@ -81,13 +76,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
 ## [0.0.0] - Project created";
 
-        Assert.Throws<ReleaseAlreadyExistsException>(
-            () =>
-                ChangeLogUpdater.CreateRelease(
-                    changeLog: changeLog,
-                    version: "1.0.0",
-                    pending: true
-                )
+        Assert.Throws<ReleaseAlreadyExistsException>(() =>
+            ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true)
         );
     }
 
@@ -119,13 +109,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 
 ## [0.0.0] - Project created";
 
-        Assert.Throws<ReleaseTooOldException>(
-            () =>
-                ChangeLogUpdater.CreateRelease(
-                    changeLog: changeLog,
-                    version: "1.0.0",
-                    pending: true
-                )
+        Assert.Throws<ReleaseTooOldException>(() =>
+            ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true)
         );
     }
 
@@ -153,11 +138,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string updated = ChangeLogUpdater.CreateRelease(
-            changeLog: changeLog,
-            version: "1.0.0",
-            pending: true
-        );
+        string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
 
         const string expected =
             @"# Changelog
@@ -211,11 +192,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string updated = ChangeLogUpdater.CreateRelease(
-            changeLog: changeLog,
-            version: "1.0.0",
-            pending: true
-        );
+        string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
 
         const string expected =
             @"# Changelog
@@ -269,11 +246,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string updated = ChangeLogUpdater.CreateRelease(
-            changeLog: changeLog,
-            version: "1.0.0",
-            pending: true
-        );
+        string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
 
         const string expected =
             @"# Changelog
@@ -327,11 +300,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.0.0] - Project created";
 
-        string updated = ChangeLogUpdater.CreateRelease(
-            changeLog: changeLog,
-            version: "1.0.0",
-            pending: true
-        );
+        string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
 
         const string expected =
             @"# Changelog
@@ -384,11 +353,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
 -->";
 
-        string updated = ChangeLogUpdater.CreateRelease(
-            changeLog: changeLog,
-            version: "1.0.0",
-            pending: true
-        );
+        string updated = ChangeLogUpdater.CreateRelease(changeLog: changeLog, version: "1.0.0", pending: true);
 
         const string expected =
             @"# Changelog
