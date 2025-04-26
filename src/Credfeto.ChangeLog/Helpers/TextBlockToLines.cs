@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Credfeto.ChangeLog.Helpers;
@@ -11,9 +11,7 @@ public static class TextBlockToLines
         [
             .. value
                 .Split("\r\n")
-                .SelectMany(x =>
-                    x.Split("\n\r").SelectMany(y => y.Split("\n").SelectMany(z => z.Split("\r")))
-                ),
+                .SelectMany(x => x.Split("\n\r").SelectMany(y => y.Split("\n").SelectMany(z => z.Split("\r")))),
         ];
     }
 }
