@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,12 +32,7 @@ public static class ChangeLogReader
 
         IReadOnlyList<string> text = RemoveComments(changeLog);
 
-        FindSectionForBuild(
-            text: text,
-            version: releaseVersion,
-            out int foundStart,
-            out int foundEnd
-        );
+        FindSectionForBuild(text: text, version: releaseVersion, out int foundStart, out int foundEnd);
 
         if (foundStart == -1)
         {
@@ -91,10 +86,7 @@ public static class ChangeLogReader
 
     private static IReadOnlyList<string> RemoveComments(string changeLog)
     {
-        return CommonRegex
-            .RemoveComments.Replace(input: changeLog, replacement: string.Empty)
-            .Trim()
-            .SplitToLines();
+        return CommonRegex.RemoveComments.Replace(input: changeLog, replacement: string.Empty).Trim().SplitToLines();
     }
 
     public static async Task<int?> FindFirstReleaseVersionPositionAsync(
@@ -143,10 +135,7 @@ public static class ChangeLogReader
                 continue;
             }
 
-            if (
-                foundStart != -1
-                && line.StartsWith(value: "## [", comparisonType: StringComparison.Ordinal)
-            )
+            if (foundStart != -1 && line.StartsWith(value: "## [", comparisonType: StringComparison.Ordinal))
             {
                 foundEnd = i;
 
@@ -163,12 +152,7 @@ public static class ChangeLogReader
         }
 
         return Candidates(version)
-            .Any(candidate =>
-                line.StartsWith(
-                    value: candidate,
-                    comparisonType: StringComparison.OrdinalIgnoreCase
-                )
-            );
+            .Any(candidate => line.StartsWith(value: candidate, comparisonType: StringComparison.OrdinalIgnoreCase));
 
         static IEnumerable<string> Candidates(Version expected)
         {
