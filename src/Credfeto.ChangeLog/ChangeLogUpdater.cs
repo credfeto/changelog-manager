@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -58,10 +58,7 @@ public static class ChangeLogUpdater
         );
     }
 
-    private static async Task<string> ReadChangeLogAsync(
-        string changeLogFileName,
-        CancellationToken cancellationToken
-    )
+    private static async Task<string> ReadChangeLogAsync(string changeLogFileName, CancellationToken cancellationToken)
     {
         if (File.Exists(changeLogFileName))
         {
@@ -72,10 +69,7 @@ public static class ChangeLogUpdater
             );
         }
 
-        await CreateEmptyAsync(
-            changeLogFileName: changeLogFileName,
-            cancellationToken: cancellationToken
-        );
+        await CreateEmptyAsync(changeLogFileName: changeLogFileName, cancellationToken: cancellationToken);
 
         return TemplateFile.Initial;
     }
@@ -230,11 +224,7 @@ public static class ChangeLogUpdater
             {
                 if (findSection)
                 {
-                    return FindPreviousNonBlankEntry(
-                        changeLog: changeLog,
-                        earliest: index,
-                        latest: next
-                    );
+                    return FindPreviousNonBlankEntry(changeLog: changeLog, earliest: index, latest: next);
                 }
 
                 return -1;
@@ -264,11 +254,7 @@ public static class ChangeLogUpdater
             cancellationToken: cancellationToken
         );
 
-        string newChangeLog = CreateReleaseCommon(
-            changeLog: originalChangeLog,
-            version: version,
-            pending: pending
-        );
+        string newChangeLog = CreateReleaseCommon(changeLog: originalChangeLog, version: version, pending: pending);
 
         await File.WriteAllTextAsync(
             path: changeLogFileName,
@@ -326,15 +312,9 @@ public static class ChangeLogUpdater
             out List<int> removeIndexes
         );
 
-        string releaseVersionHeader = CreateReleaseVersionHeader(
-            version: version,
-            pending: pending
-        );
+        string releaseVersionHeader = CreateReleaseVersionHeader(version: version, pending: pending);
 
-        PrependReleaseVersionHeader(
-            newRelease: newRelease,
-            releaseVersionHeader: releaseVersionHeader
-        );
+        PrependReleaseVersionHeader(newRelease: newRelease, releaseVersionHeader: releaseVersionHeader);
 
         text.InsertRange(index: releaseInsertPos, collection: newRelease);
 
@@ -359,12 +339,7 @@ public static class ChangeLogUpdater
         for (int i = unreleasedIndex + 1; i < releaseInsertPos; i++)
         {
             if (
-                SkipComments(
-                    text: text,
-                    i: i,
-                    removeIndexes: removeIndexes,
-                    inComment: ref inComment
-                )
+                SkipComments(text: text, i: i, removeIndexes: removeIndexes, inComment: ref inComment)
                 || SkipEmptyLine(text: text, i: i, removeIndexes: removeIndexes)
                 || SkipEmptyHeadingSections(text: text, i: i, previousLine: ref previousLine)
                 || SkipHeadingLine(text: text, i: i, previousLine: ref previousLine)
@@ -390,10 +365,7 @@ public static class ChangeLogUpdater
         return newRelease;
     }
 
-    private static void PrependReleaseVersionHeader(
-        List<string> newRelease,
-        string releaseVersionHeader
-    )
+    private static void PrependReleaseVersionHeader(List<string> newRelease, string releaseVersionHeader)
     {
         newRelease.Insert(index: 0, item: releaseVersionHeader);
         newRelease.Add(string.Empty);
@@ -410,12 +382,7 @@ public static class ChangeLogUpdater
     private static string CreateReleaseVersionHeader(string version, bool pending)
     {
         string releaseDate = CreateReleaseDate(pending);
-        string releaseVersionHeader = string.Concat(
-            str0: "## [",
-            str1: version,
-            str2: "] - ",
-            str3: releaseDate
-        );
+        string releaseVersionHeader = string.Concat(str0: "## [", str1: version, str2: "] - ", str3: releaseDate);
 
         return releaseVersionHeader;
     }
@@ -481,12 +448,7 @@ public static class ChangeLogUpdater
         return false;
     }
 
-    private static bool SkipComments(
-        List<string> text,
-        int i,
-        List<int> removeIndexes,
-        ref bool inComment
-    )
+    private static bool SkipComments(List<string> text, int i, List<int> removeIndexes, ref bool inComment)
     {
         if (ContainsHtmlCommentStart(text[i]) && !ContainsHtmlCommentEnd(text[i]))
         {
@@ -563,10 +525,7 @@ public static class ChangeLogUpdater
 
             if (latestNumeric > numericalVersion)
             {
-                return Throws.ReleaseTooOld(
-                    releaseVersionToFind: releaseVersionToFind,
-                    latestRelease: latestRelease
-                );
+                return Throws.ReleaseTooOld(releaseVersionToFind: releaseVersionToFind, latestRelease: latestRelease);
             }
 
             releaseInsertPos = releases[latestRelease];
@@ -627,11 +586,7 @@ public static class ChangeLogUpdater
         return Unreleased.IsUnreleasedHeader(line) || CommonRegex.VersionHeader.IsMatch(line);
     }
 
-    private static int FindPreviousNonBlankEntry(
-        IReadOnlyList<string> changeLog,
-        int earliest,
-        int latest
-    )
+    private static int FindPreviousNonBlankEntry(IReadOnlyList<string> changeLog, int earliest, int latest)
     {
         int previous = latest - 1;
 
@@ -650,8 +605,7 @@ public static class ChangeLogUpdater
 
     private static bool IsNextItem(string line)
     {
-        return line.StartsWith('#')
-            || line.StartsWith(value: "<!--", comparisonType: StringComparison.Ordinal);
+        return line.StartsWith('#') || line.StartsWith(value: "<!--", comparisonType: StringComparison.Ordinal);
     }
 
     private static string EnsureChangelog(string changeLog)
@@ -664,10 +618,7 @@ public static class ChangeLogUpdater
         return changeLog;
     }
 
-    public static Task CreateEmptyAsync(
-        string changeLogFileName,
-        in CancellationToken cancellationToken
-    )
+    public static Task CreateEmptyAsync(string changeLogFileName, in CancellationToken cancellationToken)
     {
         return File.WriteAllTextAsync(
             path: changeLogFileName,
