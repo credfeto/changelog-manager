@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using CommandLine;
 
 namespace Credfeto.ChangeLog.Cmd;
@@ -15,12 +15,7 @@ namespace Credfeto.ChangeLog.Cmd;
 )]
 public sealed class Options
 {
-    [Option(
-        shortName: 'f',
-        longName: "changelog",
-        Required = false,
-        HelpText = "The changelog filename to use"
-    )]
+    [Option(shortName: 'f', longName: "changelog", Required = false, HelpText = "The changelog filename to use")]
     public string? ChangeLog { get; init; }
 
     [Option(
@@ -50,13 +45,7 @@ public sealed class Options
     )]
     public string? Remove { get; init; }
 
-    [Option(
-        shortName: 'a',
-        longName: "add",
-        Group = "Commands",
-        Required = false,
-        HelpText = "The entry type to add"
-    )]
+    [Option(shortName: 'a', longName: "add", Group = "Commands", Required = false, HelpText = "The entry type to add")]
     public string? Add { get; init; }
 
     [Option(shortName: 'm', longName: "message", Required = false, HelpText = "The message to add")]
@@ -80,12 +69,7 @@ public sealed class Options
     )]
     public string? CreateRelease { get; init; }
 
-    [Option(
-        shortName: 'p',
-        longName: "Pending",
-        Required = false,
-        HelpText = "If the release is pending"
-    )]
+    [Option(shortName: 'p', longName: "Pending", Required = false, HelpText = "If the release is pending")]
     public bool Pending { get; init; }
 
     [Option(
