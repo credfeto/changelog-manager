@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Dependencies - Updated FunFair.CodeAnalysis to 7.1.22.1366
 - Dependencies - Updated Credfeto.Version.Information.Generator to 1.0.114.790
+- Dependencies - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.8.0
 ### Removed
 ### Deployment Changes
 
