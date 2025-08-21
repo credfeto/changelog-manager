@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - Dependencies - Updated xunit.analyzers to 1.24.0
 - Dependencies - Updated xunit.v3 to 3.0.1
+- Dependencies - Updated Microsoft.Sbom.Targets to 4.1.1
 ### Removed
 ### Deployment Changes
 
